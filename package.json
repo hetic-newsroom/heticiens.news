@@ -19,7 +19,15 @@
     }
   },
   "xo": {
-    "extends": "xo-react"
+    "envs": [
+      "browser",
+      "node"
+    ],
+    "extends": "xo-react",
+    "rules": {
+      "react/state-in-constructor": [1, "always"],
+      "import/no-unassigned-import": 0
+    }
   },
   "repository": {
     "type": "git",
