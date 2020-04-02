@@ -1,0 +1,17 @@
+{
+  "name": "2g164bh-wakd729",
+  "hash": "qs8KZedYf61WBXTgf/uHAGIS26CxsOgEtIasRfvf8gw=",
+  "description": "Default Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/home/squared/Documents/git/heticiens.news/.serverless_nextjs/default-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs10.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::733777751746:role/2g164bh-ngqjo9"
+  },
+  "arn": "arn:aws:lambda:us-east-1:733777751746:function:2g164bh-wakd729",
+  "region": "us-east-1"
+}

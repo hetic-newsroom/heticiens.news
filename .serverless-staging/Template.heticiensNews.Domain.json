@@ -1,0 +1,13 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "heticiens.news",
+  "subdomains": [
+    {
+      "domain": "staging.heticiens.news",
+      "distributionId": "E2L6YYSTUAJDFG",
+      "url": "https://d1y3i9pflf1ku6.cloudfront.net",
+      "type": "awsCloudFront"
+    }
+  ]
+}

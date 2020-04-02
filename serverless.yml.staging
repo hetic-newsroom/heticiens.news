@@ -1,0 +1,8 @@
+heticiensNews:
+  component: serverless-next.js
+  inputs:
+    domain: ['staging', 'heticiens.news']
+    bucketName: heticiensnewsstaging
+    name:
+      defaultLambda: heticiensNewsEndpointStaging
+      apiLambda: heticiensNewsAPIEndpointStaging
