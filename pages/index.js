@@ -39,10 +39,10 @@ class Index extends React.Component {
 			const d = (timer - h) / 24;
 
 			this.setState({
-				s: (s.length === 2) ? s : '0' + s,
-				m: (m.length === 2) ? m : '0' + m,
-				h,
-				d
+				s: (s.toString().length === 2) ? s.toString() : '0' + s,
+				m: (m.toString().length === 2) ? m.toString() : '0' + m,
+				h: h.toString(),
+				d: d.toString()
 			});
 		}
 	}
