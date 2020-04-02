@@ -8,7 +8,8 @@ class Index extends React.Component {
 		this.state = {
 			s: 'XX',
 			m: 'XX',
-			h: 'XX'
+			h: 'XX',
+			d: 'XX'
 		};
 	}
 
@@ -20,24 +21,39 @@ class Index extends React.Component {
 	}
 
 	updateClock() {
-		let timer = Math.floor((deadline - Date.now()) / 1000);
-		const s = timer % 60;
-		timer = (timer - s) / 60;
-		const m = timer % 60;
-		const h = (timer - m) / 60;
+		const now = Date.now();
+		if (deadline < now) {
+			this.setState({
+				s: '00',
+				m: '00',
+				h: null,
+				d: null
+			});
+		} else {
+			let timer = Math.floor((deadline - now) / 1000);
+			const s = timer % 60;
+			timer = (timer - s) / 60;
+			const m = timer % 60;
+			timer = (timer - m) / 60;
+			const h = timer % 24;
+			const d = (timer - h) / 24;
 
-		this.setState({
-			s,
-			m,
-			h
-		});
+			this.setState({
+				s: (s.toString().length === 2) ? s.toString() : '0' + s,
+				m: (m.toString().length === 2) ? m.toString() : '0' + m,
+				h: h.toString(),
+				d: d.toString()
+			});
+		}
 	}
 
 	render() {
 		return (
 			<div className="root">
 				<h1>
-					{this.state.h}:{this.state.m}:{this.state.s}
+					{this.state.d ? this.state.d + ':' : ''}
+					{this.state.h ? this.state.h + ':' : ''}
+					{this.state.m}:{this.state.s}
 				</h1>
 				<style jsx global>{`
 					html, body {
