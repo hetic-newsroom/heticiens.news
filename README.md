@@ -1,5 +1,5 @@
 # heticiens.news
-Ce dépôt git contient le code source de la web app d'HÉTIC Newsroom, `heticiens.news`.
+Ce dépôt git contient le code source de la web app d'HETIC Newsroom, `heticiens.news`.
 
 Ce README est destiné aux développeurs et explique le fonctionnement de l'application et les process de développement utilisés.
 
