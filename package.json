@@ -25,7 +25,10 @@
     ],
     "extends": "xo-react",
     "rules": {
-      "react/state-in-constructor": [1, "always"],
+      "react/state-in-constructor": [
+        1,
+        "always"
+      ],
       "import/no-unassigned-import": 0
     }
   },
@@ -43,6 +46,8 @@
   },
   "homepage": "https://github.com/hetic-newsroom/heticiens.news#readme",
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^18.0.0",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
     "next": "^9.3.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
