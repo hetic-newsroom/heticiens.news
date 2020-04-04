@@ -1,11 +1,14 @@
 import Link from 'next/link';
 
+import LoginForm from '../components/login-form';
+
 export default () => {
 	return (
-		<div className="root">
-			<h1>Welcome to staging.heticiens.news!</h1>
-			<Link href="/login">
-				<a>Are you a contributor? Login here!</a>
+		<div className="login">
+			<h1>Login page</h1>
+			<LoginForm/>
+			<Link href="/">
+				<a>Go home</a>
 			</Link>
 			<style jsx global>{`
 				html, body {
@@ -14,14 +17,14 @@ export default () => {
 			`}
 			</style>
 			<style jsx>{`
-				.root {
+				.login {
 					font-family: sans-serif;
-					height: 100vh;
-					width: 100vw;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
 					justify-content: center;
+					width: 100vw;
+					height: 100vh;
 				}
 			`}
 			</style>

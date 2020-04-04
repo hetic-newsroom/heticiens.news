@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /contributors
+Disallow: /403
+Disallow: /404
