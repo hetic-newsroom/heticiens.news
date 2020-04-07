@@ -17,8 +17,8 @@ export default class LoginForm extends React.Component {
 	async submit() {
 		// TODO: Retrieve form elements
 		const payload = {
-			email: 'some@guy.net',
-			password: 'verysecurepasswordlmao'
+			email: 'test@heticiens.news',
+			password: 'rosebud'
 		};
 
 		if (!payload.email || !Email.test(payload.email)) {
