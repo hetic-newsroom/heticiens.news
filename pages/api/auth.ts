@@ -1,6 +1,10 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {nanoid} from 'nanoid';
-import {Email, UnhashedPassword} from '../../lib/data-validator';
+import Database from '../../lib/database';
+import {Token, TokenRegex, Contributor, Email, UnhashedPassword} from '../../lib/data-validator';
+
+const TOKEN_TIMEOUT = 5 * 60 * 60 * 1000; // 5 hours
+const TOKEN_RENEW = 3 * 60 * 60 * 1000; // Renew if <= 3 hours left
 
 interface AuthCredentials {
 	email: string;
@@ -34,11 +38,45 @@ async function authentify(creds: AuthCredentials): Promise<AuthResponse> {
 		};
 	}
 
-	// TODO: validate against database, store new token & time of creation
+	const db = new Database();
+	let user;
+
+	try {
+		user = await db.borrow('Contributors', {
+			email: creds.email
+		}, 'email') as Contributor;
+	} catch (error) {
+		return {
+			statusCode: 404,
+			error: error.message as string
+		};
+	}
+
+	// TODO: hash password
+	// const hashedPasswd = creds.password;
+	if (user.password !== creds.password) {
+		return {
+			statusCode: 403,
+			error: 'Wrong password'
+		};
+	}
+
+	// Delete old tokens
+	user.tokens = user.tokens.filter(token => {
+		return ((Date.now() - token.created) < TOKEN_TIMEOUT);
+	});
+
+	const token: Token = {
+		token: nanoid(20),
+		created: Date.now()
+	};
+	user.tokens.push(token);
+
+	await user.save();
 
 	return {
 		statusCode: 201,
-		token: nanoid()
+		token: `${user.id as string}||${token.token}`
 	};
 }
 
@@ -50,22 +88,63 @@ export async function validateToken(token: string): Promise<AuthResponse> {
 			error: 'No token specified'
 		};
 	}
-	// TODO: validate token against database, renew if approaching expiration
-	// Perhaps also cleanup dead tokens here?
 
-	if (token.length > 5) {
+	if (!TokenRegex.test(token)) {
 		return {
-			statusCode: 200,
-			token
+			statusCode: 400,
+			error: 'Bad token format'
 		};
-		// Other possible responses:
-		// 404 - token not found
-		// 410 - no longer valid (keep this one? possible info leak)
+	}
+
+	const [userId, tokenId] = token.split('||');
+
+	const db = new Database();
+	let user;
+
+	try {
+		user = await db.borrow('Contributors', {
+			id: userId
+		}) as Contributor;
+	} catch (error) {
+		return {
+			statusCode: 404,
+			error: error.message as string
+		};
+	}
+
+	const inDb = user.tokens.find(token => {
+		return (token.token === tokenId);
+	});
+
+	if (!inDb) {
+		return {
+			statusCode: 404,
+			error: 'Token not found'
+		};
+	}
+
+	const time = (Date.now() - inDb.created);
+
+	if (time > TOKEN_TIMEOUT) {
+		return {
+			statusCode: 410,
+			error: 'Token expired'
+		};
+	}
+
+	let newTokenId: string | null;
+	if ((TOKEN_TIMEOUT - time) <= TOKEN_RENEW) {
+		newTokenId = nanoid();
+		user.tokens[user.tokens.indexOf(inDb)] = {
+			token: newTokenId,
+			created: Date.now()
+		};
+		await user.save();
 	}
 
 	return {
-		statusCode: 400,
-		error: 'Bad token format'
+		statusCode: 200,
+		token: `${userId}||${newTokenId || tokenId}`
 	};
 }
 
