@@ -52,6 +52,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^18.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "aws-sdk": "^2.653.0",
     "classnames": "^2.2.6",
     "nanoid": "^3.0.2",
     "next": "^9.3.4",
