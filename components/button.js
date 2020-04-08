@@ -1,18 +1,21 @@
 import * as React from 'react';
+import classNames from 'classnames';
+import DefaultColorScheme from '../lib/colors-default';
 
 export default React.forwardRef((props, ref) => (
 	<button
 		ref={ref}
-		className={
-			(props.icon && 'icon') ||
-			(props.primary && 'primary') ||
-			(props.positive && 'positive') ||
-			(props.negative && 'negative')
-		}
+		className={classNames(
+			{icon: (props.icon)},
+			{text: (props.value)},
+			{primary: (props.primary)},
+			{positive: (props.positive)},
+			{negative: (props.negative)}
+		)}
 		type="button"
 		onClick={props.onClick}
 	>
-		{props.children}
+		{props.value ? <span>{props.value}</span> : ''}
 		<style jsx>{`
 			button {
 				--bg: var(--color-light-grey);
@@ -23,7 +26,6 @@ export default React.forwardRef((props, ref) => (
 				display: block;
 				min-width: 160px;
 				padding: 10px 15px;
-				margin: 10px;
 				cursor: pointer;
 
 				background: var(--bg);
@@ -49,11 +51,48 @@ export default React.forwardRef((props, ref) => (
 			}
 
 			button.icon {
+				position: relative;
+			}
+			button.icon.text {
+				padding-right: calc(${22 / 16}rem + ${10 + (4 * 2)}px);
+			}
+			button.icon:not(.text) {
 				min-width: inherit;
-				width: 54px;
-				height: 54px;
+				width: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				height: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
 				padding: 0px;
 				border-radius: 15px;
+			}
+			button.icon::after {
+				content: "";
+				display: block;
+				position: absolute;
+				top: -4px;
+				right: -4px;
+				width: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				height: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				background: center/${20 / 16}rem url("/api/icons/${props.icon}?fill=${DefaultColorScheme.black.replace('#', '')}") no-repeat;
+			}
+			button.icon:not(.text)::after {
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-size: 31px;
+			}
+			button.primary::after, button.positive::after, button.negative::after {
+				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.white.replace('#', '')}");
+			}
+			button.icon:hover::after {
+				filter: invert(100);
+			}
+			button.positive.icon:hover::after {
+				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.positive.replace('#', '')}");
+				filter: none;
+			}
+			button.negative.icon:hover::after {
+				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.negative.replace('#', '')}");
+				filter: none;
 			}
 
 			button.primary:hover, button.positive:hover, button.negative:hover {

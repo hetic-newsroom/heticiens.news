@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Page from '../components/page';
 import Button from '../components/button';
+import Input from '../components/input';
 
 export default () => {
 	return (
-		<Page className="root">
+		<Page>
 			<h1>Welcome!</h1>
 			<h3>To <strong>staging.heticiens.news</strong></h3>
 			<h2>Test zone</h2>
@@ -18,23 +19,34 @@ export default () => {
 				iste. Aut inventore quam voluptatibus molestiae enim aut. Repellat
 				officia numquam architecto.
 			</p>
-			<Link href="/login">
-				<Button primary>
-					<span>Login</span>
-				</Button>
-			</Link>
-			<Button>
-				<span>Button</span>
-			</Button>
-			<Button icon>
-				<span>O</span>
-			</Button>
-			<Button positive>
-				<span>Create</span>
-			</Button>
-			<Button negative>
-				<span>Delete</span>
-			</Button>
+
+			<div className="testZone">
+				<Link href="/login">
+					<Button primary value="Login"/>
+				</Link>
+				<Button value="Button"/>
+				<Button icon="questionMark"/>
+				<Button positive value="Create"/>
+				<Button negative value="Delete"/>
+				<hr/>
+				<Input type="search" placeholder="Search…"/>
+				<Input type="email" placeholder="email@example.com"/>
+				<Input type="password" placeholder="•••••••••••"/>
+				<Button primary icon="chevronRight" value="Submit!"/>
+				<Button positive icon="hash" value="OK"/>
+				<Button icon="questionMark" value="Lorem ipsum dolor sit amet"/>
+			</div>
+
+			<style jsx global>{`
+				.testZone {
+					padding: 15px;
+				}
+
+				.testZone > * {
+					margin: 15px 0;
+				}
+			`}
+			</style>
 		</Page>
 	);
 };
