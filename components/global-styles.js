@@ -29,6 +29,11 @@ export default () => (
 				--color-form-placeholder: var(--color-dark-grey);
 			}
 
+			::-moz-focus-inner {
+				border: none;
+				padding: none;
+			}
+
 			html, body {
 				margin: 0;
 				padding: 0;
