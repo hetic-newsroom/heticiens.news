@@ -1,4 +1,6 @@
-export default props => (
+import * as React from 'react';
+
+export default React.forwardRef((props, ref) => (
 	<button
 		className={
 			(props.icon && 'icon') ||
@@ -6,6 +8,7 @@ export default props => (
 			(props.positive && 'positive') ||
 			(props.negative && 'negative')
 		}
+		ref={ref}
 		type="button"
 		onClick={props.onClick}
 	>
@@ -74,4 +77,4 @@ export default props => (
 		`}
 		</style>
 	</button>
-);
+));
