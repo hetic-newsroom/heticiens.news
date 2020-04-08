@@ -1,6 +1,7 @@
 import Head from './head';
 import Header from './header';
 import GlobalStyles from './global-styles';
+import Footer from './footer';
 
 export default props => (
 	<main id="pageRoot">
@@ -9,11 +10,11 @@ export default props => (
 			<Header/>
 			{props.children}
 		</div>
+		<Footer/>
 		<GlobalStyles/>
 		<style jsx>{`
 			main#pageRoot {
 				width: 100%;
-				display: flex;
 				min-height: 100vh;
 				overflow-x: hidden;
 			}
