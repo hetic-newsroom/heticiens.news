@@ -1,10 +1,12 @@
 import Head from './head';
+import Header from './header';
 import GlobalStyles from './global-styles';
 
 export default props => (
 	<main id="pageRoot">
 		<Head title={props.title} description={props.description}/>
 		<div id="pageWidthContainer">
+			<Header/>
 			{props.children}
 		</div>
 		<GlobalStyles/>
@@ -17,14 +19,16 @@ export default props => (
 			}
 
 			#pageWidthContainer {
-				margin: 0 auto;
 				width: 100%;
-				max-width: 660px;
+				max-width: 1130px;
+				margin: 0 auto;
+				padding: 0 15px;
+				padding-top: calc(${30 / 16}rem + ${6.25 + 12.5}px);
 			}
 
-			@media (max-width: 660px) {
+			@media (min-width: 660px) {
 				#pageWidthContainer {
-					width: calc(100% - 30px);
+					padding-top: calc(${54 + 15}px + 5vmin);
 				}
 			}
 		`}
