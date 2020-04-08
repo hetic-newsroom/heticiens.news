@@ -83,14 +83,14 @@ export default React.forwardRef((props, ref) => (
 			button.primary::after, button.positive::after, button.negative::after {
 				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.white.replace('#', '')}");
 			}
-			button.icon:hover::after {
+			button.icon:hover:not(:focus)::after {
 				filter: invert(100);
 			}
-			button.positive.icon:hover::after {
+			button.positive.icon:hover:not(:focus)::after {
 				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.positive.replace('#', '')}");
 				filter: none;
 			}
-			button.negative.icon:hover::after {
+			button.negative.icon:hover:not(:focus)::after {
 				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.negative.replace('#', '')}");
 				filter: none;
 			}
