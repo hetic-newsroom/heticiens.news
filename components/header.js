@@ -1,12 +1,18 @@
+import NavMenuMobile from './navmenu-mobile';
 import Icon from './icon';
 
 export default () => (
 	<header>
+		{
+			// TODO: newsletter subscription
+		}
 		<div className="email-icon mobile">
 			<Icon name="email" width="100%" height="100%"/>
 		</div>
 		<h2 className="mobile">H|N</h2>
-		<div className="mobile layout-placeholder"/>
+		<div className="mobile navmenu-wrapper">
+			<NavMenuMobile/>
+		</div>
 
 		<h2 className="desktop">HETIC Newsroom</h2>
 
@@ -33,14 +39,10 @@ export default () => (
 					padding: 0 15px;
 				}
 
-				.email-icon {
+				.email-icon, .navmenu-wrapper {
 					cursor: pointer;
 					width: ${30 / 16}rem;
 					height: ${30 / 16}rem;
-				}
-
-				.layout-placeholder {
-					width: ${30 / 16}rem;
 				}
 
 				.desktop {
