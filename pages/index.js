@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import GlobalStyles from '../components/global-styles';
+import Page from '../components/page';
 import Button from '../components/button';
 
 export default () => {
 	return (
-		<div className="root">
+		<Page className="root">
 			<h1>Welcome!</h1>
 			<h3>To <strong>staging.heticiens.news</strong></h3>
 			<h2>Test zone</h2>
@@ -35,16 +35,6 @@ export default () => {
 			<Button negative>
 				<span>Delete</span>
 			</Button>
-
-			<GlobalStyles/>
-			<style jsx>{`
-				.root {
-					height: 100vh;
-					width: 100vw;
-					padding: 30px;
-				}
-			`}
-			</style>
-		</div>
+		</Page>
 	);
 };
