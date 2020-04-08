@@ -2,13 +2,13 @@ import * as React from 'react';
 
 export default React.forwardRef((props, ref) => (
 	<button
+		ref={ref}
 		className={
 			(props.icon && 'icon') ||
 			(props.primary && 'primary') ||
 			(props.positive && 'positive') ||
 			(props.negative && 'negative')
 		}
-		ref={ref}
 		type="button"
 		onClick={props.onClick}
 	>
