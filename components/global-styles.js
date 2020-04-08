@@ -1,10 +1,11 @@
 import Head from 'next/head';
+import DefaultColorScheme from '../lib/colors-default';
 
 export default () => (
 	<>
 		<Head>
 			<meta key="viewport" name="viewport" content="initial-scale=1.0, width=device-width"/>
-			<link key="fonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:wght@300;400;700&display=swap"/>
+			<link key="fonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:wght@300;400;500;700&display=swap"/>
 		</Head>
 		<style jsx global>{`
 			* {
@@ -12,13 +13,13 @@ export default () => (
 			}
 
 			:root {
-				--color-white: #fff;
-				--color-black: #000;
-				--color-dark-grey: #333;
-				--color-light-grey: #f6f6f6;
-				--color-accent: #ff4545;
-				--color-positive: #2deda8;
-				--color-negative: #ff4545;
+				--color-white: ${DefaultColorScheme.white};
+				--color-black: ${DefaultColorScheme.black};
+				--color-dark-grey: ${DefaultColorScheme.darkGrey};
+				--color-light-grey: ${DefaultColorScheme.lightGrey};
+				--color-accent: ${DefaultColorScheme.accent};
+				--color-positive: ${DefaultColorScheme.positive};
+				--color-negative: ${DefaultColorScheme.negative};
 
 				--color-background: var(--color-white);
 				--color-foreground: var(--color-black);
@@ -48,8 +49,8 @@ export default () => (
 				color: var(--color-foreground);
 			}
 
-			h1, h2, h3, h4, h5, h6, span {
-				font-family: "Work Sans";
+			h1, h2, h3, h4, h5, h6, span, input {
+				font-family: "Work Sans", sans-serif;
 				margin: 0;
 				font-weight: 400;
 				color: var(--color-titles);
@@ -81,6 +82,12 @@ export default () => (
 				font-size: ${22 / 16}rem;
 				font-weight: 700;
 				color: inherit;
+				line-height: 1;
+			}
+
+			input {
+				font-size: ${19 / 16}rem;
+				font-weight: 500;
 			}
 
 			a {
