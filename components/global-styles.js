@@ -34,6 +34,11 @@ export default () => (
 				padding: none;
 			}
 
+			::selection {
+				color: var(--color-background);
+				background-color: var(--color-accent);
+			}
+
 			html, body {
 				margin: 0;
 				padding: 0;
