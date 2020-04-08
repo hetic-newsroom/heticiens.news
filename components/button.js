@@ -39,10 +39,10 @@ export default React.forwardRef((props, ref) => (
 				background: var(--fg);
 				color: var(--bg);
 				border-color: var(--fg);
-				box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2);
+				box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 				transform: scale(1.05);
 			}
-			button:active {
+			button:active, button:focus {
 				background: var(--bg);
 				color: var(--fg);
 				transform: scale(1.05);
