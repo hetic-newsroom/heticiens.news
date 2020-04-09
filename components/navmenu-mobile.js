@@ -9,7 +9,7 @@ export default class NavMenuMobile extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			opened: true
+			opened: false
 		};
 
 		this.openOrClose = this.openOrClose.bind(this);
