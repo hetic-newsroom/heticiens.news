@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /api
 Disallow: /contributors
 Disallow: /403
 Disallow: /404
