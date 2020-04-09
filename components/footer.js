@@ -1,101 +1,100 @@
+import Link from 'next/link';
 import Icon from './icon';
+import DefaultColorScheme from '../lib/colors-default';
 
 export default () => (
 	<footer>
-		<div className="main-footer">
-			<div className="container">
-				<div className="row">
-					{/* Column 1 */}
-					<div className="col">
-						<h2>HETIC Newsroom</h2>
-						<p>Un collectif indépendant de l’école <strong>HÉTIC</strong>, la Newsroom vous propose de raconter ensemble la vie des héticiens.</p>
-					</div>
-					<div className="col">
-						<h2 className="follow-us">Suivez-nous :</h2>
-						<div className="icon">
-							<Icon name="twitter" href="#" width="10%" height="10%" fill="#fff"/>
-							<Icon name="facebook" href="#" width="10%" height="10%" fill="#fff"/>
-							<Icon name="linkedIn" href="#" width="10%" height="10%" fill="#fff"/>
-						</div>
-					</div>
-				</div>
-				<p className="copyright">© 2020 HÉTIC Newsroom, tous droits réservés</p>
+		<div className="widthContainer">
+			<div className="description">
+				<h2>HETIC Newsroom</h2>
+				<h4>
+					Un collectif indépendant de l’école <strong>HETIC</strong>, la Newsroom vous propose de raconter ensemble la vie des héticiens.
+				</h4>
+			</div>
+			<div className="links">
+				<h2>Suivez-nous:</h2>
+				{/* TODO: add social links */}
+				<ul>
+					<li>
+						<Link href="#" prefetch="false">
+							<Icon name="twitter" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
+						</Link>
+					</li>
+					<li>
+						<Link href="#" prefetch="false">
+							<Icon name="facebook" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
+						</Link>
+					</li>
+					<li>
+						<Link href="#" prefetch="false">
+							<Icon name="linkedin" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
+						</Link>
+					</li>
+				</ul>
 			</div>
 		</div>
+		<h6>© 2020 HETIC Newsroom, tous droits réservés</h6>
 
 		<style jsx>{`
 			footer {
-				bottom: 0;
-				left: 0;
-				z-index: 100;
-                width: 100%;
-				align-items: center;
-                background: var(--color-black);
-                padding-top: 40px;
+				background: var(--color-black);
+				color: var(--color-white);
+				padding-top: 5vmin;
 			}
 
-            .main-footer{
-                margin: 0 auto;
-                max-width: 1100px;
-                width: 100%;
-                padding-left: 15px;
+			.widthContainer {
+				display: grid;
+				grid-template: "column column2" auto / 50%;
+				width: 100%;
+				max-width: 1100px;
+				margin: 0 auto;
+			}
 
-            }
+			.widthContainer > div {
+				padding: 0 15px;
+			}
 
-            .col p{
-                color:var(--color-white);
-            }
+			.description {
+				grid-area: column;
+			}
 
-            .copyright{
-                margin: 0;
-                color:var(--color-white);
-            }
+			.links {
+				grid-area: column2;
+				text-align: center;
+			}
 
-            .col{
-                display: inline-block;
-                width: 50%;
-            }
-
-            .row{
-                display: flex;
-            }
+			h2, h4, h6 {
+				color: var(--color-white);
+			}
 
 			h2 {
-                line-height: 1;
-                color: var(--color-white)
+				margin-bottom: 15px;
 			}
 
-            .follow-us{
-                text-align: center;
-            }
+			h4 {
+				max-width: 300px;
+			}
 
-            .icon{
-                text-align: center;
-                margin-top: 30px;
-            }
+			h6 {
+				grid-area: copyright;
+				text-align: center;
+				padding-top: 5vmin;
+			}
 
-			@media (max-width: 659px) {
-				.row{
-                    display: flex;
-                    flex-direction: column;
-                }
+			ul {
+				margin: 0;
+				padding: 0;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			}
 
-                .row h2{
-                    text-align: center;
-                }
-
-                .col{
-                    width: 100%;
-                }
-
-				.icon{
-                    margin-bottom: 10px;
-                }
-                
-                .copyright{
-                    text-align: center;
-                    padding-bottom: 10px;
-                }
+			ul li {
+				display: block;
+				margin-right: 15px;
+				cursor: pointer;
+			}
 		`}
 		</style>
 	</footer>
