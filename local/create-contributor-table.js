@@ -1,5 +1,7 @@
+const crypto = require('crypto');
 const AWS = require('aws-sdk');
 const {nanoid} = require('nanoid');
+const scrypt = require('scrypt-js');
 
 AWS.config.update({
 	region: 'eu-west-3',
@@ -9,6 +11,26 @@ AWS.config.update({
 		secretAccessKey: 'random'
 	}
 });
+
+function hash(string) {
+	return new Promise(resolve => {
+		string = Buffer.from(string.normalize('NFKC'), 'utf8');
+		crypto.randomBytes(32, async (error, salt) => {
+			if (error) {
+				throw error;
+			}
+
+			const N = 1024;
+			const r = 8;
+			const p = 1;
+			const dkLen = 32;
+
+			const hash = await scrypt.scrypt(string, salt, N, r, p, dkLen);
+
+			resolve(`${salt.toString('hex')}::${Buffer.from(hash).toString('hex')}`);
+		});
+	});
+}
 
 const dynamodb = new AWS.DynamoDB();
 
@@ -42,7 +64,7 @@ const params = {
 	}
 };
 
-dynamodb.createTable(params, (error, data) => {
+dynamodb.createTable(params, async (error, data) => {
 	if (error) {
 		console.error('Unable to create table. Error:', JSON.stringify(error, null, 2));
 	} else {
@@ -50,13 +72,15 @@ dynamodb.createTable(params, (error, data) => {
 
 		const docClient = new AWS.DynamoDB.DocumentClient();
 
+		const password = await hash('rosebud');
+
 		docClient.put({
 			TableName: 'Contributors',
 			Item: {
 				id: nanoid(),
 				name: 'Tester',
 				email: 'test@heticiens.news',
-				password: 'rosebud',
+				password,
 				tokens: []
 			}
 		}).promise().then(() => {

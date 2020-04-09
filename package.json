@@ -58,7 +58,8 @@
     "nanoid": "^3.0.2",
     "next": "^9.3.4",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "scrypt-js": "^3.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

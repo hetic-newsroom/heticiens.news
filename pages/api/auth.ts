@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {nanoid} from 'nanoid';
+import scrypt from 'scrypt-js';
 import Database from '../../lib/database';
 import {Token, TokenRegex, Contributor, Email, UnhashedPassword} from '../../lib/data-validator';
 
@@ -52,9 +53,25 @@ async function authentify(creds: AuthCredentials): Promise<AuthResponse> {
 		};
 	}
 
-	// TODO: hash password
-	// const hashedPasswd = creds.password;
-	if (user.password !== creds.password) {
+	const salt = Buffer.from(
+		user.password.slice(0, user.password.indexOf('::')),
+		'hex'
+	);
+	const password = Buffer.from(
+		user.password.slice(user.password.indexOf('::') as number + 2),
+		'hex'
+	);
+
+	const suppliedPassword = Buffer.from(creds.password.normalize('NFKC'), 'utf8');
+
+	const N = 1024;
+	const r = 8;
+	const p = 1;
+	const dkLen = 32;
+
+	const suppliedPasswordHash = Buffer.from(await scrypt.scrypt(suppliedPassword, salt, N, r, p, dkLen));
+
+	if (suppliedPasswordHash.toString('hex') !== password.toString('hex')) {
 		return {
 			statusCode: 403,
 			error: 'Wrong password'
