@@ -60,10 +60,10 @@ export default () => (
                 display: flex;
             }
 
-												h2 {
+			h2 {
                 line-height: 1;
                 color: var(--color-white)
-												}
+			}
 
             .follow-us{
                 text-align: center;
@@ -74,8 +74,8 @@ export default () => (
                 margin-top: 30px;
             }
 
-												@media (max-width: 659px) {
-																	.row{
+			@media (max-width: 659px) {
+				.row{
                     display: flex;
                     flex-direction: column;
                 }
@@ -88,7 +88,7 @@ export default () => (
                     width: 100%;
                 }
 
-																.icon{
+				.icon{
                     margin-bottom: 10px;
                 }
                 
