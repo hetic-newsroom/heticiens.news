@@ -21,6 +21,13 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+      - name: Cache Nextjs build
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-nextjs-staging
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Build
