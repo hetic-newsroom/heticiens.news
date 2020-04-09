@@ -9,7 +9,7 @@ export default class NavMenuMobile extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			opened: false
+			opened: true
 		};
 
 		this.openOrClose = this.openOrClose.bind(this);
@@ -130,9 +130,10 @@ export default class NavMenuMobile extends React.Component {
 						position: fixed;
 						top: 0;
 						right: 0;
-						bottom: 0;
 						width: 100vw;
 						max-width: 300px;
+						height: 100vh;
+						overflow-y: auto;
 						padding: 15px;
 						background: var(--color-background);
 						transition: right .4s cubic-bezier(0,0,0,1);
@@ -171,9 +172,8 @@ export default class NavMenuMobile extends React.Component {
 					}
 
 					footer {
-						position: absolute;
-						bottom: 15px;
-						width: calc(100% - 30px);
+						position: sticky;
+						top: calc(100vh - 15px);
 						display: flex;
 						justify-content: space-between;
 					}
