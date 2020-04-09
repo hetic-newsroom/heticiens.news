@@ -13,9 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		article = await db.borrow('Articles', {
 			title
 		}, 'title') as Article;
-	} catch (error) {
+	} catch (_) {
 		res.status(404);
-		res.json(error);
+		res.end();
 		return;
 	}
 

@@ -4,7 +4,7 @@ import DynamoDB from 'aws-sdk/clients/dynamodb';
 import {customAlphabet} from 'nanoid';
 const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
-const tablePrefix = (process.env.NODE_ENV === 'production') ? 'PROD-' : '';
+const tablePrefix = (process.env.stage === 'prod') ? 'PROD-' : '';
 
 type StoreableValue = string | number | boolean | object | any[] | Buffer | DataView | Uint8Array | null;
 
