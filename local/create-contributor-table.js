@@ -81,7 +81,17 @@ dynamodb.createTable(params, async (error, data) => {
 				name: 'Tester',
 				email: 'test@heticiens.news',
 				password,
-				tokens: []
+				tokens: [],
+				moderator: true,
+				sex: 'F',
+				bio: `I'm a test account, hello there!`,
+				picture: 'no-picture',
+				social: {
+					twitter: 'https://twitter.com/jack'
+				},
+				Articles: [
+					'article_id'
+				]
 			}
 		}).promise().then(() => {
 			console.log('Table populated');

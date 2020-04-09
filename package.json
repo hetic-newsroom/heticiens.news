@@ -25,6 +25,9 @@
       "node"
     ],
     "extends": "xo-react",
+    "ignores": [
+      "local/**"
+    ],
     "rules": {
       "react/state-in-constructor": [
         1,

@@ -5,11 +5,22 @@ export interface Token {
 	created: number;
 }
 
+type sex = 'H' | 'F';
+type socialNetwork = 'twitter' | 'facebook' | 'instagram' | 'website' | 'linkedin';
+type socialLinks = Record<socialNetwork, string>;
+
 export interface Contributor {
 	id: string;
 	name: string;
 	email: string;
+	password: string;
 	tokens: Token[];
+	moderator: boolean;
+	sex: sex;
+	bio: string;
+	picture: string; // URL to s3 resource
+	social: socialLinks;
+	articles: string[]; // IDs of corresponding entries in Articles db
 }
 
 export const Name = /^([A-Z][^\d\s]*[a-z]*)( ([A-z][^\d\s]*[a-z]+)+)+$/;
