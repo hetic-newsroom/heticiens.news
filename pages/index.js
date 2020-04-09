@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Page from '../components/page';
 import Button from '../components/button';
 import Input from '../components/input';
+import {VerticalCard, HorizontalCard, ImageLessCard} from '../components/article-card';
 
 export default () => {
 	return (
@@ -35,6 +36,9 @@ export default () => {
 				<Button primary icon="chevronRight" value="Submit!"/>
 				<Button positive icon="hash" value="OK"/>
 				<Button icon="questionMark" value="Lorem ipsum dolor sit amet"/>
+				<VerticalCard/>
+				<HorizontalCard/>
+				<ImageLessCard/>
 			</div>
 
 			<style jsx global>{`
