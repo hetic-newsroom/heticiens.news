@@ -3,6 +3,10 @@ heticiensNews:
   inputs:
     domain: ['staging', 'heticiens.news']
     bucketName: heticiensnewsstaging
+    policy: "arn:aws:iam::733777751746:policy/HN-Nextjs-Lambdas"
     name:
       defaultLambda: heticiensNewsEndpointStaging
       apiLambda: heticiensNewsAPIEndpointStaging
+    build:
+      env:
+        NODE_ENV: "development"
