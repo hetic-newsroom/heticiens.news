@@ -1,6 +1,5 @@
 const crypto = require('crypto');
 const AWS = require('aws-sdk');
-const {nanoid} = require('nanoid');
 
 AWS.config.update({
 	region: 'eu-west-3',
@@ -70,11 +69,11 @@ dynamodb.createTable(params, async (error, data) => {
 		docClient.put({
 			TableName: 'Articles',
 			Item: {
-				id: nanoid(),
-				title: 'This is a test article',
-				date: Date.now(),
+				id: 'test_article1',
+				title: 'Test article',
+				date: Math.floor(Date.now() / 1000),
 				category: 'interviews',
-				author: 'contributor_id',
+				author: 'tester1',
 				visits: 0,
 				readTime: 20000,
 				content: '<p>Lorem ipsum dolor sit amet.</p>'

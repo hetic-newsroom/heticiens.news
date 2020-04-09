@@ -1,6 +1,5 @@
 const crypto = require('crypto');
 const AWS = require('aws-sdk');
-const {nanoid} = require('nanoid');
 const scrypt = require('scrypt-js');
 
 AWS.config.update({
@@ -77,7 +76,7 @@ dynamodb.createTable(params, async (error, data) => {
 		docClient.put({
 			TableName: 'Contributors',
 			Item: {
-				id: nanoid(),
+				id: 'tester1',
 				name: 'Tester',
 				email: 'test@heticiens.news',
 				password,
@@ -90,7 +89,7 @@ dynamodb.createTable(params, async (error, data) => {
 					twitter: 'https://twitter.com/jack'
 				},
 				Articles: [
-					'article_id'
+					'test_article1'
 				]
 			}
 		}).promise().then(() => {
