@@ -1,5 +1,5 @@
 import ErrorPage from '../components/error-page';
 
 export default () => (
-	<ErrorPage code="403"/>
+	<ErrorPage code="404"/>
 );
