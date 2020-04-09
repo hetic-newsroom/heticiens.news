@@ -4,6 +4,8 @@ import DynamoDB from 'aws-sdk/clients/dynamodb';
 import {customAlphabet} from 'nanoid';
 const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
+const tablePrefix = (process.env.NODE_ENV === 'production') ? 'PROD-' : '';
+
 type StoreableValue = string | number | boolean | object | any[] | Buffer | DataView | Uint8Array | null;
 
 type CrudOpResult = Request.PromiseResult<DynamoDB.QueryOutput, AWS.AWSError>;
@@ -48,7 +50,7 @@ export default class Database {
 
 	async read(TableName: string, options: Partial<QueryOptions>): Promise<CrudOpResult> {
 		return this._client.query({
-			TableName,
+			TableName: tablePrefix + TableName,
 			IndexName: options.index || null,
 			KeyConditionExpression: options.filter || null,
 			ExpressionAttributeValues: options.filterValues || null,
@@ -60,7 +62,7 @@ export default class Database {
 
 	async put(TableName: string, Item: Key): Promise<CrudOpResult> {
 		return this._client.put({
-			TableName,
+			TableName: tablePrefix + TableName,
 			Item
 		}).promise();
 	}
@@ -95,7 +97,7 @@ export default class Database {
 					case 'save':
 						return async (): Promise<CrudOpResult> => {
 							return this._client.put({
-								TableName,
+								TableName: tablePrefix + TableName,
 								Item
 							}).promise();
 						};
@@ -104,7 +106,7 @@ export default class Database {
 
 						return async (): Promise<CrudOpResult> => {
 							return this._client.delete({
-								TableName,
+								TableName: tablePrefix + TableName,
 								Key: {
 									id: Item.id
 								}
