@@ -2,6 +2,7 @@ import Head from './head';
 import Header from './header';
 import GlobalStyles from './global-styles';
 import Footer from './footer';
+import {VerticalCard, HorizontalCard, ImageLessCard} from './article-card';
 
 export default props => (
 	<main id="pageRoot">
@@ -10,6 +11,9 @@ export default props => (
 			<Header/>
 			{props.children}
 		</div>
+		<VerticalCard/>
+		<HorizontalCard/>
+		<ImageLessCard/>
 		<Footer/>
 		<GlobalStyles/>
 		<style jsx>{`
