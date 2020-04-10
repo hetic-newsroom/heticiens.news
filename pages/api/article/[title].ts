@@ -9,23 +9,52 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	const db = new Database();
 	let article;
 
-	// TODO: implement specific attributes on db.read, do not fetch author password and article visit count...
-
 	try {
-		article = await db.borrow('Articles', {
+		const res = await db.read('Articles', {
 			title
-		}, 'title') as Article;
-	} catch (_) {
-		res.status(404);
-		res.end();
+		}, {
+			count: 1,
+			index: 'title',
+			attributes: [
+				'date',
+				'title',
+				'intro',
+				'category',
+				'author',
+				'readTime',
+				'content'
+			]
+		});
+		const Items = res.Items as unknown;
+		article = Items[0] as Article;
+		if (typeof article === 'undefined') {
+			throw new TypeError('not found');
+		}
+	} catch (error) {
+		if (error.message === 'not found') {
+			res.status(404);
+			res.end();
+			return;
+		}
+
+		res.status(500);
+		res.json(error);
 		return;
 	}
 
 	let author;
 	try {
-		author = await db.borrow('Contributors', {
+		const res = await db.read('Contributors', {
 			id: article.author
-		}) as Contributor;
+		}, {
+			count: 1,
+			attributes: [
+				'name',
+				'picture'
+			]
+		});
+		const Items = res.Items as unknown;
+		author = Items[0] as Contributor;
 	} catch (_) {
 		res.status(500);
 		res.end('Author not found');

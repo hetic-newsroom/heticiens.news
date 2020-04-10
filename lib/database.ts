@@ -18,8 +18,7 @@ interface Key {
 
 interface QueryOptions {
 	index: string;
-	filter: string;
-	filterValues: Key;
+	attributes: string[];
 	startFrom: Key;
 	count: number;
 	order: order;
@@ -48,12 +47,35 @@ export default class Database {
 		});
 	}
 
-	async read(TableName: string, options: Partial<QueryOptions>): Promise<CrudOpResult> {
+	async read(TableName: string, identifier: Key, options: Partial<QueryOptions>): Promise<CrudOpResult> {
+		const filters = [];
+		const expressionValues = {};
+		Object.keys(identifier).forEach(key => {
+			const id = nanoid();
+			filters.push(`${key} = :${id}`);
+			expressionValues[`:${id}`] = identifier[key];
+		});
+
+		const projectionAttributes = [];
+		const expressionNames = {};
+		if (options.attributes) {
+			options.attributes.forEach(attr => {
+				const id = nanoid();
+				projectionAttributes.push(`#${id}`);
+				expressionNames[`#${id}`] = attr;
+			});
+		}
+
+		const filter = filters.join(' and ');
+		const projection = projectionAttributes.join(', ');
+
 		return this._client.query({
 			TableName: tablePrefix + TableName,
 			IndexName: options.index || null,
-			KeyConditionExpression: options.filter || null,
-			ExpressionAttributeValues: options.filterValues || null,
+			KeyConditionExpression: filter,
+			ExpressionAttributeValues: expressionValues,
+			ProjectionExpression: projection || null,
+			ExpressionAttributeNames: expressionNames,
 			ExclusiveStartKey: options.startFrom || null,
 			Limit: options.count || 20,
 			ScanIndexForward: (options.order === 'descending')
@@ -68,19 +90,7 @@ export default class Database {
 	}
 
 	async borrow(TableName: string, identifier: Key, index?: string): Promise<object> {
-		const filters = [];
-		const filterValues = {};
-		Object.keys(identifier).forEach(key => {
-			const id = nanoid();
-			filters.push(`${key} = :${id}`);
-			filterValues[`:${id}`] = identifier[key];
-		});
-
-		const filter = filters.join(' and ');
-
-		const res = await this.read(TableName, {
-			filter,
-			filterValues,
+		const res = await this.read(TableName, identifier, {
 			count: 1,
 			index
 		});
