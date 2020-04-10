@@ -24,7 +24,7 @@ export default () => (
 						</a>
 					</li>
 					<li>
-						<a target="_blank" href="https://www.linkedin.com/groups/13847585/" rel="noopener noreferrer">
+						<a target="_blank" href="https://www.linkedin.com/company/hetic-newsroom" rel="noopener noreferrer">
 							<Icon name="linkedin" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
 						</a>
 					</li>
