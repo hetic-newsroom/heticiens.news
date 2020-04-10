@@ -25,7 +25,7 @@ export default props => (
 				min-height: 95vh;
 				margin: 0 auto;
 				padding: 0 15px;
-				padding-top: calc(${30 / 16}rem + ${6.25 + 12.5}px);
+				padding-top: calc(${30 / 16}rem + ${6.25 + 12.5 + 15}px);
 			}
 
 			@media (min-width: 660px) {
