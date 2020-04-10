@@ -79,7 +79,7 @@ export default () => (
 			}
 
 			span {
-				font-size: ${22 / 16}rem;
+				font-size: ${20 / 16}rem;
 				font-weight: 700;
 				color: inherit;
 				line-height: 1;

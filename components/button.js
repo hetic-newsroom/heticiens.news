@@ -24,7 +24,7 @@ export default React.forwardRef((props, ref) => (
 				-webkit-appearance: none;
 				outline: none;
 				display: block;
-				min-width: 160px;
+				min-width: 100px;
 				padding: 10px 15px;
 				cursor: pointer;
 
@@ -54,12 +54,12 @@ export default React.forwardRef((props, ref) => (
 				position: relative;
 			}
 			button.icon.text {
-				padding-right: calc(${22 / 16}rem + ${10 + (4 * 2)}px);
+				padding-right: calc(${20 / 16}rem + ${10 + (4 * 2)}px);
 			}
 			button.icon:not(.text) {
 				min-width: inherit;
-				width: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
-				height: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				width: calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				height: calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px);
 				padding: 0px;
 				border-radius: 15px;
 			}
@@ -69,8 +69,8 @@ export default React.forwardRef((props, ref) => (
 				position: absolute;
 				top: -4px;
 				right: -4px;
-				width: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
-				height: calc(${22 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				width: calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				height: calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px);
 				background: center/${20 / 16}rem url("/api/icons/${props.icon}?fill=${DefaultColorScheme.black.replace('#', '')}") no-repeat;
 			}
 			button.icon:not(.text)::after {

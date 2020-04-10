@@ -22,10 +22,6 @@ export default props => (
 				align-items: center;
 				justify-content: center;
 			}
-
-			span {
-				font-size: 1rem;
-			}
 		`}
 		</style>
 		<style jsx>{`
