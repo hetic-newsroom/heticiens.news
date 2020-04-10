@@ -1,34 +1,37 @@
-import Link from 'next/link';
 import Icon from './icon';
 import DefaultColorScheme from '../lib/colors-default';
 
 export default () => (
 	<footer>
 		<div className="widthContainer">
+			<h2>HETIC Newsroom</h2>
 			<div className="description">
-				<h2>HETIC Newsroom</h2>
 				<h4>
 					Un collectif indépendant de l’école <strong>HETIC</strong>, la Newsroom vous propose de raconter ensemble la vie des héticiens.
 				</h4>
 			</div>
 			<div className="links">
-				<h2>Suivez-nous:</h2>
-				{/* TODO: add social links */}
+				<h3>Suivez-nous:</h3>
 				<ul>
 					<li>
-						<Link href="#">
+						<a target="_blank" href="https://twitter.com/hetic_newsroom" rel="noopener noreferrer">
 							<Icon name="twitter" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
-						</Link>
+						</a>
 					</li>
 					<li>
-						<Link href="#">
+						<a target="_blank" href="https://www.facebook.com/HETIC-Newsroom-114058820257237/" rel="noopener noreferrer">
 							<Icon name="facebook" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
-						</Link>
+						</a>
 					</li>
 					<li>
-						<Link href="#">
+						<a target="_blank" href="https://www.linkedin.com/groups/13847585/" rel="noopener noreferrer">
 							<Icon name="linkedin" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
-						</Link>
+						</a>
+					</li>
+					<li>
+						<a target="_blank" href="https://www.instagram.com/hetic_newsroom/?hl=fr" rel="noopener noreferrer">
+							<Icon name="instagram" width="2rem" height="2rem" color={DefaultColorScheme.white}/>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -39,12 +42,13 @@ export default () => (
 			footer {
 				background: var(--color-black);
 				color: var(--color-white);
-				padding-top: 5vmin;
+				padding-top: 15px;
 			}
 
 			.widthContainer {
 				display: grid;
-				grid-template: "column column2" auto / 50%;
+				grid-template: "title title" auto
+									"description links" auto / 50%;
 				width: 100%;
 				max-width: 1100px;
 				margin: 0 auto;
@@ -54,16 +58,21 @@ export default () => (
 				padding: 0 15px;
 			}
 
-			.description {
-				grid-area: column;
+			.widthContainer > h2:first-child {
+				grid-area: title;
+				padding: 0 15px 5vmin;
 			}
 
-			.links {
-				grid-area: column2;
+			.description {
+				grid-area: description;
+			}
+
+			div.links {
+				grid-area: links;
 				text-align: center;
 			}
 
-			h2, h4, h6 {
+			h2, h3, h4, h6 {
 				color: var(--color-white);
 			}
 
@@ -81,18 +90,22 @@ export default () => (
 				padding-top: 5vmin;
 			}
 
+			h3 {
+				font-weight: 500;
+			}
+
 			ul {
 				margin: 0;
 				padding: 0;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				justify-content: center;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 1fr 1fr;
+				justify-items: center;
+				margin-top: 1rem;
 			}
 
 			ul li {
 				display: block;
-				margin-right: 15px;
 				cursor: pointer;
 			}
 		`}
