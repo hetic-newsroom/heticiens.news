@@ -59,6 +59,7 @@
     "classnames": "^2.2.6",
     "dompurify": "^2.0.8",
     "isomorphic-unfetch": "^3.0.0",
+    "jsdom": "^16.2.2",
     "nanoid": "^3.0.2",
     "next": "^9.3.4",
     "react": "^16.13.1",
