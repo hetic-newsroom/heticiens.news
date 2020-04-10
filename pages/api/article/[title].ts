@@ -9,6 +9,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	const db = new Database();
 	let article;
 
+	// TODO: implement specific attributes on db.read, do not fetch author password and article visit count...
+
 	try {
 		article = await db.borrow('Articles', {
 			title
