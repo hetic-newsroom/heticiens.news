@@ -76,6 +76,7 @@ dynamodb.createTable(params, async (error, data) => {
 				author: 'tester1',
 				visits: 0,
 				readTime: 20000,
+				intro: 'Lorem ipsum dolor sit amet. Nectet us mergitur, nectet es. Obitur.',
 				content: '<p>Lorem ipsum dolor sit amet.</p>'
 			}
 		}).promise().then(() => {

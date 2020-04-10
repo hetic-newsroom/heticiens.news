@@ -31,6 +31,7 @@ export interface Article {
 	author: string; // ID of corresponding Contributor
 	visits: number;
 	readTime: number; // Milliseconds
+	intro: string;
 	content: string; // HTML content
 }
 
