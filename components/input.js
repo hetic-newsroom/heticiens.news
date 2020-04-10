@@ -1,9 +1,15 @@
+import classNames from 'classnames';
 import DefaultColorScheme from '../lib/colors-default';
 
 export default props => (
 	<>
-		<label>
-			<input {...props}/>
+		<label className={classNames({slim: (props.slim)})}>
+			<input
+				{...props}
+				className={classNames(
+					{slim: (props.slim)}
+				)}
+			/>
 			<i className="input-icon"/>
 		</label>
 		<style jsx>{`
@@ -66,6 +72,52 @@ export default props => (
 
 			input[type="search"] + .input-icon {
 				background: center/cover url("/api/icons/search?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+			}
+
+			label.slim {
+				width: 170px;
+				position: relative;
+			}
+			label.slim:hover, label.slim:focus-within, label.slim:active {
+				transform: none;
+			}
+			label.slim:focus-within {
+				width: 230px;
+			}
+
+			input.slim {
+				position: relative;
+				top: 4px;
+				left: 0;
+				width: 170px;
+				box-sizing: border-box;
+				overflow: hidden;
+				// font-size: 1.1rem;
+				padding: 0 0 0 calc(4px + ${22 / 16}rem);
+				background: transparent;
+				border-color: transparent;
+			}
+			input.slim:hover, input.slim:active, input.slim:focus {
+				background: var(--color-light-grey);
+				border-color: var(--color-light-grey);
+			}
+
+			input.slim:focus {
+				top: 9px;
+				width: 230px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+
+			input.slim + i.input-icon {
+				top: 8px;
+				left: 4px;
+				width: ${22 / 16}rem;
+				height: ${22 / 16}rem;
+				transition: all .2s ease-out;
+			}
+			input.slim:focus + i.input-icon {
+				top: 18px;
 			}
 		`}
 		</style>
