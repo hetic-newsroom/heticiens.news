@@ -58,10 +58,10 @@ export default React.forwardRef((props, ref) => (
 			}
 			button.icon:not(.text) {
 				min-width: inherit;
-				width: calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px);
-				height: calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px);
+				width: ${(props.size) ? props.size : `calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px)`};
+				height: ${(props.size) ? props.size : `calc(${20 / 16}rem + ${(10 * 2) + (4 * 2)}px)`};
 				padding: 0px;
-				border-radius: 15px;
+				border-radius: ${(props.size) ? `calc(${props.size} * 0.375)` : '15px'};
 			}
 			button.icon::after {
 				content: "";
@@ -78,7 +78,7 @@ export default React.forwardRef((props, ref) => (
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background-size: 31px;
+				background-size: ${(props.size) ? `calc(${props.size} * 0.775)` : '31px'};
 			}
 			button.primary::after, button.positive::after, button.negative::after {
 				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.white.replace('#', '')}");

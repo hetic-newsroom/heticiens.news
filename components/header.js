@@ -1,4 +1,5 @@
-import NavMenuMobile from './navmenu-mobile';
+import Link from 'next/link';
+import NavMenu from './navmenu';
 import Icon from './icon';
 
 export default () => (
@@ -9,12 +10,15 @@ export default () => (
 		<div className="email-icon mobile">
 			<Icon name="email" width="100%" height="100%"/>
 		</div>
-		<h2 className="mobile">H|N</h2>
-		<div className="mobile navmenu-wrapper">
-			<NavMenuMobile/>
-		</div>
+		<Link href="/">
+			<h2 className="mobile">H|N</h2>
+		</Link>
 
 		<h2 className="desktop">HETIC Newsroom</h2>
+
+		<div className="navmenu-wrapper">
+			<NavMenu/>
+		</div>
 
 		<style jsx>{`
 			header {
@@ -31,6 +35,7 @@ export default () => (
 
 			h2 {
 				line-height: 1;
+				cursor: pointer;
 			}
 
 			@media (max-width: 659px) {
@@ -57,13 +62,25 @@ export default () => (
 					max-width: 1100px;
 					height: calc(54px + 5vmin);
 					align-items: flex-end;
-					justify-content: start;
+					justify-content: space-between;
 					padding-bottom: 10px;
 					border-bottom: 1px solid var(--color-dark-grey);
 				}
 
+				.navmenu-wrapper {
+					cursor: pointer;
+					width: ${30 / 16}rem;
+					height: ${30 / 16}rem;
+				}
+
 				.mobile {
 					display: none;
+				}
+			}
+
+			@media (min-width: 900px) {
+				.navmenu-wrapper {
+					width: auto;
 				}
 			}
 
