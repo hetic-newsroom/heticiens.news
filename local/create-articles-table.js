@@ -15,14 +15,15 @@ const dynamodb = new AWS.DynamoDB();
 const params = {
 	TableName: 'Articles',
 	KeySchema: [
-		{AttributeName: 'id', KeyType: 'HASH'},
-		{AttributeName: 'date', KeyType: 'RANGE'}
+		{AttributeName: 'id', KeyType: 'HASH'}
 	],
 	AttributeDefinitions: [
 		{AttributeName: 'id', AttributeType: 'S'},
+		{AttributeName: 'status', AttributeType: 'S'},
 		{AttributeName: 'date', AttributeType: 'N'},
 		{AttributeName: 'title', AttributeType: 'S'},
-		{AttributeName: 'category', AttributeType: 'S'}
+		{AttributeName: 'category', AttributeType: 'S'},
+		{AttributeName: 'author', AttributeType: 'S'}
 	],
 	GlobalSecondaryIndexes: [
 		{
@@ -39,9 +40,38 @@ const params = {
 			}
 		},
 		{
+			IndexName: 'status',
+			KeySchema: [
+				{AttributeName: 'status', KeyType: 'HASH'},
+				{AttributeName: 'date', KeyType: 'RANGE'}
+			],
+			Projection: {
+				ProjectionType: 'ALL'
+			},
+			ProvisionedThroughput: {
+				ReadCapacityUnits: 5,
+				WriteCapacityUnits: 5
+			}
+		},
+		{
 			IndexName: 'category',
 			KeySchema: [
-				{AttributeName: 'category', KeyType: 'HASH'}
+				{AttributeName: 'category', KeyType: 'HASH'},
+				{AttributeName: 'date', KeyType: 'RANGE'}
+			],
+			Projection: {
+				ProjectionType: 'ALL'
+			},
+			ProvisionedThroughput: {
+				ReadCapacityUnits: 5,
+				WriteCapacityUnits: 5
+			}
+		},
+		{
+			IndexName: 'author',
+			KeySchema: [
+				{AttributeName: 'author', KeyType: 'HASH'},
+				{AttributeName: 'date', KeyType: 'RANGE'}
 			],
 			Projection: {
 				ProjectionType: 'ALL'
@@ -66,18 +96,42 @@ dynamodb.createTable(params, async (error, data) => {
 
 		const docClient = new AWS.DynamoDB.DocumentClient();
 
-		docClient.put({
-			TableName: 'Articles',
-			Item: {
-				id: 'test_article1',
-				title: 'Test article',
-				date: Math.floor(Date.now() / 1000),
-				category: 'interviews',
-				author: 'tester1',
-				visits: 0,
-				readTime: 20000,
-				intro: 'Lorem ipsum dolor sit amet. Nectet us mergitur, nectet es. Obitur.',
-				content: '<p>Lorem ipsum dolor sit amet.</p>'
+		docClient.batchWrite({
+			RequestItems: {
+				'Articles': [
+					{
+						PutRequest: {
+							Item: {
+								id: 'test_article1',
+								title: 'Test article',
+								date: Math.floor(Date.now() / 1000),
+								category: 'interviews',
+								author: 'tester1',
+								visits: 0,
+								readTime: 20000,
+								intro: 'Lorem ipsum dolor sit amet. Nectet us mergitur, nectet es. Obitur.',
+								content: '<p>Lorem ipsum dolor sit amet.</p>',
+								status: 'published'
+							}
+						}
+					},
+					{
+						PutRequest: {
+							Item: {
+								id: 'test_article2',
+								title: 'Sean Connery et la vodka',
+								date: Math.floor(Date.now() / 1000) + 5,
+								category: 'portraits',
+								author: 'tester2',
+								visits: 8,
+								readTime: 120000,
+								intro: 'Depuis plusieurs années, l\'acteur esquive les attaques de Raspoutine, à qui il a volé un litre de Poliakof. Portrait d\'un homme retranché.',
+								content: '<p>Lorem ipsum dolor sit amet.</p><img src="https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920"/><i>Description de cette magnifique image.</i><p>Et oui, cet article continue!</p><h2>Deuxième section</h2><p>Incroyable, non? Lorem ipsum dolor est.</p>',
+								status: 'published'
+							}
+						}
+					}
+				]
 			}
 		}).promise().then(() => {
 			console.log('Table populated');

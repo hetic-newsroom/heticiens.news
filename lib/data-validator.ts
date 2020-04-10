@@ -8,6 +8,7 @@ export interface Token {
 type sex = 'H' | 'F';
 type socialNetwork = 'twitter' | 'facebook' | 'instagram' | 'website' | 'linkedin';
 type socialLinks = Record<socialNetwork, string>;
+type booleanNumber = 0 | 1;
 
 export interface Contributor {
 	id: string;
@@ -15,13 +16,15 @@ export interface Contributor {
 	email: string;
 	password: string;
 	tokens: Token[];
-	moderator: boolean;
+	moderator: booleanNumber;
 	sex: sex;
 	bio: string;
 	picture: string; // URL to s3 resource
 	social: socialLinks;
 	articles: string[]; // IDs of corresponding entries in Articles db
 }
+
+type articleStatus = 'published' | 'waiting' | 'refused' | 'draft';
 
 export interface Article {
 	id: string;
@@ -33,6 +36,16 @@ export interface Article {
 	readTime: number; // Milliseconds
 	intro: string;
 	content: string; // HTML content
+	status: articleStatus;
+}
+
+type newsletterRegistrantStatus = 'unconfirmed' | 'confirmed';
+
+export interface NewsletterRegistration {
+	id: string;
+	email: string;
+	status: newsletterRegistrantStatus;
+	validationToken: string;
 }
 
 export const Name = /^([A-Z][^\d\s]*[a-z]*)( ([A-z][^\d\s]*[a-z]+)+)+$/;

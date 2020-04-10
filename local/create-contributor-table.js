@@ -40,13 +40,27 @@ const params = {
 	],
 	AttributeDefinitions: [
 		{AttributeName: 'id', AttributeType: 'S'},
-		{AttributeName: 'email', AttributeType: 'S'}
+		{AttributeName: 'email', AttributeType: 'S'},
+		{AttributeName: 'moderator', AttributeType: 'N'}
 	],
 	GlobalSecondaryIndexes: [
 		{
 			IndexName: 'email',
 			KeySchema: [
 				{AttributeName: 'email', KeyType: 'HASH'}
+			],
+			Projection: {
+				ProjectionType: 'ALL'
+			},
+			ProvisionedThroughput: {
+				ReadCapacityUnits: 5,
+				WriteCapacityUnits: 5
+			}
+		},
+		{
+			IndexName: 'moderator',
+			KeySchema: [
+				{AttributeName: 'moderator', KeyType: 'HASH'}
 			],
 			Projection: {
 				ProjectionType: 'ALL'
@@ -73,23 +87,52 @@ dynamodb.createTable(params, async (error, data) => {
 
 		const password = await hash('rosebud');
 
-		docClient.put({
-			TableName: 'Contributors',
-			Item: {
-				id: 'tester1',
-				name: 'Tester',
-				email: 'test@heticiens.news',
-				password,
-				tokens: [],
-				moderator: true,
-				sex: 'F',
-				bio: `I'm a test account, hello there!`,
-				picture: 'no-picture',
-				social: {
-					twitter: 'https://twitter.com/jack'
-				},
-				Articles: [
-					'test_article1'
+		docClient.batchWrite({
+			RequestItems: {
+				'Contributors': [
+					{
+						PutRequest: {
+							Item: {
+								id: 'tester1',
+								name: 'Tester',
+								email: 'test@heticiens.news',
+								password,
+								tokens: [],
+								moderator: 1,
+								sex: 'F',
+								bio: `I'm a test account, hello there!`,
+								picture: 'no-picture',
+								social: {
+									twitter: 'https://twitter.com/jack'
+								},
+								Articles: [
+									'test_article1'
+								]
+							}
+						}
+					},
+					{
+						PutRequest: {
+							Item: {
+								id: 'tester2',
+								name: 'Jean-Michel Tester',
+								email: 'testi@heticiens.news',
+								password,
+								tokens: [],
+								moderator: 0,
+								sex: 'H',
+								bio: `Je suis un compte de test, salut!`,
+								picture: 'no-picture',
+								social: {
+									twitter: 'https://twitter.com/jack',
+									linkedin: 'https://linkedin.com'
+								},
+								Articles: [
+									'test_article2'
+								]
+							}
+						}
+					}
 				]
 			}
 		}).promise().then(() => {

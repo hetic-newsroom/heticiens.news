@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	let article;
 
 	try {
-		const res = await db.read('Articles', {
+		const res = await db.query('Articles', {
 			title
 		}, {
 			count: 1,
@@ -44,7 +44,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 	let author;
 	try {
-		const res = await db.read('Contributors', {
+		const res = await db.query('Contributors', {
 			id: article.author
 		}, {
 			count: 1,
