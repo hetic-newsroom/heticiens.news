@@ -60,11 +60,14 @@ export default () => (
 
 			.widthContainer > h2:first-child {
 				grid-area: title;
+				max-width: 50%;
 				padding: 0 15px 5vmin;
+				margin-bottom: 0;
 			}
 
 			.description {
 				grid-area: description;
+				margin-top: 15px;
 			}
 
 			div.links {
@@ -80,10 +83,6 @@ export default () => (
 				margin-bottom: 15px;
 			}
 
-			h4 {
-				max-width: 300px;
-			}
-
 			h6 {
 				grid-area: copyright;
 				text-align: center;
@@ -95,13 +94,22 @@ export default () => (
 			}
 
 			ul {
-				margin: 0;
+				margin: 0 auto;
 				padding: 0;
 				display: grid;
 				grid-template-columns: 1fr 1fr;
 				grid-template-rows: 1fr 1fr;
 				justify-items: center;
 				margin-top: 1rem;
+				max-width: 10rem;
+			}
+
+			@media (min-width: 660px) {
+				ul {
+					grid-template-columns: repeat(4, 1fr);
+					grid-template-rows: 1fr;
+					grid-gap: 15px;
+				}
 			}
 
 			ul li {
