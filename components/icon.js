@@ -20,6 +20,10 @@ export default class Icon extends React.Component {
 		color = color.replace('#', '');
 
 		window.fetch(`/api/icons/${this.props.name}?fill=${color}`).then(async res => {
+			if (this.unmounted) {
+				return false;
+			}
+
 			if (!res.ok) {
 				throw new Error(`Network response: ${res.status} ${res.statusText}`);
 			}
@@ -33,6 +37,10 @@ export default class Icon extends React.Component {
 		}).catch(error => {
 			console.warn('could not load icon', this.props.name, error);
 		});
+	}
+
+	componentWillUnmount() {
+		this.unmounted = true;
 	}
 
 	render() {
