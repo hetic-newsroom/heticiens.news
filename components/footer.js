@@ -16,17 +16,17 @@ export default () => (
 				{/* TODO: add social links */}
 				<ul>
 					<li>
-						<Link href="#" prefetch="false">
+						<Link href="#">
 							<Icon name="twitter" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
 						</Link>
 					</li>
 					<li>
-						<Link href="#" prefetch="false">
+						<Link href="#">
 							<Icon name="facebook" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
 						</Link>
 					</li>
 					<li>
-						<Link href="#" prefetch="false">
+						<Link href="#">
 							<Icon name="linkedin" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
 						</Link>
 					</li>
