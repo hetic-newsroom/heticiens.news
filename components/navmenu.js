@@ -93,7 +93,7 @@ export default class NavMenu extends React.Component {
 					{/* TODO: Link to search page on enter */}
 					<Input slim type="search" placeholder="Rechercher…"/>
 					<div className="buttons">
-						<Button icon="hash" size="30px"/>
+						<Button icon="night" size="30px"/>
 						<Link href="/login">
 							<Button icon="person" size="30px"/>
 						</Link>
@@ -147,7 +147,7 @@ export default class NavMenu extends React.Component {
 							top: 100%;
 							right: 0;
 							padding: 0;
-							background: var(--color-white);
+							background: var(--color-background);
 							border-right: 2px solid var(--color-black);
 							transition: height .2s ease-out, padding 0s .2s linear;
 						}
@@ -237,7 +237,7 @@ export default class NavMenu extends React.Component {
 						</li>
 					</ul>
 					<footer>
-						<Button icon="hash"/>
+						<Button icon="night"/>
 						<Link href="/login">
 							<Button icon="person"/>
 						</Link>
