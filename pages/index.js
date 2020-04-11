@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Page from '../components/page';
 import Button from '../components/button';
 import Input from '../components/input';
-import {VerticalCard, HorizontalCard, ImageLessCard} from '../components/article-card';
+import ArticleCard from '../components/article-card';
 
 export default () => {
 	return (
@@ -36,9 +36,9 @@ export default () => {
 				<Button primary icon="chevronRight" value="Submit!"/>
 				<Button positive icon="hash" value="OK"/>
 				<Button icon="questionMark" value="Lorem ipsum dolor sit amet"/>
-				<VerticalCard/>
-				<HorizontalCard/>
-				<ImageLessCard/>
+				<hr/>
+				<ArticleCard title="Titre de l’article, qui se trouve être très long, c’est con!" category="Portraits" author="Johnny Mnemonic" image="https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920"/>
+				<ArticleCard title="Titre de l’article" category="Interviews" author="Bill" image="https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920"/>
 			</div>
 
 			<style jsx global>{`
