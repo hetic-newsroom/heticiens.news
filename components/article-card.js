@@ -36,6 +36,7 @@ export default props => (
 				grid-area: category;
 				font-weight: 400;
 				${(props.title.length > 25) ? 'margin-top: 15px;' : ''}
+				text-transform: capitalize;
 			}
 
 			h2 {

@@ -18,6 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			attributes: [
 				'date',
 				'title',
+				'image',
 				'intro',
 				'category',
 				'author',

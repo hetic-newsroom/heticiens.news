@@ -31,7 +31,7 @@ export interface Article {
 	title: string;
 	date: number; // UNIX timestamp
 	category: string;
-	author: string; // ID of corresponding Contributor
+	author: string | Partial<Contributor>; // ID of corresponding Contributor
 	visits: number;
 	readTime: number; // Milliseconds
 	image: string; // URL

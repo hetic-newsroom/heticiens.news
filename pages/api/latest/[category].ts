@@ -1,6 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import Database from '../../../lib/database';
-import {Article} from '../../../lib/data-validator';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 	const category = req.query.category as string;
@@ -18,6 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			attributes: [
 				'date',
 				'title',
+				'image',
 				'intro',
 				'category',
 				'author'
@@ -43,7 +43,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	}
 
 	try {
-		articles.forEach(async (article: Article) => {
+		for (const article of articles) {
+			/* eslint-disable-next-line no-await-in-loop */
 			const res = await db.query('Contributors', {
 				id: article.author
 			}, {
@@ -51,12 +52,10 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				attributes: [
 					'name'
 				]
-			}).catch(error => {
-				throw error;
 			});
 			const Items = res.Items as unknown;
 			article.author = Items[0];
-		});
+		}
 	} catch (_) {
 		res.status(500);
 		res.end('Author not found');
@@ -65,5 +64,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 	res.status(200);
 	res.setHeader('Cache-control', 'public, max-age=43200, must-revalidate');
-	res.json({articles});
+	res.json({
+		category,
+		articles
+	});
 };
