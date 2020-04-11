@@ -7,7 +7,7 @@ export default tprops => {
 
 	return (
 		<>
-			<label className={classNames({slim: (props.slim)})}>
+			<label className={classNames({slim: (tprops.slim)})}>
 				<input
 					className={classNames(
 						{slim: (tprops.slim)}
@@ -90,8 +90,8 @@ export default tprops => {
 				}
 
 				input.slim {
-					position: relative;
-					top: 4px;
+					position: absolute;
+					bottom: -4px;
 					left: 0;
 					width: 170px;
 					box-sizing: border-box;
@@ -107,21 +107,19 @@ export default tprops => {
 				}
 
 				input.slim:focus {
-					top: 9px;
+					bottom: -8px;
 					width: 230px;
 					padding-top: 5px;
 					padding-bottom: 5px;
 				}
 
 				input.slim + i.input-icon {
-					top: 8px;
+					top: unset;
+					bottom: 0px;
 					left: 4px;
 					width: ${22 / 16}rem;
 					height: ${22 / 16}rem;
 					transition: all .2s ease-out;
-				}
-				input.slim:focus + i.input-icon {
-					top: 18px;
 				}
 			`}
 			</style>
