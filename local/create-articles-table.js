@@ -109,6 +109,7 @@ dynamodb.createTable(params, async (error, data) => {
 								author: 'tester1',
 								visits: 0,
 								readTime: 20000,
+								image: 'https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920',
 								intro: 'Lorem ipsum dolor sit amet. Nectet us mergitur, nectet es. Obitur.',
 								content: '<p>Lorem ipsum dolor sit amet.</p>',
 								status: 'published'
@@ -125,6 +126,7 @@ dynamodb.createTable(params, async (error, data) => {
 								author: 'tester2',
 								visits: 8,
 								readTime: 120000,
+								image: 'https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920',
 								intro: 'Depuis plusieurs années, l\'acteur esquive les attaques de Raspoutine, à qui il a volé un litre de Poliakof. Portrait d\'un homme retranché.',
 								content: '<p>Lorem ipsum dolor sit amet.</p><img src="https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920"/><i>Description de cette magnifique image.</i><p>Et oui, cet article continue!</p><h2>Deuxième section</h2><p>Incroyable, non? Lorem ipsum dolor est.</p>',
 								status: 'published'
