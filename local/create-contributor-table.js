@@ -105,7 +105,7 @@ dynamodb.createTable(params, async (error, data) => {
 								social: {
 									twitter: 'https://twitter.com/jack'
 								},
-								Articles: [
+								articles: [
 									'test_article1'
 								]
 							}
@@ -127,7 +127,7 @@ dynamodb.createTable(params, async (error, data) => {
 									twitter: 'https://twitter.com/jack',
 									linkedin: 'https://linkedin.com'
 								},
-								Articles: [
+								articles: [
 									'test_article2'
 								]
 							}
