@@ -21,7 +21,6 @@ export default class NavMenu extends React.Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.onWindowResize);
 		this.onWindowResize();
-		// TODO: swipe handler?
 	}
 
 	componentWillUnmount() {
@@ -45,46 +44,51 @@ export default class NavMenu extends React.Component {
 	}
 
 	render() {
+		let url = '/';
+		if (typeof window !== 'undefined') {
+			url = window.location.pathname;
+		}
+
 		if (this.state.desktop) {
 			return (
 				<nav>
 					<ul>
-						<li className="active">
-							<Link href="#">
+						<li className={classNames({active: (url === '/')})}>
+							<Link href="/">
 								<span>À la une</span>
 							</Link>
 						</li>
 						<li className="dropdown">
 							<span>Catégories</span>
 							<ul>
-								<li>
+								<li className={classNames({active: (url === '/')})}>
 									<Link href="#">
 										<span>Interviews</span>
 									</Link>
 								</li>
-								<li>
+								<li className={classNames({active: (url === '/')})}>
 									<Link href="#">
 										<span>Reportages</span>
 									</Link>
 								</li>
-								<li>
+								<li className={classNames({active: (url === '/')})}>
 									<Link href="#">
 										<span>Enquêtes</span>
 									</Link>
 								</li>
-								<li>
+								<li className={classNames({active: (url === '/')})}>
 									<Link href="#">
 										<span>Opinions</span>
 									</Link>
 								</li>
-								<li>
+								<li className={classNames({active: (url === '/')})}>
 									<Link href="#">
 										<span>Portraits</span>
 									</Link>
 								</li>
 							</ul>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/about')})}>
 							<Link href="#">
 								<span>À propos</span>
 							</Link>
@@ -93,7 +97,7 @@ export default class NavMenu extends React.Component {
 					{/* TODO: Link to search page on enter */}
 					<Input slim type="search" placeholder="Rechercher…"/>
 					<div className="buttons">
-						<Button icon="night" size="30px"/>
+						<Button icon="email" size="30px"/>
 						<Link href="/login">
 							<Button icon="person" size="30px"/>
 						</Link>
@@ -200,44 +204,44 @@ export default class NavMenu extends React.Component {
 					</header>
 					<Input type="search" placeholder="Rechercher…"/>
 					<ul>
-						<li className="active">
+						<li className={classNames({active: (url === '/')})}>
 							<Link href="#">
 								<h2>À la une</h2>
 							</Link>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/')})}>
 							<Link href="#">
 								<h2>Interviews</h2>
 							</Link>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/')})}>
 							<Link href="#">
 								<h2>Reportages</h2>
 							</Link>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/')})}>
 							<Link href="#">
 								<h2>Enquêtes</h2>
 							</Link>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/')})}>
 							<Link href="#">
 								<h2>Opinions</h2>
 							</Link>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/')})}>
 							<Link href="#">
 								<h2>Portraits</h2>
 							</Link>
 						</li>
-						<li>
+						<li className={classNames({active: (url === '/about')})}>
 							<Link href="#">
 								<h2>À propos</h2>
 							</Link>
 						</li>
 					</ul>
 					<footer>
-						<Button icon="night"/>
+						<Button icon="email"/>
 						<Link href="/login">
 							<Button icon="person"/>
 						</Link>
