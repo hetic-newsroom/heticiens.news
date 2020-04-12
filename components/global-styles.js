@@ -122,6 +122,8 @@ export default () => (
 				display: block;
 				font-family: Lora, serif;
 				text-align: center;
+				font-size: ${18 / 16}rem;
+				color: var(--color-p);
 			}
 		`}
 		</style>
