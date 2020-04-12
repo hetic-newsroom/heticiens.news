@@ -21,12 +21,14 @@ export default props => {
 	props.articles.forEach(article => {
 		cards.push(
 			<Link href={titleToUrl(article.title)}>
-				<ArticleCard
-					title={article.title}
-					category={article.category}
-					author={article.author.name}
-					image={article.image}
-				/>
+				<a>
+					<ArticleCard
+						title={article.title}
+						category={article.category}
+						author={article.author.name}
+						image={article.image}
+					/>
+				</a>
 			</Link>
 		);
 	});
