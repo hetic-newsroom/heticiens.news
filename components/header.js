@@ -77,7 +77,7 @@ export default () => (
 					top: 0;
 					left: 0;
 					right: 0;
-					height: calc(54px + 5vmin);
+					height: calc(53px + 5vmin);
 					background: var(--color-background);
 				}
 
