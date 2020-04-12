@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import getProps from '../../lib/get-props';
@@ -148,6 +149,22 @@ export default props => {
 	);
 };
 
-export function getServerSideProps(ctx) {
-	return getProps(ctx, `/article/${ctx.params.title}`);
+export async function getServerSideProps(ctx) {
+	const {props, host} = await getProps(ctx, `/article/${ctx.params.title}`);
+
+	if (props.error) {
+		if (ctx.res) {
+			ctx.res.writeHead(302, {
+				Location: `${host}/404`,
+				'Content-Type': 'text/html; charset=utf-8'
+			});
+			ctx.res.end();
+			return;
+		}
+
+		Router.replace('/404');
+		return;
+	}
+
+	return {props};
 }

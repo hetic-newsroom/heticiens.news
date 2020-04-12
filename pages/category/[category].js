@@ -31,11 +31,14 @@ export default props => {
 		);
 	});
 
+	const notFoundMessage = (cards.length === 0) ? <h3>Aucun article n&apos;a été trouvé.</h3> : null;
+
 	return (
 		<Page title={`${category} - H|N`}>
 			<h1>{category}</h1>
 
 			{cards}
+			{notFoundMessage}
 			<style jsx>{`
 				h1 {
 					margin-bottom: 15px;
@@ -46,6 +49,7 @@ export default props => {
 	);
 };
 
-export function getServerSideProps(ctx) {
-	return getProps(ctx, `/latest/${ctx.params.category}`);
+export async function getServerSideProps(ctx) {
+	const {props} = await getProps(ctx, `/latest/${ctx.params.category}`);
+	return {props};
 }

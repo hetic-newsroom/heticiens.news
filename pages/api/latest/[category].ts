@@ -32,8 +32,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		}
 	} catch (error) {
 		if (error.message === 'not found') {
-			res.status(404);
-			res.end();
+			res.status(200);
+			res.json({
+				category,
+				articles: []
+			});
 			return;
 		}
 
