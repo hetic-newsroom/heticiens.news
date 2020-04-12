@@ -14,7 +14,9 @@ export default () => (
 			<h2 className="mobile">H|N</h2>
 		</Link>
 
-		<h2 className="desktop">HETIC Newsroom</h2>
+		<Link href="/">
+			<h2 className="desktop">HETIC Newsroom</h2>
+		</Link>
 
 		<div className="navmenu-wrapper">
 			<NavMenu/>

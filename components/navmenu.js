@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 import classNames from 'classnames';
 import DefaultColorScheme from '../lib/colors-default';
 import Icon from './icon';
@@ -11,7 +12,8 @@ export default class NavMenu extends React.Component {
 		super(props);
 		this.state = {
 			opened: false,
-			desktop: false
+			desktop: false,
+			url: '/'
 		};
 
 		this.openOrClose = this.openOrClose.bind(this);
@@ -21,6 +23,9 @@ export default class NavMenu extends React.Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.onWindowResize);
 		this.onWindowResize();
+		this.setState({
+			url: Router.router.asPath
+		});
 	}
 
 	componentWillUnmount() {
@@ -44,53 +49,48 @@ export default class NavMenu extends React.Component {
 	}
 
 	render() {
-		let url = '/';
-		if (typeof window !== 'undefined') {
-			url = window.location.pathname;
-		}
-
 		if (this.state.desktop) {
 			return (
 				<nav>
 					<ul>
-						<li className={classNames({active: (url === '/')})}>
+						<li className={classNames({active: (this.state.url === '/')})}>
 							<Link href="/">
-								<span>À la une</span>
+								<a><span>À la une</span></a>
 							</Link>
 						</li>
 						<li className="dropdown">
 							<span>Catégories</span>
 							<ul>
-								<li className={classNames({active: (url === '/')})}>
-									<Link href="#">
-										<span>Interviews</span>
+								<li className={classNames({active: (this.state.url === '/category/interviews')})}>
+									<Link href="/category/interviews">
+										<a><span>Interviews</span></a>
 									</Link>
 								</li>
-								<li className={classNames({active: (url === '/')})}>
-									<Link href="#">
-										<span>Reportages</span>
+								<li className={classNames({active: (this.state.url === '/category/reportages')})}>
+									<Link href="/category/reportages">
+										<a><span>Reportages</span></a>
 									</Link>
 								</li>
-								<li className={classNames({active: (url === '/')})}>
-									<Link href="#">
-										<span>Enquêtes</span>
+								<li className={classNames({active: (this.state.url === '/category/enquêtes')})}>
+									<Link href="/category/enquêtes">
+										<a><span>Enquêtes</span></a>
 									</Link>
 								</li>
-								<li className={classNames({active: (url === '/')})}>
-									<Link href="#">
-										<span>Opinions</span>
+								<li className={classNames({active: (this.state.url === '/category/opinions')})}>
+									<Link href="/category/opinions">
+										<a><span>Opinions</span></a>
 									</Link>
 								</li>
-								<li className={classNames({active: (url === '/')})}>
-									<Link href="#">
-										<span>Portraits</span>
+								<li className={classNames({active: (this.state.url === '/category/portraits')})}>
+									<Link href="/category/portraits">
+										<a><span>Portraits</span></a>
 									</Link>
 								</li>
 							</ul>
 						</li>
-						<li className={classNames({active: (url === '/about')})}>
-							<Link href="#">
-								<span>À propos</span>
+						<li className={classNames({active: (this.state.url === '/about')})}>
+							<Link href="/about">
+								<a><span>À propos</span></a>
 							</Link>
 						</li>
 					</ul>
@@ -204,39 +204,39 @@ export default class NavMenu extends React.Component {
 					</header>
 					<Input type="search" placeholder="Rechercher…"/>
 					<ul>
-						<li className={classNames({active: (url === '/')})}>
-							<Link href="#">
-								<h2>À la une</h2>
+						<li className={classNames({active: (this.state.url === '/')})}>
+							<Link href="/">
+								<a><h2>À la une</h2></a>
 							</Link>
 						</li>
-						<li className={classNames({active: (url === '/')})}>
-							<Link href="#">
-								<h2>Interviews</h2>
+						<li className={classNames({active: (this.state.url === '/category/interviews')})}>
+							<Link href="/category/interviews">
+								<a><h2>Interviews</h2></a>
 							</Link>
 						</li>
-						<li className={classNames({active: (url === '/')})}>
-							<Link href="#">
-								<h2>Reportages</h2>
+						<li className={classNames({active: (this.state.url === '/category/reportages')})}>
+							<Link href="/category/reportages">
+								<a><h2>Reportages</h2></a>
 							</Link>
 						</li>
-						<li className={classNames({active: (url === '/')})}>
-							<Link href="#">
-								<h2>Enquêtes</h2>
+						<li className={classNames({active: (this.state.url === '/category/enquêtes')})}>
+							<Link href="/category/enquêtes">
+								<a><h2>Enquêtes</h2></a>
 							</Link>
 						</li>
-						<li className={classNames({active: (url === '/')})}>
-							<Link href="#">
-								<h2>Opinions</h2>
+						<li className={classNames({active: (this.state.url === '/category/opinions')})}>
+							<Link href="/category/opinions">
+								<a><h2>Opinions</h2></a>
 							</Link>
 						</li>
-						<li className={classNames({active: (url === '/')})}>
-							<Link href="#">
-								<h2>Portraits</h2>
+						<li className={classNames({active: (this.state.url === '/category/portraits')})}>
+							<Link href="/category/portraits">
+								<a><h2>Portraits</h2></a>
 							</Link>
 						</li>
-						<li className={classNames({active: (url === '/about')})}>
-							<Link href="#">
-								<h2>À propos</h2>
+						<li className={classNames({active: (this.state.url === '/about')})}>
+							<Link href="/about">
+								<a><h2>À propos</h2></a>
 							</Link>
 						</li>
 					</ul>
