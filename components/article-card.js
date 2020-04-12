@@ -23,6 +23,12 @@ export default props => (
 									`};
 				grid-column-gap: 15px;
 				grid-${(props.title.length > 25) ? 'column' : 'row'}-gap: 0;
+				transform: scale(1);
+				transition: transform .2s ease-out;
+			}
+
+			div.articleCard:hover, div.articleCard:active {
+				transform: scale(1.05);
 			}
 
 			@media (min-width: 660px) {
