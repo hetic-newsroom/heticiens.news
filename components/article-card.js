@@ -25,6 +25,21 @@ export default props => (
 				grid-${(props.title.length > 25) ? 'column' : 'row'}-gap: 0;
 			}
 
+			@media (min-width: 660px) {
+				div.articleCard {
+					grid-template: "img" 9rem
+										"category" auto
+										"title" auto
+										"author" auto / auto;
+					padding: 15px 0;
+					border-bottom: 2px solid var(--color-light-grey);
+				}
+
+				h3 {
+					margin-top: 15px;
+				}
+			}
+
 			.imgContainer {
 				grid-area: img;
 				height: 100%;

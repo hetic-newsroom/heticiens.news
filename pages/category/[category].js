@@ -37,11 +37,19 @@ export default props => {
 
 	return (
 		<Page title={`${category} - H|N`}>
-			<h1>{category}</h1>
+			<article>
+				<h1>{category}</h1>
 
-			{cards}
-			{notFoundMessage}
+				{cards}
+				{notFoundMessage}
+			</article>
+
 			<style jsx>{`
+				article {
+					max-width: 660px;
+					margin: 0 auto;
+				}
+
 				h1 {
 					margin-bottom: 15px;
 				}
