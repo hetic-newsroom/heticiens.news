@@ -121,7 +121,7 @@ export default class NavMenu extends React.Component {
 							transition: all .15s ease-out;
 						}
 
-						ul li.active span, ul li:hover > span {
+						ul li.active span, ul li:hover > a > span {
 							color: var(--color-accent);
 						}
 
