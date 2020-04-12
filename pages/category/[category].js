@@ -1,6 +1,11 @@
+import Link from 'next/link';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
+
+function titleToUrl(title) {
+	return `/articles/${title.replace(/ /g, '-')}`;
+}
 
 export default props => {
 	if (!props) {
@@ -15,12 +20,14 @@ export default props => {
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<ArticleCard
-				title={article.title}
-				category={article.category}
-				author={article.author.name}
-				image={article.image}
-			/>
+			<Link href={titleToUrl(article.title)}>
+				<ArticleCard
+					title={article.title}
+					category={article.category}
+					author={article.author.name}
+					image={article.image}
+				/>
+			</Link>
 		);
 	});
 

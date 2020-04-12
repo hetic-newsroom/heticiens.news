@@ -79,7 +79,7 @@ export default props => {
 				}}
 			/>
 			<div className="eol">
-				<Link href={`/auteur/${authorNameToURL(props.author.name)}`}>
+				<Link href={`/author/${authorNameToURL(props.author.name)}`}>
 					<div className="author">
 						<img src={(props.author.picture === 'no-picture') ? '/api/icons/person' : props.picture} alt={props.author.name}/>
 						<h3>Écrit par</h3>
