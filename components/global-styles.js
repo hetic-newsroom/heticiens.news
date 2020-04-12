@@ -109,6 +109,19 @@ export default () => (
 				font-size: ${18 / 16}rem;
 				line-height: 1.56;
 				color: var(--color-p);
+				max-width: 660px;
+			}
+
+			div.articleHtmlContainer img {
+				width: calc(100% + 30px);
+				position: relative;
+				left: -15px;
+			}
+
+			div.articleHtmlContainer img + i {
+				display: block;
+				font-family: Lora, serif;
+				text-align: center;
 			}
 		`}
 		</style>

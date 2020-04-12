@@ -69,6 +69,19 @@ export default () => (
 					border-bottom: 1px solid var(--color-dark-grey);
 				}
 
+				header::before {
+					content: "";
+					display: block;
+					z-index: -1;
+					position: fixed;
+					top: 0;
+					left: 0;
+					right: 0;
+					height: calc(54px + 5vmin);
+					background: var(--color-background);
+				}
+
+
 				.navmenu-wrapper {
 					cursor: pointer;
 					width: ${30 / 16}rem;
@@ -89,8 +102,7 @@ export default () => (
 			@media (min-width: 1100px) {
 				header {
 					left: calc(50% - ${1100 / 2}px);
-				}
-			}
+				}			}
 		`}
 		</style>
 	</header>
