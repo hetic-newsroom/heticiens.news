@@ -115,6 +115,8 @@ export default props => {
 
 				header img {
 					grid-area: pic;
+					width: 5.5rem;
+					height: 5.5rem;
 					border-radius: 100%;
 					background: var(--color-light-grey);
 					align-self: center;
