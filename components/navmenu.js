@@ -270,12 +270,12 @@ export default class NavMenu extends React.Component {
 						left: 0;
 						right: 0;
 						bottom: 0;
-						background: #000;
-						opacity: 0.25;
+						background: rgba(0,0,0,0.2);
+						backdrop-filter: blur(4px);
 					}
 					@keyframes fadeBackground {
-						from {opacity: 0;}
-						to   {opacity: 0.25;}
+						from {background: rgba(0,0,0,0);backdrop-filter: blur(0px);}
+						to   {background: rgba(0,0,0,0.2);backdrop-filter: blur(4px);}
 					}
 					.darken:not(.disabled) {
 						animation: .4s cubic-bezier(0,0,0,1) 0s 1 normal forwards fadeBackground;
