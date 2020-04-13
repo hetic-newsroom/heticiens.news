@@ -41,6 +41,7 @@ const params = {
 	AttributeDefinitions: [
 		{AttributeName: 'id', AttributeType: 'S'},
 		{AttributeName: 'email', AttributeType: 'S'},
+		{AttributeName: 'name', AttributeType: 'S'},
 		{AttributeName: 'moderator', AttributeType: 'N'}
 	],
 	GlobalSecondaryIndexes: [
@@ -48,6 +49,19 @@ const params = {
 			IndexName: 'email',
 			KeySchema: [
 				{AttributeName: 'email', KeyType: 'HASH'}
+			],
+			Projection: {
+				ProjectionType: 'ALL'
+			},
+			ProvisionedThroughput: {
+				ReadCapacityUnits: 5,
+				WriteCapacityUnits: 5
+			}
+		},
+		{
+			IndexName: 'name',
+			KeySchema: [
+				{AttributeName: 'name', KeyType: 'HASH'}
 			],
 			Projection: {
 				ProjectionType: 'ALL'
