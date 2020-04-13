@@ -45,8 +45,8 @@ export default props => {
 	let content;
 	if (props.content) {
 		if (typeof window === 'undefined') {
-			// SSR, use dompurify with jsdom
-			const {JSDOM} = require('jsdom');
+			// SSR, use dompurify with jsdom - this fork doesn't need canvas which fixes a bunch of errors
+			const {JSDOM} = require('@applitools/jsdom');
 			const window = new JSDOM('').window;
 			/* eslint-disable-next-line new-cap */
 			content = DOMPurify(window).sanitize(props.content);

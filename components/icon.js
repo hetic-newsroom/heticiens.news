@@ -1,4 +1,5 @@
 import * as React from 'react';
+import fetch from 'isomorphic-unfetch';
 import DOMPurify from 'dompurify';
 import DefaultColorScheme from '../lib/colors-default';
 
@@ -19,7 +20,7 @@ export default class Icon extends React.Component {
 		let color = this.props.color || DefaultColorScheme.black;
 		color = color.replace('#', '');
 
-		window.fetch(`/api/icons/${this.props.name}?fill=${color}`).then(async res => {
+		fetch(`/api/icons/${this.props.name}?fill=${color}`).then(async res => {
 			if (this.unmounted) {
 				return false;
 			}
