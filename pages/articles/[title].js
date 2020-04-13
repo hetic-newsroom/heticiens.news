@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import Link from 'next/link';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'dompurify';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import Button from '../../components/button';
@@ -44,7 +44,15 @@ export default props => {
 
 	let content;
 	if (props.content) {
-		content = DOMPurify.sanitize(props.content);
+		if (typeof window === 'undefined') {
+			// SSR, use dompurify with jsdom
+			const {JSDOM} = require('jsdom');
+			const window = new JSDOM('').window;
+			/* eslint-disable-next-line new-cap */
+			content = DOMPurify(window).sanitize(props.content);
+		} else {
+			content = DOMPurify.sanitize(props.content);
+		}
 	} else {
 		content = 'Chargement en cours…';
 	}
@@ -118,8 +126,7 @@ export default props => {
 
 				article {
 					grid-area: article;
-					width: 660px;
-					max-width: 100%;
+					max-width: 660px;
 					margin: 0 auto;
 				}
 
