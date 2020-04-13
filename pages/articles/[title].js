@@ -1,6 +1,5 @@
 import Router from 'next/router';
 import Link from 'next/link';
-import DOMPurify from 'dompurify';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import Button from '../../components/button';
@@ -21,7 +20,6 @@ function authorNameToURL(name) {
 
 function share(title) {
 	if (typeof navigator !== 'undefined' && navigator.share) {
-		console.log(window.location, title);
 		navigator.share({
 			title,
 			url: window.location
@@ -44,15 +42,7 @@ export default props => {
 
 	let content;
 	if (props.content) {
-		if (typeof window === 'undefined') {
-			// SSR, use dompurify with jsdom - this fork doesn't need canvas which fixes a bunch of errors
-			const {JSDOM} = require('@applitools/jsdom');
-			const window = new JSDOM('').window;
-			/* eslint-disable-next-line new-cap */
-			content = DOMPurify(window).sanitize(props.content);
-		} else {
-			content = DOMPurify.sanitize(props.content);
-		}
+		content = props.content;
 	} else {
 		content = 'Chargement en cours…';
 	}

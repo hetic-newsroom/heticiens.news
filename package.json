@@ -53,7 +53,6 @@
   },
   "homepage": "https://github.com/hetic-newsroom/heticiens.news#readme",
   "dependencies": {
-    "@applitools/jsdom": "^1.0.2",
     "@ckeditor/ckeditor5-build-classic": "^18.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "aws-sdk": "^2.653.0",
