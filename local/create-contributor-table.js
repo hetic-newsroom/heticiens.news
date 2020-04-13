@@ -129,7 +129,7 @@ dynamodb.createTable(params, async (error, data) => {
 						PutRequest: {
 							Item: {
 								id: 'tester2',
-								name: 'Jean-Michel Tester',
+								name: 'Jean Michel Tester',
 								email: 'testi@heticiens.news',
 								password,
 								tokens: [],

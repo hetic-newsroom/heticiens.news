@@ -1,21 +1,7 @@
 import Router from 'next/router';
-import Link from 'next/link';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import Button from '../../components/button';
-
-function formatDate(timestamp) {
-	const d = new Date(timestamp * 1000);
-	return `${d.getDay()}/${d.getMonth()}/${d.getFullYear()}`;
-}
-
-function formatReadingTime(ms) {
-	return `${Math.round(ms / 1000 / 60)}min`;
-}
-
-function authorNameToURL(name) {
-	return name.normalize('NFKC').replace(/ /g, '-');
-}
 
 function share(title) {
 	if (typeof navigator !== 'undefined' && navigator.share) {
@@ -30,6 +16,18 @@ function share(title) {
 	}
 }
 
+function makeSocialLinks(social) {
+	const links = [];
+	Object.keys(social).forEach(network => {
+		links.push(
+			<a href={social[network]} target="_blank" rel="noopener noreferrer">
+				<Button icon={network}/>
+			</a>
+		);
+	});
+	return links;
+}
+
 export default props => {
 	if (!props) {
 		return (
@@ -39,75 +37,40 @@ export default props => {
 		);
 	}
 
-	let content;
-	if (props.content) {
-		content = props.content;
-	} else {
-		content = 'Chargement en cours…';
-	}
-
 	return (
 		<Page
-			title={`${props.title} - H|N`}
-			description={`${props.intro} À lire sur HETIC Newsroom !`}
+			title={`${props.name} - H|N`}
+			description={props.bio}
 		>
 			<div className="articleContainer">
 				<article>
-					<span>{props.category[0].toUpperCase() + props.category.slice(1)}</span>
-					<h1>{props.title}</h1>
-					<h3>
-						Publié le <strong>{formatDate(props.date)}</strong><br/>par <strong>{props.author.name}</strong>
-					</h3>
-					<h5>Temps de lecture: {formatReadingTime(props.readTime)}</h5>
-					<p className="intro">
-						<i>{props.intro}</i>
+					<header>
+						<img src={(props.picture === 'no-picture') ? '/api/icons/person' : props.picture} alt={props.name}/>
+						<span>Contributeur</span>
+						<h1>{props.name}</h1>
+					</header>
+					<p className="biography">
+						{props.bio}
 					</p>
-					<div
-						className="articleHtmlContainer"
-						// Html is sanitized...
-						/* eslint-disable-next-line react/no-danger */
-						dangerouslySetInnerHTML={{
-							__html: content
-						}}
-					/>
 				</article>
 				<aside>
-					<Link href={`/author/${authorNameToURL(props.author.name)}`}>
-						<a>
-							<div className="author">
-								<img src={(props.author.picture === 'no-picture') ? '/api/icons/person' : props.author.picture} alt={props.author.name}/>
-								<h3>Écrit par</h3>
-								<h2>{props.author.name}</h2>
-							</div>
-						</a>
-					</Link>
+					<div className="socialLinks">
+						{makeSocialLinks(props.social)}
+					</div>
 					<Button
 						primary
 						icon="share"
 						value="Partager"
 						onClick={() => {
-							share(props.title);
+							share(`${props.name}, auteur sur HETIC Newsroom`);
 						}}
 					/>
 				</aside>
 			</div>
 
-			{/* TODO: Next articles component */}
+			{/* TODO: Articles component */}
 
 			<style jsx>{`
-				span {
-					font-weight: 400;
-				}
-
-				h1 {
-					margin-bottom: 0.5rem;
-				}
-
-				h5 {
-					opacity: 0.4;
-					margin-top: 0.5rem;
-				}
-
 				div.articleContainer {
 					display: grid;
 					grid-template: "article" auto
@@ -140,32 +103,45 @@ export default props => {
 					}
 				}
 
-				div.author {
+				header {
 					align-self: flex-start;
 					display: grid;
-					grid-template: "pic desc" auto
-										"pic name" auto / 4rem auto;
+					grid-template: "pic title" auto
+										"pic name" auto / 5.5rem auto;
 					grid-column-gap: 15px;
 					cursor: pointer;
 					margin-bottom: 15px;
 				}
 
-				div.author img {
+				header img {
 					grid-area: pic;
 					border-radius: 100%;
 					background: var(--color-light-grey);
 					align-self: center;
 				}
 
-				div.author h3 {
-					grid-area: desc;
+				header span {
+					grid-area: title;
 					line-height: 1;
 					align-self: end;
+					font-weight: 400;
 				}
 
-				div.author h2 {
+				header h1 {
 					grid-area: name;
-					font-size: ${24 / 16}rem;
+				}
+
+				div.socialLinks {
+					display: grid;
+					grid-template-columns: repeat(${Object.keys(props.social).length}, auto);
+					grid-template-rows: 1fr;
+					grid-gap: 15px;
+				}
+
+				@media (max-width: 660px) {
+					div.socialLinks {
+						margin-bottom: 15px;
+					}
 				}
 			`}
 			</style>
@@ -174,7 +150,7 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props, host} = await getProps(ctx, `/article/${ctx.params.title}`);
+	const {props, host} = await getProps(ctx, `/author/${ctx.params.name}`);
 
 	if (props.error) {
 		if (ctx.res) {
