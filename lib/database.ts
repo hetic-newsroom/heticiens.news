@@ -6,17 +6,17 @@ const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
 const tablePrefix = (process.env.stage === 'prod') ? 'PROD-' : '';
 
-type StoreableValue = string | number | boolean | object | any[] | Buffer | DataView | Uint8Array | null;
+export type StoreableValue = string | number | boolean | object | any[] | Buffer | DataView | Uint8Array | null;
 
-type CrudOpResult = Request.PromiseResult<DynamoDB.QueryOutput, AWS.AWSError>;
+export type CrudOpResult = Request.PromiseResult<DynamoDB.QueryOutput, AWS.AWSError>;
 
-type order = 'ascending' | 'descending';
+export type order = 'ascending' | 'descending';
 
-interface Key {
+export interface Key {
 	[key: string]: StoreableValue;
 }
 
-interface QueryOptions {
+export interface QueryOptions {
 	index: string;
 	attributes: string[];
 	startFrom: Key;
