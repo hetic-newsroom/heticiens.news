@@ -152,6 +152,7 @@ export default props => {
 
 				div.author img {
 					grid-area: pic;
+					max-width: 100%;
 					border-radius: 100%;
 					background: var(--color-light-grey);
 					align-self: center;
