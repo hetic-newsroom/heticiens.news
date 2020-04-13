@@ -116,7 +116,8 @@ export default props => {
 
 				article {
 					grid-area: article;
-					max-width: 660px;
+					width: 660px;
+					max-width: 100%;
 					margin: 0 auto;
 				}
 
