@@ -23,8 +23,8 @@ export default props => {
 
 							<style jsx>{`
 								.bannerArticle {
-									padding: 15px;
-									padding-top: 15vmax;
+									width: 100%;
+									padding: 15vmax calc((100% - 660px) / 2) 15px;
 									background: center/cover url("${article.image}") no-repeat;
 									margin-bottom: 30px;
 								}
@@ -98,8 +98,8 @@ export default props => {
 
 	return (
 		<Page>
+			{bannerArticle}
 			<div className="widthContainer">
-				{bannerArticle}
 				<h2>À la une</h2>
 				<div className="articleList">
 					{cards}
