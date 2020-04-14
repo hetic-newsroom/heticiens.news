@@ -25,25 +25,11 @@ export default props => (
 				grid-${(props.title.length > 25) ? 'column' : 'row'}-gap: 0;
 				transform: scale(1);
 				transition: transform .2s ease-out;
+				padding: 15px 0;
 			}
 
 			div.articleCard:hover, div.articleCard:active {
 				transform: scale(1.05);
-			}
-
-			@media (min-width: 660px) {
-				div.articleCard {
-					grid-template: "img" 9rem
-										"category" auto
-										"title" auto
-										"author" auto / auto;
-					padding: 15px 0;
-					border-bottom: 2px solid var(--color-light-grey);
-				}
-
-				h3 {
-					margin-top: 15px;
-				}
 			}
 
 			.imgContainer {

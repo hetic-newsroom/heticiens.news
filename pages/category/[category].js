@@ -40,7 +40,9 @@ export default props => {
 			<article>
 				<h1>{category}</h1>
 
-				{cards}
+				<div className="articleList">
+					{cards}
+				</div>
 				{notFoundMessage}
 			</article>
 
@@ -48,6 +50,14 @@ export default props => {
 				article {
 					max-width: 660px;
 					margin: 0 auto;
+				}
+
+				@media (min-width: 660px) {
+					.articleList {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						grid-column-gap: 15px;
+					}
 				}
 
 				h1 {
