@@ -28,10 +28,12 @@ export default props => (
 				background: rgba(0,0,0,0.2);
 				backdrop-filter: blur(4px);
 				display: flex;
+				padding: 15px;
 			}
 
 			.modalBox {
 				margin: auto;
+				max-width: 100%;
 				background: var(--color-background);
 				padding: 20px;
 				border-radius: 20px;
