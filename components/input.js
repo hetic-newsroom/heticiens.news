@@ -20,7 +20,7 @@ export default tprops => {
 				label {
 					display: block;
 					position: relative;
-					width: 200px;
+					min-width: 200px;
 					transform: scale(1);
 					transition: .2s ease-out;
 				}
@@ -34,8 +34,7 @@ export default tprops => {
 
 					-webkit-appearance: none;
 					outline: none;
-					width: 100%;
-					box-sizing: content-box;
+					max-width: 100%;
 					padding: 10px 15px;
 
 					background: var(--bg);
@@ -79,6 +78,7 @@ export default tprops => {
 				}
 
 				label.slim {
+					min-width: 0;
 					width: 170px;
 					position: relative;
 				}
