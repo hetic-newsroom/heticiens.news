@@ -22,7 +22,7 @@ export default props => (
 			#pageWidthContainer {
 				width: 100%;
 				max-width: 1130px;
-				min-height: 95vh;
+				min-height: 75vh;
 				margin: 0 auto;
 				padding: 0 15px;
 				padding-top: calc(${30 / 16}rem + ${6.25 + 12.5 + 15}px);
@@ -31,6 +31,12 @@ export default props => (
 			@media (min-width: 660px) {
 				#pageWidthContainer {
 					padding-top: calc(${54 + 15}px + 5vmin);
+				}
+			}
+
+			@media (min-width: 800px) {
+				#pageWidthContainer {
+					min-height: 90vh;
 				}
 			}
 		`}
