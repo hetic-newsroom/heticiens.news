@@ -1,6 +1,7 @@
 import * as React from 'react';
 import fetch from 'isomorphic-unfetch';
 import classNames from 'classnames';
+import {nanoid} from 'nanoid';
 import DefaultColorScheme from '../lib/colors-default';
 import {Email} from '../lib/data-validator';
 import Modal from './modal';
@@ -15,12 +16,13 @@ export default class Newsletter extends React.Component {
 		this.state = {
 			status: null
 		};
+		this.id = nanoid();
 
 		this.submit = this.submit.bind(this);
 	}
 
 	submit() {
-		const email = document.querySelector('#newsletterForm').value;
+		const email = document.querySelector(`#newsletterForm-${this.id}`).value;
 		if (!Email.test(email)) {
 			this.setState({
 				status: 'badInput'
@@ -47,7 +49,7 @@ export default class Newsletter extends React.Component {
 							</h3>
 							<div className="inputContainer">
 								<Input
-									id="newsletterForm"
+									id={`newsletterForm-${this.id}`}
 									type="email"
 									placeholder="mail@example.com"
 								/>
