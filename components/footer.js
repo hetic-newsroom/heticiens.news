@@ -36,7 +36,7 @@ export default () => (
 				</ul>
 			</div>
 		</div>
-		<h6>© 2020 HETIC Newsroom, tous droits réservés</h6>
+		<h6><i>© 2020 HETIC Newsroom, tous droits réservés.</i><br/>Notre code est <strong><a href="https://github.com/hetic-newsroom" target="_blank" rel="noopener noreferrer">open-source</a></strong>.</h6>
 
 		<style jsx>{`
 			footer {
@@ -87,6 +87,7 @@ export default () => (
 				grid-area: copyright;
 				text-align: center;
 				padding-top: 5vmin;
+				padding-bottom: 15px;
 			}
 
 			h3 {
