@@ -4,13 +4,20 @@ import DefaultColorScheme from '../lib/colors-default';
 export default tprops => {
 	const props = {...tprops};
 	delete props.slim;
+	delete props.stretch;
 
 	return (
 		<>
-			<label className={classNames({slim: (tprops.slim)})}>
+			<label
+				className={classNames(
+					{slim: (tprops.slim)},
+					{stretch: (tprops.stretch)}
+				)}
+			>
 				<input
 					className={classNames(
-						{slim: (tprops.slim)}
+						{slim: (tprops.slim)},
+						{stretch: (tprops.stretch)}
 					)}
 					{...props}
 				/>
@@ -120,6 +127,11 @@ export default tprops => {
 					width: ${22 / 16}rem;
 					height: ${22 / 16}rem;
 					transition: all .2s ease-out;
+				}
+
+				label.stretch, input.stretch {
+					min-width: 0;
+					width: 100%;
 				}
 			`}
 			</style>
