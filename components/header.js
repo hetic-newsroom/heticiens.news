@@ -1,109 +1,135 @@
+import * as React from 'react';
 import Link from 'next/link';
 import NavMenu from './navmenu';
+import Newsletter from './newsletter-subscribe';
 import Icon from './icon';
 
-export default () => (
-	<header>
-		{
-			// TODO: newsletter subscription
-		}
-		<div className="email-icon mobile">
-			<Icon name="email" width="100%" height="100%"/>
-		</div>
-		<Link href="/">
-			<h2 className="mobile">H|N</h2>
-		</Link>
+export default class Header extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			newsletterOpened: false
+		};
 
-		<Link href="/">
-			<h2 className="desktop">HETIC Newsroom</h2>
-		</Link>
+		this.handleNewsletterClick = this.handleNewsletterClick.bind(this);
+		this.handleNewsletterQuit = this.handleNewsletterQuit.bind(this);
+	}
 
-		<div className="navmenu-wrapper">
-			<NavMenu/>
-		</div>
+	handleNewsletterClick() {
+		this.setState({
+			newsletterOpened: true
+		});
+	}
 
-		<style jsx>{`
-			header {
-				position: fixed;
-				top: 0;
-				left: 0;
-				z-index: 100;
-				width: 100%;
-				height: 54px;
-				display: flex;
-				align-items: center;
-				background: var(--color-background);
-			}
+	handleNewsletterQuit() {
+		this.setState({
+			newsletterOpened: false
+		});
+	}
 
-			h2 {
-				line-height: 1;
-				cursor: pointer;
-			}
+	render() {
+		return (
+			<header>
+				<div className="email-icon mobile">
+					<Icon name="email" width="100%" height="100%" onClick={this.handleNewsletterClick}/>
+					<Newsletter opened={this.state.newsletterOpened} onWantClose={this.handleNewsletterQuit}/>
+				</div>
+				<Link href="/">
+					<h2 className="mobile">H|N</h2>
+				</Link>
 
-			@media (max-width: 659px) {
-				header {
-					justify-content: space-between;
-					padding: 0 15px;
-				}
+				<Link href="/">
+					<h2 className="desktop">HETIC Newsroom</h2>
+				</Link>
 
-				.email-icon, .navmenu-wrapper {
-					cursor: pointer;
-					width: ${30 / 16}rem;
-					height: ${30 / 16}rem;
-				}
+				<div className="navmenu-wrapper">
+					<NavMenu/>
+				</div>
 
-				.desktop {
-					display: none;
-				}
-			}
+				<style jsx>{`
+					header {
+						position: fixed;
+						top: 0;
+						left: 0;
+						z-index: 100;
+						width: 100%;
+						height: 54px;
+						display: flex;
+						align-items: center;
+						background: var(--color-background);
+					}
 
-			@media (min-width: 660px) {
-				header {
-					left: 15px;
-					width: calc(100% - 30px);
-					max-width: 1100px;
-					height: calc(54px + 5vmin);
-					align-items: flex-end;
-					justify-content: space-between;
-					padding-bottom: 10px;
-					border-bottom: 1px solid var(--color-dark-grey);
-				}
+					h2 {
+						line-height: 1;
+						cursor: pointer;
+					}
 
-				header::before {
-					content: "";
-					display: block;
-					z-index: -1;
-					position: fixed;
-					top: 0;
-					left: 0;
-					right: 0;
-					height: calc(53px + 5vmin);
-					background: var(--color-background);
-				}
+					@media (max-width: 659px) {
+						header {
+							justify-content: space-between;
+							padding: 0 15px;
+						}
+
+						.email-icon, .navmenu-wrapper {
+							cursor: pointer;
+							width: ${30 / 16}rem;
+							height: ${30 / 16}rem;
+						}
+
+						.desktop {
+							display: none;
+						}
+					}
+
+					@media (min-width: 660px) {
+						header {
+							left: 15px;
+							width: calc(100% - 30px);
+							max-width: 1100px;
+							height: calc(54px + 5vmin);
+							align-items: flex-end;
+							justify-content: space-between;
+							padding-bottom: 10px;
+							border-bottom: 1px solid var(--color-dark-grey);
+						}
+
+						header::before {
+							content: "";
+							display: block;
+							z-index: -1;
+							position: fixed;
+							top: 0;
+							left: 0;
+							right: 0;
+							height: calc(53px + 5vmin);
+							background: var(--color-background);
+						}
 
 
-				.navmenu-wrapper {
-					cursor: pointer;
-					width: ${30 / 16}rem;
-					height: ${30 / 16}rem;
-				}
+						.navmenu-wrapper {
+							cursor: pointer;
+							width: ${30 / 16}rem;
+							height: ${30 / 16}rem;
+						}
 
-				.mobile {
-					display: none;
-				}
-			}
+						.mobile {
+							display: none;
+						}
+					}
 
-			@media (min-width: 900px) {
-				.navmenu-wrapper {
-					width: auto;
-				}
-			}
+					@media (min-width: 900px) {
+						.navmenu-wrapper {
+							width: auto;
+						}
+					}
 
-			@media (min-width: 1100px) {
-				header {
-					left: calc(50% - ${1100 / 2}px);
-				}			}
-		`}
-		</style>
-	</header>
-);
+					@media (min-width: 1100px) {
+						header {
+							left: calc(50% - ${1100 / 2}px);
+						}			}
+				`}
+				</style>
+			</header>
+		);
+	}
+}

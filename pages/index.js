@@ -3,7 +3,6 @@ import Page from '../components/page';
 import Button from '../components/button';
 import Input from '../components/input';
 import ArticleCard from '../components/article-card';
-import Modal from '../components/modal';
 
 export default () => {
 	return (
@@ -30,10 +29,6 @@ export default () => {
 				<Button icon="questionMark"/>
 				<Button positive value="Create"/>
 				<Button negative value="Delete"/>
-				<Modal opened={false}>
-					<h1>Hello there!</h1>
-					<p>Fancy subscribing?</p>
-				</Modal>
 				<hr/>
 				<Input type="search" placeholder="Search…"/>
 				<Input type="email" placeholder="email@example.com"/>

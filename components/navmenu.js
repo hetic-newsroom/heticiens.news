@@ -6,6 +6,7 @@ import DefaultColorScheme from '../lib/colors-default';
 import Icon from './icon';
 import Button from './button';
 import Input from './input';
+import Newsletter from './newsletter-subscribe';
 
 export default class NavMenu extends React.Component {
 	constructor(props) {
@@ -13,11 +14,14 @@ export default class NavMenu extends React.Component {
 		this.state = {
 			opened: false,
 			desktop: false,
-			url: '/'
+			url: '/',
+			newsletterOpened: false
 		};
 
 		this.openOrClose = this.openOrClose.bind(this);
 		this.onWindowResize = this.onWindowResize.bind(this);
+		this.newsletterOpen = this.newsletterOpen.bind(this);
+		this.newsletterWantClose = this.newsletterWantClose.bind(this);
 	}
 
 	componentDidMount() {
@@ -46,6 +50,19 @@ export default class NavMenu extends React.Component {
 				desktop: false
 			});
 		}
+	}
+
+	newsletterOpen() {
+		this.setState({
+			opened: false,
+			newsletterOpened: true
+		});
+	}
+
+	newsletterWantClose() {
+		this.setState({
+			newsletterOpened: false
+		});
 	}
 
 	render() {
@@ -97,11 +114,12 @@ export default class NavMenu extends React.Component {
 					{/* TODO: Link to search page on enter */}
 					<Input slim type="search" placeholder="Rechercher…"/>
 					<div className="buttons">
-						<Button icon="email" size="30px"/>
+						<Button icon="email" size="30px" onClick={this.newsletterOpen}/>
 						<Link href="/login">
 							<Button icon="person" size="30px"/>
 						</Link>
 					</div>
+					<Newsletter opened={this.state.newsletterOpened} onWantClose={this.newsletterWantClose}/>
 
 					<style jsx>{`
 						nav, ul {
@@ -241,12 +259,13 @@ export default class NavMenu extends React.Component {
 						</li>
 					</ul>
 					<footer>
-						<Button icon="email"/>
+						<Button icon="email" onClick={this.newsletterOpen}/>
 						<Link href="/login">
 							<Button icon="person"/>
 						</Link>
 					</footer>
 				</nav>
+				<Newsletter opened={this.state.newsletterOpened} onWantClose={this.newsletterWantClose}/>
 
 				<style jsx>{`
 					.nav-button {
