@@ -10,7 +10,7 @@ export default () => (
 			<h3>Le manifeste</h3>
 
 			<p>
-				<strong>HETIC Newsroom</strong> est un collectif d’étudiants, qui représente l’ensemble des filières et promotions de HETIC. Il se donne pour ambition de raconter l’ «Expérience HETIC», par la production de contenus éditoriaux, tous supports et formats confondus.
+				<strong>HETIC Newsroom</strong> est un collectif d’étudiants, qui représente l’ensemble des filières et promotions de HETIC. Il se donne pour ambition de raconter leur“expérience HETIC”, par la production de contenus éditoriaux, tous supports et formats confondus.
 			</p>
 
 			<p>
@@ -24,7 +24,7 @@ export default () => (
 			<p>
 				<strong>HETIC Newsroom</strong> est un groupe souple et ouvert. La participation se fait sur base du volontariat. Sans limitation de nombre, les membres partagent la volonté d’apprendre ensemble, de mettre à l’épreuve leurs connaissances, leurs sensibilités et pratiques. Le collectif fonctionne comme une “chorale démocratique”; chaque voix a une valeur égale.
 			</p>
-			<h3 className="closing"><i>- Stéphane De Torquat, fondateur</i></h3>
+			<h3 className="closing"><i>- L&#39;équipe HETIC Newsroom</i></h3>
 		</article>
 
 		<style jsx>{`
