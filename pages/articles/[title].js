@@ -133,7 +133,7 @@ export default props => {
 					justify-content: flex-start;
 				}
 
-				@media (min-width: 660px) {
+				@media (min-width: 300px) {
 					aside {
 						flex-direction: row;
 						justify-content: space-between;
@@ -147,7 +147,6 @@ export default props => {
 										"pic name" auto / 4rem auto;
 					grid-column-gap: 15px;
 					cursor: pointer;
-					margin-bottom: 15px;
 				}
 
 				div.author img {
