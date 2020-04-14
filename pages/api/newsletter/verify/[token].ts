@@ -32,5 +32,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse): Promi
 	await registration.save();
 
 	res.status(200);
+	res.setHeader('Content-type', 'text/html; charset=UTF-8');
 	res.end('Votre inscription a été confirmée!');
 }
