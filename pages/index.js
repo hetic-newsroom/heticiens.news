@@ -29,12 +29,12 @@ export default props => {
 									margin-bottom: 30px;
 								}
 
-								@media (max-width: 559px) {
+								@media (max-width: 659px) {
 									.bannerArticle {
 										width: calc(100% + 30px);
 										position: relative;
 										left: -15px;
-										padding-top: 10vmax;
+										padding: 10vmax 15px 15px;
 										margin-bottom: 0;
 									}
 								}
