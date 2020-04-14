@@ -53,6 +53,7 @@ export default class Icon extends React.Component {
 					dangerouslySetInnerHTML={{
 						__html: (this.state.downloaded) ? this.state.downloaded : this.props.name
 					}}
+					onClick={this.props.onClick}
 				/>
 
 				<style jsx>{`
