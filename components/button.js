@@ -10,7 +10,8 @@ export default React.forwardRef((props, ref) => (
 			{text: (props.value)},
 			{primary: (props.primary)},
 			{positive: (props.positive)},
-			{negative: (props.negative)}
+			{negative: (props.negative)},
+			{accent: (props.accent)}
 		)}
 		type="button"
 		onClick={props.onClick}
@@ -80,7 +81,7 @@ export default React.forwardRef((props, ref) => (
 				height: 100%;
 				background-size: ${(props.size) ? `calc(${props.size} * 0.775)` : '31px'};
 			}
-			button.primary::after, button.positive::after, button.negative::after {
+			button.primary::after, button.positive::after, button.negative::after, button.accent::after {
 				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.white.replace('#', '')}");
 			}
 			button.icon:hover:not(:focus)::after {
@@ -94,8 +95,12 @@ export default React.forwardRef((props, ref) => (
 				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.negative.replace('#', '')}");
 				filter: none;
 			}
+			button.accent.icon:hover:not(:focus)::after {
+				background-image: url("/api/icons/${props.icon}?fill=${DefaultColorScheme.accent.replace('#', '')}");
+				filter: none;
+			}
 
-			button.primary:hover, button.positive:hover, button.negative:hover {
+			button.primary:hover, button.positive:hover, button.negative:hover, button.accent:hover {
 				border-color: var(--bg);
 			}
 
@@ -111,6 +116,11 @@ export default React.forwardRef((props, ref) => (
 
 			button.negative {
 				--bg: var(--color-negative);
+				--fg: var(--color-white);
+			}
+
+			button.accent {
+				--bg: var(--color-accent);
 				--fg: var(--color-white);
 			}
 		`}
