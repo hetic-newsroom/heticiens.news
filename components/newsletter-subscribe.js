@@ -101,6 +101,10 @@ export default class Newsletter extends React.Component {
 						justify-content: center;
 					}
 
+					h3 {
+						max-width: 318px;
+					}
+
 					h4 {
 						text-align: center;
 						color: var(--color-negative);
