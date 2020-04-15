@@ -170,7 +170,9 @@ export default props => {
 					div.socialLinks {
 						margin-bottom: 15px;
 					}
+				}
 
+				@media (min-width: 660px) {
 					.articleList {
 						display: grid;
 						grid-template-columns: 1fr 1fr;

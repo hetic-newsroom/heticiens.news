@@ -2,6 +2,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
+import ArticleCard from '../../components/article-card';
 import Button from '../../components/button';
 
 function formatDate(timestamp) {
@@ -17,6 +18,10 @@ function authorNameToURL(name) {
 	return name.normalize('NFKC').replace(/ /g, '-');
 }
 
+function titleToUrl(title) {
+	return `/articles/${title.replace(/ /g, '-')}`;
+}
+
 function share(title) {
 	if (typeof navigator !== 'undefined' && navigator.share) {
 		navigator.share({
@@ -25,8 +30,6 @@ function share(title) {
 		}).catch(() => {
 			// User aborted sharing, we don't care
 		});
-	} else {
-		// TODO: Leverage a modal component to display clickable icons?
 	}
 }
 
@@ -45,6 +48,22 @@ export default props => {
 	} else {
 		content = 'Chargement en cours…';
 	}
+
+	const cards = [];
+	props.next.forEach(article => {
+		cards.push(
+			<Link href={titleToUrl(article.title)}>
+				<a>
+					<ArticleCard
+						title={article.title}
+						category={article.category}
+						image={article.image}
+						author={article.author.name}
+					/>
+				</a>
+			</Link>
+		);
+	});
 
 	return (
 		<Page
@@ -90,9 +109,12 @@ export default props => {
 						}}
 					/>
 				</aside>
-			</div>
 
-			{/* TODO: Next articles component */}
+				<h2>Voir aussi</h2>
+				<div className="articleList">
+					{cards}
+				</div>
+			</div>
 
 			<style jsx>{`
 				span {
@@ -113,6 +135,8 @@ export default props => {
 					grid-template: "article" auto
 										"aside" auto / 100%;
 					grid-gap: 15px;
+					max-width: 660px;
+					margin: 0 auto;
 				}
 
 				article {
@@ -168,6 +192,18 @@ export default props => {
 					grid-area: name;
 					font-size: ${24 / 16}rem;
 				}
+
+				aside + h2 {
+					margin-top: 30px;
+				}
+
+				@media (min-width: 660px) {
+					.articleList {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						grid-column-gap: 15px;
+					}
+				}
 			`}
 			</style>
 		</Page>
@@ -191,5 +227,9 @@ export async function getServerSideProps(ctx) {
 		return;
 	}
 
-	return {props};
+	const {props: next} = await getProps(ctx, '/latest?count=4');
+
+	return {
+		props: {...props, next: next.articles}
+	};
 }
