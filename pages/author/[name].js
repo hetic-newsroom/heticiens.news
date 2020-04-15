@@ -1,6 +1,8 @@
 import Router from 'next/router';
+import Link from 'next/link';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
+import ArticleCard from '../../components/article-card';
 import Button from '../../components/button';
 
 function share(title) {
@@ -28,6 +30,10 @@ function makeSocialLinks(social) {
 	return links;
 }
 
+function titleToUrl(title) {
+	return `/articles/${title.replace(/ /g, '-')}`;
+}
+
 export default props => {
 	if (!props) {
 		return (
@@ -36,6 +42,22 @@ export default props => {
 			</Page>
 		);
 	}
+
+	const cards = [];
+	props.articles.forEach(article => {
+		cards.push(
+			<Link href={titleToUrl(article.title)}>
+				<a>
+					<ArticleCard
+						title={article.title}
+						category={article.category}
+						image={article.image}
+						author={props.name}
+					/>
+				</a>
+			</Link>
+		);
+	});
 
 	return (
 		<Page
@@ -66,9 +88,12 @@ export default props => {
 						}}
 					/>
 				</aside>
-			</div>
 
-			{/* TODO: Articles component */}
+				<h2>Articles publiés</h2>
+				<div className="articleList">
+					{cards}
+				</div>
+			</div>
 
 			<style jsx>{`
 				div.articleContainer {
@@ -76,6 +101,9 @@ export default props => {
 					grid-template: "article" auto
 										"aside" auto / 100%;
 					grid-gap: 15px;
+					width: 660px;
+					max-width: 100%;
+					margin: 0 auto;
 				}
 
 				article {
@@ -144,6 +172,12 @@ export default props => {
 					div.socialLinks {
 						margin-bottom: 15px;
 					}
+
+					.articleList {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						grid-column-gap: 15px;
+					}
 				}
 			`}
 			</style>
@@ -168,5 +202,11 @@ export async function getServerSideProps(ctx) {
 		return;
 	}
 
-	return {props};
+	const name = props.name.normalize('NFKC').replace(/ /g, '-');
+
+	const {props: props2} = await getProps(ctx, `/articles/${name}`);
+
+	return {
+		props: {...props, articles: props2.articles}
+	};
 }

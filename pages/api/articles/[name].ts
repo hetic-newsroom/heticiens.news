@@ -50,8 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				'title',
 				'image',
 				'intro',
-				'category',
-				'author'
+				'category'
 			],
 			order: 'ascending'
 		});
