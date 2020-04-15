@@ -18,7 +18,7 @@ export default () => (
 			</p>
 
 			<p>
-				<strong>HETIC Newsroom</strong> élabore sa charte éditoriale et graphique. Il opère des choix, notammentortho-typographiques. Le collectif repère, acquiert et adapte les meilleures pratiques dans le traitement de l’information et la communication digitale. Il cherche à (ré)investir les savoir-faire, outils et méthodes qui sont le cœur des enseignements de HETIC.
+				<strong>HETIC Newsroom</strong> élabore sa charte éditoriale et graphique. Il opère des choix, notamment ortho-typographiques. Le collectif repère, acquiert et adapte les meilleures pratiques dans le traitement de l’information et la communication digitale. Il cherche à (ré)investir les savoir-faire, outils et méthodes qui sont le cœur des enseignements de HETIC.
 			</p>
 
 			<p>
