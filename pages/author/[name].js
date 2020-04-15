@@ -13,8 +13,6 @@ function share(title) {
 		}).catch(() => {
 			// User aborted sharing, we don't care
 		});
-	} else {
-		// TODO: Leverage a modal component to display clickable icons?
 	}
 }
 
