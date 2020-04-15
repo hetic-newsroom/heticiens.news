@@ -7,7 +7,7 @@ export default () => (
 			<h2>HETIC Newsroom</h2>
 			<div className="description">
 				<h4>
-					Un collectif indépendant de l’école <strong>HETIC</strong>, la Newsroom vous propose de raconter ensemble la vie des héticiens.
+					Un collectif indépendant de l’école <strong>HETIC</strong>, la Newsroom vous propose de raconter ensemble la vie des héticiens.<br/>Nous sommes joignables à <strong><a href="mailto:info@heticiens.news">info@heticiens.news</a></strong>.
 				</h4>
 			</div>
 			<div className="links">
