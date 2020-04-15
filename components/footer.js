@@ -65,9 +65,10 @@ export default () => (
 				margin-bottom: 0;
 			}
 
-			.description {
+			.widthContainer > .description {
 				grid-area: description;
 				margin-top: 15px;
+				padding-right: 0;
 			}
 
 			div.links {
