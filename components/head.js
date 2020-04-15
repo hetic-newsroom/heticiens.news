@@ -8,7 +8,7 @@ export default props => (
 			name="description"
 			content={
 				props.description ||
-			'HETIC Newsroom est le journal des héticiens: Retrouvez interviews, reportages, enquêtes, portraits et plus encore autour de la vie des étudiants de l’école HETIC.'
+			'Collectif d’étudiants, qui regroupe l’ensemble des filières de l’école HETIC. Indépendant, HETIC Newsroom se propose de raconter ce qui fait l’expérience des héticiens.'
 			}
 		/>
 	</Head>
