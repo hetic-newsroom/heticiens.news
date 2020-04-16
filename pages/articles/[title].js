@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
@@ -70,6 +71,15 @@ export default props => {
 			title={`${props.title} - H|N`}
 			description={`${props.intro} À lire sur HETIC Newsroom !`}
 		>
+			<Head>
+				<meta property="og:title" content={`${props.title} - H|N`}/>
+				<meta property="og:type" content="article"/>
+				<meta property="og:image" content={props.image}/>
+				<meta property="og:description" content={props.intro}/>
+				<meta property="og:url" content={`https://heticiens.news${titleToUrl(props.title)}`}/>
+				<meta property="og:locale" content="fr_FR"/>
+				<meta property="og:site_name" content="HETIC Newsroom"/>
+			</Head>
 			<div className="articleContainer">
 				<article>
 					<span>{props.category[0].toUpperCase() + props.category.slice(1)}</span>

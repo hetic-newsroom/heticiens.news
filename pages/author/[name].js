@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
@@ -32,6 +33,10 @@ function titleToUrl(title) {
 	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
 }
 
+function authorNameToURL(name) {
+	return encodeURIComponent(name.normalize('NFKC').replace(/ /g, '-'));
+}
+
 export default props => {
 	if (!props) {
 		return (
@@ -62,6 +67,15 @@ export default props => {
 			title={`${props.name} - H|N`}
 			description={props.bio}
 		>
+			<Head>
+				<meta property="og:title" content={`${props.name} - H|N`}/>
+				<meta property="og:type" content="profile"/>
+				<meta property="og:image" content={props.picture}/>
+				<meta property="og:description" content={props.bio}/>
+				<meta property="og:url" content={`https://heticiens.news/author/${authorNameToURL(props.name)}`}/>
+				<meta property="og:locale" content="fr_FR"/>
+				<meta property="og:site_name" content="HETIC Newsroom"/>
+			</Head>
 			<div className="articleContainer">
 				<article>
 					<header>
