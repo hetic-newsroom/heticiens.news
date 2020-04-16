@@ -112,6 +112,10 @@ export default () => (
 				max-width: 660px;
 			}
 
+			div.articleHtmlContainer h2 {
+				margin: 30px 0 15px;
+			}
+
 			div.articleHtmlContainer img {
 				width: calc(100% + 30px);
 				position: relative;
