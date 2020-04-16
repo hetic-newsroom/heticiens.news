@@ -2,7 +2,11 @@ heticiensNews:
   component: serverless-next.js
   inputs:
     domain: ['heticiens.news']
-    bucketName: heticiensnewsprod
+    bucketName: heticiensnews
+    policy: "arn:aws:iam::733777751746:policy/HN-Nextjs-Lambdas"
     name:
       defaultLambda: heticiensNewsEndpointProd
       apiLambda: heticiensNewsAPIEndpointProd
+    build:
+      env:
+        NODE_ENV: "production"

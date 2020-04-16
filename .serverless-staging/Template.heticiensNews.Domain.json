@@ -5,8 +5,8 @@
   "subdomains": [
     {
       "domain": "staging.heticiens.news",
-      "distributionId": "E2L6YYSTUAJDFG",
-      "url": "https://d1y3i9pflf1ku6.cloudfront.net",
+      "distributionId": "E35DC5AHPGZB6Y",
+      "url": "https://d1h6mbjnt6mwgy.cloudfront.net",
       "type": "awsCloudFront"
     }
   ]

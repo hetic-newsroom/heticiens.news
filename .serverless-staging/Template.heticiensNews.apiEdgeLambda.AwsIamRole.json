@@ -1,6 +1,6 @@
 {
-  "name": "q7v87gf-g5wptt",
-  "arn": "arn:aws:iam::733777751746:role/q7v87gf-g5wptt",
+  "name": "q7v87gf-y0nqzf",
+  "arn": "arn:aws:iam::733777751746:role/q7v87gf-y0nqzf",
   "service": [
     "lambda.amazonaws.com",
     "edgelambda.amazonaws.com"

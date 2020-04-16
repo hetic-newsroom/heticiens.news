@@ -1,85 +1,203 @@
-import * as React from 'react';
+import Link from 'next/link';
+import getProps from '../lib/get-props';
+import Page from '../components/page';
+import ArticleCard from '../components/article-card';
 
-const deadline = new Date('April 16, 2020 15:00:00 UTC+1').getTime();
-
-class Index extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			s: 'XX',
-			m: 'XX',
-			h: 'XX',
-			d: 'XX'
-		};
-	}
-
-	componentDidMount() {
-		this.updateClock();
-		this.timer = setInterval(() => {
-			this.updateClock();
-		}, 1000);
-	}
-
-	updateClock() {
-		const now = Date.now();
-		if (deadline < now) {
-			this.setState({
-				s: '00',
-				m: '00',
-				h: null,
-				d: null
-			});
-		} else {
-			let timer = Math.floor((deadline - now) / 1000);
-			const s = timer % 60;
-			timer = (timer - s) / 60;
-			const m = timer % 60;
-			timer = (timer - m) / 60;
-			const h = timer % 24;
-			const d = (timer - h) / 24;
-
-			this.setState({
-				s: (s.toString().length === 2) ? s.toString() : '0' + s,
-				m: (m.toString().length === 2) ? m.toString() : '0' + m,
-				h: h.toString(),
-				d: d.toString()
-			});
-		}
-	}
-
-	render() {
-		return (
-			<div className="root">
-				<h1>
-					{this.state.d ? this.state.d + ':' : ''}
-					{this.state.h ? this.state.h + ':' : ''}
-					{this.state.m}:{this.state.s}
-				</h1>
-				<style jsx global>{`
-					html, body {
-						margin: 0;
-					}
-				`}
-				</style>
-				<style jsx>{`
-					.root {
-						background: black;
-						color: white;
-						font-family: sans-serif;
-						height: 100vh;
-						width: 100vw;
-						display: flex;
-					}
-
-					h1 {
-						margin: auto;
-						font-size: 3rem;
-					}
-				`}
-				</style>
-			</div>
-		);
-	}
+function titleToUrl(title) {
+	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
 }
 
-export default Index;
+export default props => {
+	const cards = [];
+	let bannerArticle;
+	props.articles.forEach(article => {
+		if (!bannerArticle) {
+			bannerArticle = (
+				<Link href={titleToUrl(article.title)}>
+					<a>
+						<div className="bannerArticle">
+							<h3>{article.category}</h3>
+							<h2>{article.title}</h2>
+							<h4>par {article.author.name}</h4>
+							<p>{article.intro}</p>
+
+							<style jsx>{`
+								.bannerArticle {
+									width: 100%;
+									padding: 15vmax calc((100% - 660px) / 2) 15px;
+									background: center/cover url("${article.image}") no-repeat;
+									margin-bottom: 30px;
+								}
+
+								@media (max-width: 659px) {
+									.bannerArticle {
+										width: calc(100% + 30px);
+										position: relative;
+										left: -15px;
+										padding: 10vmax 15px 15px;
+										margin-bottom: 0;
+									}
+								}
+
+								h3, h2, h4, p {
+									color: #fff;
+								}
+
+								h2 {
+									text-shadow: 1px 1px 10px rgba(0,0,0,0.15);
+								}
+
+								h3, h4, p {
+									text-shadow: 1px 1px 7px rgba(0,0,0,0.6);
+								}
+
+								h3 {
+									font-weight: 500;
+									text-transform: capitalize;
+								}
+
+								h2 {
+									font-size: ${27 / 16}rem;
+									line-height: 1.1;
+								}
+
+								p {
+									font-size: ${15 / 16}rem;
+									font-family: "Work Sans", sans-serif;
+									font-weight: 500;
+									line-height: 1.2;
+									margin-bottom: 0;
+									text-overflow: ellipsis;
+									display: -webkit-box;
+									-webkit-line-clamp: 3;
+									-webkit-box-orient: vertical;
+									overflow: hidden;
+								}
+							`}
+							</style>
+						</div>
+					</a>
+				</Link>
+			);
+			return;
+		}
+
+		cards.push(
+			<Link href={titleToUrl(article.title)}>
+				<a>
+					<ArticleCard
+						title={article.title}
+						category={article.category}
+						author={article.author.name}
+						image={article.image}
+					/>
+				</a>
+			</Link>
+		);
+	});
+
+	return (
+		<Page>
+			{bannerArticle}
+			<div className="widthContainer">
+				<div className="intro">
+					<h2>👋 Bienvenue!</h2>
+					<p>
+						Bienvenue sur le site HETIC Newsroom!<br/><br/>Plongez dans l’expérience HETIC, racontée par les étudiants eux-mêmes.<br/>Nous sommes un collectif, qui représente l’ensemble des filières de l’école.<br/>Tous les héticiens sont les bienvenus. Une aide ponctuelle, une critique (constructive), une suggestion d’article ou un engagement à plus long terme ?<br/> N’hésitez pas à nous contacter: <strong><a href="mailto:info@heticiens.news">info@heticiens.news</a></strong>.<br/><br/>Bonne consultation!
+					</p>
+				</div>
+				<h2>À la une</h2>
+				<div className="articleList">
+					{cards}
+				</div>
+				<h2>Retrouvez aussi</h2>
+				<div className="categories">
+					<Link href="/category/interviews">
+						<a>
+							<span>Interviews</span>
+						</a>
+					</Link>
+					<Link href="/category/reportages">
+						<a>
+							<span>Reportages</span>
+						</a>
+					</Link>
+					<Link href="/category/enquêtes">
+						<a>
+							<span>Enquêtes</span>
+						</a>
+					</Link>
+					<Link href="/category/opinions">
+						<a>
+							<span>Opinions</span>
+						</a>
+					</Link>
+					<Link href="/category/portraits">
+						<a>
+							<span>Portraits</span>
+						</a>
+					</Link>
+					<Link href="/about">
+						<a>
+							<span>À propos</span>
+						</a>
+					</Link>
+				</div>
+			</div>
+
+			<style jsx>{`
+				.widthContainer {
+					width: 100%;
+					max-width: 660px;
+					margin: 0 auto;
+				}
+
+				@media (min-width: 660px) {
+					.articleList {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						grid-column-gap: 15px;
+					}
+				}
+
+				h2 {
+					margin-top: 15px;
+				}
+
+				.categories {
+					margin: 15px 0;
+					margin-bottom: 30px;
+					display: grid;
+					grid-template-columns: repeat(2, 1fr);
+					grid-template-rows: repeat(3, auto);
+					align-items: center;
+					justify-items: center;
+				}
+
+				.categories span {
+					display: block;
+					padding: 7.5px;
+					font-size: ${23 / 16}rem;
+					transition: color .2s ease-out;
+				}
+
+				.categories span:hover, .categories span:active {
+					color: var(--color-accent);
+				}
+
+				.intro {
+					// background: var(--color-light-grey);
+					// padding: 15px;
+					border-radius: 20px;
+					margin-bottom: 30px;
+				}
+			`}
+			</style>
+		</Page>
+	);
+};
+
+export async function getServerSideProps(ctx) {
+	const {props} = await getProps(ctx, '/latest');
+	return {props};
+}
