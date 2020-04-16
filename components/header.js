@@ -35,11 +35,15 @@ export default class Header extends React.Component {
 					<Newsletter opened={this.state.newsletterOpened} onWantClose={this.handleNewsletterQuit}/>
 				</div>
 				<Link href="/">
-					<h2 className="mobile">H|N</h2>
+					<a className="mobile">
+						<div className="mobile icon">
+							<Icon name="hn" height="100%" width="100%"/>
+						</div>
+					</a>
 				</Link>
 
 				<Link href="/">
-					<h2 className="desktop">HETIC Newsroom</h2>
+					<a className="desktop"><h2 className="desktop">HETIC Newsroom</h2></a>
 				</Link>
 
 				<div className="navmenu-wrapper">
@@ -62,6 +66,11 @@ export default class Header extends React.Component {
 					h2 {
 						line-height: 1;
 						cursor: pointer;
+					}
+
+					.mobile.icon {
+						height: ${30 / 16}rem;
+						width: calc(${30 / 16}rem * 1.6);
 					}
 
 					@media (max-width: 659px) {
