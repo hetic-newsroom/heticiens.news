@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import DefaultColorScheme from '../lib/colors-default';
 import Icon from './icon';
 import Button from './button';
-import Input from './input';
+// Disabled: import Input from './input';
 import Newsletter from './newsletter-subscribe';
 
 export default class NavMenu extends React.Component {
@@ -111,8 +111,7 @@ export default class NavMenu extends React.Component {
 							</Link>
 						</li>
 					</ul>
-					{/* TODO: Link to search page on enter */}
-					<Input slim type="search" placeholder="Rechercher…"/>
+					{/* TODO: Search <Input slim type="search" placeholder="Rechercher…"/> */}
 					<div className="buttons">
 						<Button icon="email" size="30px" onClick={this.newsletterOpen}/>
 						<Link href="/login">
@@ -220,7 +219,7 @@ export default class NavMenu extends React.Component {
 					<header>
 						<h3>HETIC Newsroom</h3>
 					</header>
-					<Input type="search" placeholder="Rechercher…"/>
+					{/* TODO: Search <Input slim type="search" placeholder="Rechercher…"/> */}
 					<ul>
 						<li className={classNames({active: (this.state.url === '/')})}>
 							<Link href="/">
