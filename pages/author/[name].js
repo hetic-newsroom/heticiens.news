@@ -29,7 +29,7 @@ function makeSocialLinks(social) {
 }
 
 function titleToUrl(title) {
-	return `/articles/${title.replace(/ /g, '-')}`;
+	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
 }
 
 export default props => {
@@ -204,7 +204,7 @@ export async function getServerSideProps(ctx) {
 
 	const name = props.name.normalize('NFKC').replace(/ /g, '-');
 
-	const {props: props2} = await getProps(ctx, `/articles/${name}`);
+	const {props: props2} = await getProps(ctx, `/articles/${encodeURIComponent(name)}`);
 
 	return {
 		props: {...props, articles: props2.articles}

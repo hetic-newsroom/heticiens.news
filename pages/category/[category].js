@@ -4,7 +4,7 @@ import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 
 function titleToUrl(title) {
-	return `/articles/${title.replace(/ /g, '-')}`;
+	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
 }
 
 export default props => {
@@ -70,6 +70,6 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props} = await getProps(ctx, `/latest/${ctx.params.category}`);
+	const {props} = await getProps(ctx, `/latest/${encodeURIComponent(ctx.params.category)}`);
 	return {props};
 }

@@ -15,11 +15,11 @@ function formatReadingTime(ms) {
 }
 
 function authorNameToURL(name) {
-	return name.normalize('NFKC').replace(/ /g, '-');
+	return encodeURIComponent(name.normalize('NFKC').replace(/ /g, '-'));
 }
 
 function titleToUrl(title) {
-	return `/articles/${title.replace(/ /g, '-')}`;
+	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
 }
 
 function share(title) {
@@ -211,7 +211,7 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props, host} = await getProps(ctx, `/article/${ctx.params.title}`);
+	const {props, host} = await getProps(ctx, `/article/${encodeURIComponent(ctx.params.title)}`);
 
 	if (props.error) {
 		if (ctx.res) {
