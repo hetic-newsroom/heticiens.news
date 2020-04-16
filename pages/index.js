@@ -100,6 +100,12 @@ export default props => {
 		<Page>
 			{bannerArticle}
 			<div className="widthContainer">
+				<div className="intro">
+					<h2>👋 Bienvenue!</h2>
+					<p>
+						Bienvenue sur le site HETIC Newsroom!<br/><br/>Plongez dans l’expérience HETIC, racontée par les étudiants eux-mêmes.<br/>Nous sommes un collectif, qui représente l’ensemble des filières de l’école.<br/>Tous les héticiens sont les bienvenus. Une aide ponctuelle, une critique (constructive), une suggestion d’article ou un engagement à plus long terme ?<br/> N’hésitez pas à nous contacter: <strong><a href="mailto:info@heticiens.news">info@heticiens.news</a></strong>.<br/><br/>Bonne consultation!
+					</p>
+				</div>
 				<h2>À la une</h2>
 				<div className="articleList">
 					{cards}
@@ -177,6 +183,13 @@ export default props => {
 
 				.categories span:hover, .categories span:active {
 					color: var(--color-accent);
+				}
+
+				.intro {
+					// background: var(--color-light-grey);
+					// padding: 15px;
+					border-radius: 20px;
+					margin-bottom: 30px;
 				}
 			`}
 			</style>
