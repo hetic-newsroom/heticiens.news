@@ -82,7 +82,7 @@ export default props => {
 			</Head>
 			<div className="articleContainer">
 				<article>
-					<span>{props.category[0].toUpperCase() + props.category.slice(1)}</span>
+					<span>{props.category[0].toUpperCase() + props.category.slice(1).slice(0, -1)}</span>
 					<h1>{props.title}</h1>
 					<h3>
 						Publié le <strong>{formatDate(props.date)}</strong><br/>par <strong>{props.author.name}</strong>
