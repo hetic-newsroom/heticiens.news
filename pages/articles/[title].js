@@ -12,7 +12,7 @@ function formatDate(timestamp) {
 }
 
 function formatReadingTime(ms) {
-	return `${Math.round(ms / 1000 / 60)}min`;
+	return `${Math.round(ms / 1000 / 60)} min`;
 }
 
 function authorNameToURL(name) {
