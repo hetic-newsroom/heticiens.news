@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import getProps from '../lib/get-props';
 import Page from '../components/page';
 import ArticleCard from '../components/article-card';
@@ -98,6 +99,15 @@ export default props => {
 
 	return (
 		<Page>
+			<Head>
+				<meta property="og:title" content="HETIC Newsroom"/>
+				<meta property="og:type" content="website"/>
+				<meta property="og:image" content="https://heticiens.news/favicon.png"/>
+				<meta property="og:description" content="Collectif d’étudiants, qui regroupe l’ensemble des filières de l’école HETIC. Indépendant, HETIC Newsroom se propose de raconter ce qui fait l’expérience des héticiens."/>
+				<meta property="og:url" content="https://heticiens.news"/>
+				<meta property="og:locale" content="fr_FR"/>
+				<meta property="og:site_name" content="HETIC Newsroom"/>
+			</Head>
 			{bannerArticle}
 			<div className="widthContainer">
 				<div className="intro">
