@@ -114,6 +114,7 @@ export default () => (
 
 			div.articleHtmlContainer h2 {
 				margin: 30px 0 15px;
+				font-size: ${27 / 16}rem;
 			}
 
 			div.articleHtmlContainer img {
