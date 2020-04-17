@@ -89,7 +89,7 @@ export default props => {
 					</h3>
 					<h5>Temps de lecture: {formatReadingTime(props.readTime)}</h5>
 					<p className="intro">
-						<i>{props.intro}</i>
+						{props.intro}
 					</p>
 					<div
 						className="articleHtmlContainer"
@@ -138,6 +138,10 @@ export default props => {
 				h5 {
 					opacity: 0.4;
 					margin-top: 0.5rem;
+				}
+
+				p.intro {
+					font-weight: 700;
 				}
 
 				div.articleContainer {
