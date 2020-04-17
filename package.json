@@ -26,7 +26,8 @@
     ],
     "extends": "xo-react",
     "ignores": [
-      "local/**"
+      "local/**",
+      "components/head.js"
     ],
     "rules": {
       "react/state-in-constructor": [
