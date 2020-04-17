@@ -3,7 +3,7 @@ import * as React from 'react';
 export default props => (
 	<div className="articleCard">
 		<div className="imgContainer"/>
-		<h3>{props.category}</h3>
+		<h3>{props.category.slice(0, -1)}</h3>
 		<h2>{props.title}</h2>
 		<h4>par {props.author}</h4>
 

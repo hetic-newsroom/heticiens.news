@@ -16,7 +16,7 @@ export default props => {
 				<Link href={titleToUrl(article.title)}>
 					<a>
 						<div className="bannerArticle">
-							<h3>{article.category}</h3>
+							<h3>{article.category.slice(0, -1)}</h3>
 							<h2>{article.title}</h2>
 							<h4>par {article.author.name}</h4>
 							<p>{article.intro}</p>
