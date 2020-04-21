@@ -8,7 +8,7 @@ import Button from '../../components/button';
 
 function formatDate(timestamp) {
 	const d = new Date(timestamp * 1000);
-	return `${d.getDay()}/${d.getMonth()}/${d.getFullYear()}`;
+	return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
 }
 
 function formatReadingTime(ms) {
