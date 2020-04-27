@@ -200,6 +200,7 @@ export default props => {
 					// padding: 15px;
 					border-radius: 20px;
 					margin-bottom: 30px;
+					display: none;
 				}
 			`}
 			</style>
