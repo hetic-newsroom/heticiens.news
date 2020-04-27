@@ -52,6 +52,11 @@ export default props => {
 
 	const cards = [];
 	props.next.forEach(article => {
+		if (article.title === props.title) {
+			// Do not recommend current article
+			return;
+		}
+
 		cards.push(
 			<Link href={titleToUrl(article.title)}>
 				<a>
