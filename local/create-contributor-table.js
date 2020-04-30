@@ -120,7 +120,8 @@ dynamodb.createTable(params, async (error, data) => {
 									twitter: 'https://twitter.com/jack'
 								},
 								articles: [
-									'test_article1'
+									'test-article',
+									'sean-connery-et-la-vodka'
 								]
 							}
 						}
@@ -142,7 +143,7 @@ dynamodb.createTable(params, async (error, data) => {
 									linkedin: 'https://linkedin.com'
 								},
 								articles: [
-									'test_article2'
+									'sean-connery-et-la-vodka'
 								]
 							}
 						}

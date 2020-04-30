@@ -22,8 +22,7 @@ const params = {
 		{AttributeName: 'status', AttributeType: 'S'},
 		{AttributeName: 'date', AttributeType: 'N'},
 		{AttributeName: 'title', AttributeType: 'S'},
-		{AttributeName: 'category', AttributeType: 'S'},
-		{AttributeName: 'author', AttributeType: 'S'}
+		{AttributeName: 'category', AttributeType: 'S'}
 	],
 	GlobalSecondaryIndexes: [
 		{
@@ -66,20 +65,6 @@ const params = {
 				ReadCapacityUnits: 5,
 				WriteCapacityUnits: 5
 			}
-		},
-		{
-			IndexName: 'author',
-			KeySchema: [
-				{AttributeName: 'author', KeyType: 'HASH'},
-				{AttributeName: 'date', KeyType: 'RANGE'}
-			],
-			Projection: {
-				ProjectionType: 'ALL'
-			},
-			ProvisionedThroughput: {
-				ReadCapacityUnits: 5,
-				WriteCapacityUnits: 5
-			}
 		}
 	],
 	ProvisionedThroughput: {
@@ -102,12 +87,13 @@ dynamodb.createTable(params, async (error, data) => {
 					{
 						PutRequest: {
 							Item: {
-								id: 'test_article1',
+								id: 'test-article',
 								title: 'Test article',
 								date: Math.floor(Date.now() / 1000),
 								category: 'interviews',
-								author: 'tester1',
-								visits: 0,
+								authors: [
+									'tester1'
+								],
 								readTime: 20000,
 								image: 'https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920',
 								intro: 'Lorem ipsum dolor sit amet. Nectet us mergitur, nectet es. Obitur.',
@@ -119,12 +105,14 @@ dynamodb.createTable(params, async (error, data) => {
 					{
 						PutRequest: {
 							Item: {
-								id: 'test_article2',
+								id: 'sean-connery-et-la-vodka',
 								title: 'Sean Connery et la vodka',
 								date: Math.floor(Date.now() / 1000) + 5,
 								category: 'portraits',
-								author: 'tester2',
-								visits: 8,
+								authors: [
+									'tester1',
+									'tester2'
+								],
 								readTime: 120000,
 								image: 'https://images.unsplash.com/photo-1586462175816-c0e709898f01?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920',
 								intro: 'Depuis plusieurs années, l\'acteur esquive les attaques de Raspoutine, à qui il a volé un litre de Poliakof. Portrait d\'un homme retranché.',
