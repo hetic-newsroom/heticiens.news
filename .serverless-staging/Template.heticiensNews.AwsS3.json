@@ -1,6 +1,0 @@
-{
-  "name": "heticiensnewsstaging",
-  "region": "us-east-1",
-  "accelerated": true,
-  "url": "https://heticiensnewsstaging.s3.amazonaws.com"
-}

@@ -28,13 +28,19 @@ jobs:
         with:
           path: ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Cache AWS infrastructure data
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-aws-production
+        with:
+          path: ${{ github.workspace }}/.serverless
+          key: build-${{ env.cache-name }}-${{ hashFiles('serverless.yml.production') }}
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
       - name: Deploy
         run: |
-          cp -r .serverless-prod .serverless
           cp serverless.yml.prod serverless.yml
           npm run deploy
         env:
