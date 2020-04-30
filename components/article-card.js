@@ -5,7 +5,11 @@ export default props => (
 		<div className="imgContainer"/>
 		<h3>{props.category.slice(0, -1)}</h3>
 		<h2>{props.title}</h2>
-		<h4>par {props.author}</h4>
+		<h4>
+			par {props.authors.reduce((accumulator, author, index) => {
+				return (index === 0) ? `${author.name}` : `${accumulator} et ${author.name}`;
+			}, props.authors[0].name)}
+		</h4>
 
 		<style jsx>{`
 			div.articleCard {

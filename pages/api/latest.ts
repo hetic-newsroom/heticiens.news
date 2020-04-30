@@ -14,12 +14,13 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			count: count || 10,
 			index: 'status',
 			attributes: [
+				'id',
 				'date',
 				'title',
 				'image',
 				'intro',
 				'category',
-				'author'
+				'authors'
 			],
 			order: 'ascending'
 		});
@@ -43,17 +44,23 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 	try {
 		for (const article of articles) {
-			/* eslint-disable-next-line no-await-in-loop */
-			const res = await db.query('Contributors', {
-				id: article.author
-			}, {
-				count: 1,
-				attributes: [
-					'name'
-				]
-			});
-			const Items = res.Items as unknown;
-			article.author = Items[0];
+			const authors = [];
+
+			for (const author of article.authors) {
+				/* eslint-disable-next-line no-await-in-loop */
+				const res = await db.query('Contributors', {
+					id: author
+				}, {
+					count: 1,
+					attributes: [
+						'name'
+					]
+				});
+				const Items = res.Items as unknown;
+				authors.push(Items[0]);
+			}
+
+			article.authors = authors;
 		}
 	} catch (_) {
 		res.status(500);

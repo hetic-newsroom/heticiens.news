@@ -4,22 +4,22 @@ import getProps from '../lib/get-props';
 import Page from '../components/page';
 import ArticleCard from '../components/article-card';
 
-function titleToUrl(title) {
-	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
-}
-
 export default props => {
 	const cards = [];
 	let bannerArticle;
 	props.articles.forEach(article => {
 		if (!bannerArticle) {
 			bannerArticle = (
-				<Link href={titleToUrl(article.title)}>
+				<Link href={`/article/${article.id}`}>
 					<a>
 						<div className="bannerArticle">
 							<h3>{article.category.slice(0, -1)}</h3>
 							<h2>{article.title}</h2>
-							<h4>par {article.author.name}</h4>
+							<h4>
+								par {article.authors.reduce((accumulator, author, index) => {
+									return (index === 0) ? `${author.name}` : `${accumulator} et ${author.name}`;
+								}, article.authors[0].name)}
+							</h4>
 							<p>{article.intro}</p>
 
 							<style jsx>{`
@@ -84,12 +84,12 @@ export default props => {
 		}
 
 		cards.push(
-			<Link href={titleToUrl(article.title)}>
+			<Link href={`/article/${article.id}`}>
 				<a>
 					<ArticleCard
 						title={article.title}
 						category={article.category}
-						author={article.author.name}
+						authors={article.authors}
 						image={article.image}
 					/>
 				</a>
