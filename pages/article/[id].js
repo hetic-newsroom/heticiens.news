@@ -4,7 +4,7 @@ import Head from 'next/head';
 import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
-import Button from '../../components/button';
+import Share from '../../components/share-button';
 
 function formatDate(timestamp) {
 	const d = new Date(timestamp * 1000);
@@ -13,17 +13,6 @@ function formatDate(timestamp) {
 
 function formatReadingTime(ms) {
 	return `${Math.round(ms / 1000 / 60)} min`;
-}
-
-function share(title) {
-	if (typeof navigator !== 'undefined' && navigator.share) {
-		navigator.share({
-			title,
-			url: window.location
-		}).catch(() => {
-			// User aborted sharing, we don't care
-		});
-	}
 }
 
 export default props => {
@@ -109,13 +98,9 @@ export default props => {
 							</div>
 						</a>
 					</Link>
-					<Button
-						primary
-						icon="share"
-						value="Partager"
-						onClick={() => {
-							share(props.title);
-						}}
+					<Share
+						type="article"
+						link={`https://heticiens.news/article/${props.id}`}
 					/>
 				</aside>
 

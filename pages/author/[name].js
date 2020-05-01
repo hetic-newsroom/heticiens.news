@@ -5,17 +5,7 @@ import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 import Button from '../../components/button';
-
-function share(title) {
-	if (typeof navigator !== 'undefined' && navigator.share) {
-		navigator.share({
-			title,
-			url: window.location
-		}).catch(() => {
-			// User aborted sharing, we don't care
-		});
-	}
-}
+import Share from '../../components/share-button';
 
 function makeSocialLinks(social) {
 	const links = [];
@@ -91,13 +81,9 @@ export default props => {
 					<div className="socialLinks">
 						{makeSocialLinks(props.social)}
 					</div>
-					<Button
-						primary
-						icon="share"
-						value="Partager"
-						onClick={() => {
-							share(`${props.name}, auteur sur HETIC Newsroom`);
-						}}
+					<Share
+						type="author"
+						link={`https://heticiens.news/author/${authorNameToURL(props.name)}`}
 					/>
 				</aside>
 

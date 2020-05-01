@@ -47,7 +47,8 @@
   },
   "author": "Gabriel SAILLARD <gabriel@saillard.dev> (https://gaby.dev)",
   "contributors": [
-    "Arnaud MEGE <arnaud.mege@hetic.net>"
+    "Arnaud MEGE <arnaud.mege@hetic.net>",
+    "Joshua TABAKHOFF <joshua.tabakhoff@hetic.net>"
   ],
   "license": "UNLICENSED",
   "bugs": {
