@@ -15,14 +15,6 @@ function formatReadingTime(ms) {
 	return `${Math.round(ms / 1000 / 60)} min`;
 }
 
-function authorNameToURL(name) {
-	return encodeURIComponent(name.normalize('NFKC').replace(/ /g, '-'));
-}
-
-function titleToUrl(title) {
-	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
-}
-
 function share(title) {
 	if (typeof navigator !== 'undefined' && navigator.share) {
 		navigator.share({
@@ -58,13 +50,13 @@ export default props => {
 		}
 
 		cards.push(
-			<Link href={titleToUrl(article.title)}>
+			<Link href={`/article/${article.id}`}>
 				<a>
 					<ArticleCard
 						title={article.title}
 						category={article.category}
 						image={article.image}
-						author={article.author.name}
+						authors={article.authors}
 					/>
 				</a>
 			</Link>
@@ -81,7 +73,7 @@ export default props => {
 				<meta property="og:type" content="article"/>
 				<meta property="og:image" content={props.image}/>
 				<meta property="og:description" content={props.intro}/>
-				<meta property="og:url" content={`https://heticiens.news${titleToUrl(props.title)}`}/>
+				<meta property="og:url" content={`https://heticiens.news/article/${props.id}`}/>
 				<meta property="og:locale" content="fr_FR"/>
 				<meta property="og:site_name" content="HETIC Newsroom"/>
 			</Head>
@@ -90,7 +82,8 @@ export default props => {
 					<span>{props.category[0].toUpperCase() + props.category.slice(1).slice(0, -1)}</span>
 					<h1>{props.title}</h1>
 					<h3>
-						Publié le <strong>{formatDate(props.date)}</strong><br/>par <strong>{props.author.name}</strong>
+						{ /* TODO: Display multiple authors */ }
+						Publié le <strong>{formatDate(props.date)}</strong><br/>par <strong>{props.authors[0].name}</strong>
 					</h3>
 					<h5>Temps de lecture: {formatReadingTime(props.readTime)}</h5>
 					<p className="intro">
@@ -106,12 +99,13 @@ export default props => {
 					/>
 				</article>
 				<aside>
-					<Link href={`/author/${authorNameToURL(props.author.name)}`}>
+					{ /* TODO: Display multiple authors */ }
+					<Link href={`/author/${props.authors[0].id}`}>
 						<a>
 							<div className="author">
-								<img src={(props.author.picture === 'no-picture') ? '/api/icons/person' : props.author.picture} alt={props.author.name}/>
+								<img src={(props.authors[0].picture === 'no-picture') ? '/api/icons/person' : props.authors[0].picture} alt={props.authors[0].name}/>
 								<h3>Écrit par</h3>
-								<h2>{props.author.name}</h2>
+								<h2>{props.authors[0].name}</h2>
 							</div>
 						</a>
 					</Link>
@@ -230,7 +224,7 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props, host} = await getProps(ctx, `/article/${encodeURIComponent(ctx.params.title)}`);
+	const {props, host} = await getProps(ctx, `/article/${encodeURIComponent(ctx.params.id)}`);
 
 	if (props.error) {
 		if (ctx.res) {
