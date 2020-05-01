@@ -20,7 +20,7 @@ export default props => {
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<Link href={titleToUrl(article.title)}>
+			<Link key={article.id} href={titleToUrl(article.title)}>
 				<a>
 					<ArticleCard
 						title={article.title}
