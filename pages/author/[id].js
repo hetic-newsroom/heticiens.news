@@ -7,26 +7,6 @@ import ArticleCard from '../../components/article-card';
 import Button from '../../components/button';
 import Share from '../../components/share-button';
 
-function makeSocialLinks(social) {
-	const links = [];
-	Object.keys(social).forEach(network => {
-		links.push(
-			<a key={network} href={social[network]} target="_blank" rel="noopener noreferrer">
-				<Button icon={network}/>
-			</a>
-		);
-	});
-	return links;
-}
-
-function titleToUrl(title) {
-	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
-}
-
-function authorNameToURL(name) {
-	return encodeURIComponent(name.normalize('NFKC').replace(/ /g, '-'));
-}
-
 export default props => {
 	if (!props) {
 		return (
@@ -36,16 +16,33 @@ export default props => {
 		);
 	}
 
+	const socialLinks = [];
+	Object.keys(props.social).forEach(network => {
+		socialLinks.push(
+			<div className="socialLink">
+				<a key={network} href={props.social[network]} target="_blank" rel="noopener noreferrer">
+					<Button icon={network}/>
+				</a>
+				<style jsx>{`
+					.socialLink {
+						margin: 0 15px 15px 0;
+					}
+				`}
+				</style>
+			</div>
+		);
+	});
+
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<Link key={article.id}> href={titleToUrl(article.title)}
+			<Link key={article.id} href={`/article/${article.id}`}>
 				<a>
 					<ArticleCard
 						title={article.title}
 						category={article.category}
 						image={article.image}
-						author={props.name}
+						authors={article.authors}
 					/>
 				</a>
 			</Link>
@@ -62,7 +59,7 @@ export default props => {
 				<meta property="og:type" content="profile"/>
 				<meta property="og:image" content={props.picture}/>
 				<meta property="og:description" content={props.bio}/>
-				<meta property="og:url" content={`https://heticiens.news/author/${authorNameToURL(props.name)}`}/>
+				<meta property="og:url" content={`https://heticiens.news/author/${props.id}`}/>
 				<meta property="og:locale" content="fr_FR"/>
 				<meta property="og:site_name" content="HETIC Newsroom"/>
 			</Head>
@@ -79,12 +76,14 @@ export default props => {
 				</article>
 				<aside>
 					<div className="socialLinks">
-						{makeSocialLinks(props.social)}
+						{socialLinks}
 					</div>
-					<Share
-						type="author"
-						link={`https://heticiens.news/author/${authorNameToURL(props.name)}`}
-					/>
+					<div className="shareButtonContainer">
+						<Share
+							type="author"
+							link={`https://heticiens.news/author/${props.id}`}
+						/>
+					</div>
 				</aside>
 
 				<h2>Articles publiés</h2>
@@ -109,24 +108,6 @@ export default props => {
 					width: 660px;
 					max-width: 100%;
 					margin: 0 auto;
-				}
-
-				aside {
-					grid-area: aside;
-					width: 660px;
-					max-width: 100%;
-					margin: 0 auto;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: flex-start;
-				}
-
-				@media (min-width: 660px) {
-					aside {
-						flex-direction: row;
-						justify-content: space-between;
-					}
 				}
 
 				header {
@@ -159,17 +140,34 @@ export default props => {
 					grid-area: name;
 				}
 
-				div.socialLinks {
+				aside {
+					grid-area: aside;
+					width: 660px;
+					max-width: 100%;
+					margin: 0 auto;
 					display: grid;
-					grid-template-columns: repeat(${Object.keys(props.social).length}, auto);
-					grid-template-rows: 1fr;
-					grid-gap: 15px;
+					grid-template-columns: auto 150px;
 				}
 
-				@media (max-width: 660px) {
-					div.socialLinks {
-						margin-bottom: 15px;
-					}
+				aside .socialLinks {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+				}
+
+				aside .socialLinks > * {
+					margin: 0 15px 15px 0;
+				}
+
+				aside .shareButtonContainer {
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+					padding-bottom: 15px;
+				}
+
+				.articleList {
+					margin-bottom: 15px;
 				}
 
 				@media (min-width: 660px) {
@@ -186,7 +184,7 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props, host} = await getProps(ctx, `/author/${ctx.params.name}`);
+	const {props, host} = await getProps(ctx, `/contributor/${ctx.params.id}`);
 
 	if (props.error) {
 		if (ctx.res) {
@@ -202,9 +200,7 @@ export async function getServerSideProps(ctx) {
 		return;
 	}
 
-	const name = props.name.normalize('NFKC').replace(/ /g, '-');
-
-	const {props: props2} = await getProps(ctx, `/articles/${encodeURIComponent(name)}`);
+	const {props: props2} = await getProps(ctx, `/contributor/${ctx.params.id}/articles`);
 
 	return {
 		props: {...props, articles: props2.articles}

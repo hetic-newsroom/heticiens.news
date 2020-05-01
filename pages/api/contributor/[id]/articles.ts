@@ -11,9 +11,19 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		const articles = [];
 		for (const article of contributor.articles) {
-			articles.push(await getArticle(article).catch(e => {
+			const populatedArticle = await getArticle(article).catch(e => {
 				throw e;
-			}));
+			});
+
+			let i = 0;
+			for (const author of populatedArticle.authors) {
+				populatedArticle.authors[i] = await getContributor(author as string).catch(e => {
+					throw e;
+				});
+				i++;
+			}
+
+			articles.push(populatedArticle);
 		}
 
 		articles.forEach((article, i) => {
@@ -25,7 +35,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		res.status(200);
 		res.setHeader('Cache-control', 'public, max-age=172800, must-revalidate');
 		res.json({
-			author: contributor,
 			articles
 		});
 	}).catch(error => {
