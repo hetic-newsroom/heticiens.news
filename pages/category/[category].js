@@ -3,10 +3,6 @@ import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 
-function titleToUrl(title) {
-	return `/articles/${encodeURIComponent(title.replace(/ /g, '-'))}`;
-}
-
 export default props => {
 	if (!props) {
 		return (
@@ -20,12 +16,12 @@ export default props => {
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<Link key={article.id} href={titleToUrl(article.title)}>
+			<Link key={article.id} href={`/article/${article.id}`}>
 				<a>
 					<ArticleCard
 						title={article.title}
 						category={article.category}
-						author={article.author.name}
+						authors={article.authors}
 						image={article.image}
 					/>
 				</a>
@@ -71,5 +67,15 @@ export default props => {
 
 export async function getServerSideProps(ctx) {
 	const {props} = await getProps(ctx, `/latest/${encodeURIComponent(ctx.params.category)}`);
+
+	if (props.error) {
+		return {
+			props: {
+				category: ctx.params.category,
+				articles: []
+			}
+		};
+	}
+
 	return {props};
 }
