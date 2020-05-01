@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import Database from '../../lib/database';
+import Database from '../../../lib/database';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 	const count = Number(req.query.count as string);

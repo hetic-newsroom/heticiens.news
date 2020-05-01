@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import Database from '../../../lib/database';
-import {Contributor} from '../../../lib/data-validator';
+import Database from '../../../../lib/database';
+import {Contributor} from '../../../../lib/data-validator';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 	let name = req.query.name as string;
