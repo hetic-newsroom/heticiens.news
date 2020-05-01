@@ -20,12 +20,17 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				'image',
 				'intro',
 				'category',
-				'author'
+				'author',
+				'status'
 			],
 			order: 'ascending'
 		});
 		const Items = res.Items as unknown;
 		articles = Items;
+
+		articles.forEach((article, index) => {
+			articles.splice(index, 1);
+		});
 
 		if (articles.length === 0) {
 			throw new TypeError('not found');
