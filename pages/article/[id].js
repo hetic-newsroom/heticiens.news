@@ -31,6 +31,58 @@ export default props => {
 		content = 'Chargement en cours…';
 	}
 
+	const authors = [];
+	props.authors.forEach((author, index) => {
+		let title = 'Avec';
+
+		if (index === 0) {
+			title = 'Écrit par';
+		}
+
+		authors.push(
+			<Link key={author.id} href={`/author/${author.id}`}>
+				<a>
+					<div className="author">
+						<img src={(author.picture === 'no-picture') ? '/api/icons/person' : author.picture} alt={author.name}/>
+						<h3>{title}</h3>
+						<h2>{author.name}</h2>
+						<style jsx>{`
+							div.author {
+								display: grid;
+								grid-template: "pic desc" auto
+													"pic name" auto / 4rem auto;
+								grid-column-gap: 15px;
+								cursor: pointer;
+								margin: 0 15px 15px 0;
+							}
+
+							div.author img {
+								grid-area: pic;
+								width: 4rem;
+								height: 4rem;
+								border-radius: 100%;
+								background: var(--color-light-grey);
+								align-self: center;
+							}
+
+							div.author h3 {
+								grid-area: desc;
+								line-height: 1;
+								align-self: end;
+							}
+
+							div.author h2 {
+								grid-area: name;
+								font-size: ${24 / 16}rem;
+							}
+						`}
+						</style>
+					</div>
+				</a>
+			</Link>
+		);
+	});
+
 	const cards = [];
 	props.next.forEach(article => {
 		if (article.title === props.title) {
@@ -71,8 +123,13 @@ export default props => {
 					<span>{props.category[0].toUpperCase() + props.category.slice(1).slice(0, -1)}</span>
 					<h1>{props.title}</h1>
 					<h3>
-						{ /* TODO: Display multiple authors */ }
-						Publié le <strong>{formatDate(props.date)}</strong><br/>par <strong>{props.authors[0].name}</strong>
+						Publié le <strong>{formatDate(props.date)}</strong><br/>par {props.authors.reduce((accumulator, author, index) => {
+							if (index === 0) {
+								return <strong key={author.id}>{`${author.name}`}</strong>;
+							}
+
+							return [accumulator, ' et ', <strong key={author.id}>{`${author.name}`}</strong>];
+						}, props.authors[0].name)}
 					</h3>
 					<h5>Temps de lecture: {formatReadingTime(props.readTime)}</h5>
 					<p className="intro">
@@ -88,20 +145,15 @@ export default props => {
 					/>
 				</article>
 				<aside>
-					{ /* TODO: Display multiple authors */ }
-					<Link href={`/author/${props.authors[0].id}`}>
-						<a>
-							<div className="author">
-								<img src={(props.authors[0].picture === 'no-picture') ? '/api/icons/person' : props.authors[0].picture} alt={props.authors[0].name}/>
-								<h3>Écrit par</h3>
-								<h2>{props.authors[0].name}</h2>
-							</div>
-						</a>
-					</Link>
-					<Share
-						type="article"
-						link={`https://heticiens.news/article/${props.id}`}
-					/>
+					<div className="authorsContainer">
+						{authors}
+					</div>
+					<div className="shareButtonContainer">
+						<Share
+							type="article"
+							link={`https://heticiens.news/article/${props.id}`}
+						/>
+					</div>
 				</aside>
 
 				<h2>Voir aussi</h2>
@@ -149,46 +201,21 @@ export default props => {
 					width: 660px;
 					max-width: 100%;
 					margin: 0 auto;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: flex-start;
-				}
-
-				@media (min-width: 300px) {
-					aside {
-						flex-direction: row;
-						justify-content: space-between;
-					}
-				}
-
-				div.author {
-					align-self: flex-start;
 					display: grid;
-					grid-template: "pic desc" auto
-										"pic name" auto / 4rem auto;
-					grid-column-gap: 15px;
-					cursor: pointer;
+					grid-template-columns: auto 150px;
 				}
 
-				div.author img {
-					grid-area: pic;
-					width: 4rem;
-					height: 4rem;
-					border-radius: 100%;
-					background: var(--color-light-grey);
-					align-self: center;
+				aside .authorsContainer {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
 				}
 
-				div.author h3 {
-					grid-area: desc;
-					line-height: 1;
-					align-self: end;
-				}
-
-				div.author h2 {
-					grid-area: name;
-					font-size: ${24 / 16}rem;
+				aside .shareButtonContainer {
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+					padding-bottom: 15px;
 				}
 
 				aside + h2 {

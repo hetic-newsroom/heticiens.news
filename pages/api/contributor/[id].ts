@@ -5,11 +5,12 @@ import {Contributor} from '../../../lib/data-validator';
 export async function getContributor(id: string, preview = true): Promise<Contributor> {
 	const attributes = [
 		'id',
-		'name'
+		'name',
+		'picture'
 	];
 
 	if (!preview) {
-		attributes.push('picture', 'sex', 'bio', 'social', 'articles');
+		attributes.push('sex', 'bio', 'social', 'articles');
 	}
 
 	const db = new Database();
