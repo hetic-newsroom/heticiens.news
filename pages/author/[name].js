@@ -11,7 +11,7 @@ function makeSocialLinks(social) {
 	const links = [];
 	Object.keys(social).forEach(network => {
 		links.push(
-			<a href={social[network]} target="_blank" rel="noopener noreferrer">
+			<a key={network} href={social[network]} target="_blank" rel="noopener noreferrer">
 				<Button icon={network}/>
 			</a>
 		);
@@ -39,7 +39,7 @@ export default props => {
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<Link href={titleToUrl(article.title)}>
+			<Link key={article.id}> href={titleToUrl(article.title)}
 				<a>
 					<ArticleCard
 						title={article.title}

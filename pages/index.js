@@ -84,7 +84,7 @@ export default props => {
 		}
 
 		cards.push(
-			<Link href={`/article/${article.id}`}>
+			<Link key={article.id} href={`/article/${article.id}`}>
 				<a>
 					<ArticleCard
 						title={article.title}
