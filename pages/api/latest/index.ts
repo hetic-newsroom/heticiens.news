@@ -1,36 +1,54 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import Database from '../../../lib/database';
+import {Article} from '../../../lib/data-validator';
+import {getArticle} from '../article/[id]';
+import {getContributor} from '../contributor/[id]';
+
+export async function getArticleList(count = 10): Promise<[{id: string}]> {
+	const db = new Database();
+
+	const res = await db.query('Articles', {
+		status: 'published'
+	}, {
+		count,
+		index: 'status',
+		attributes: ['id']
+	});
+	const Items = res.Items as unknown[];
+
+	if (Items.length === 0) {
+		throw new Error('not found');
+	}
+
+	return Items as [{id: string}];
+}
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 	const count = Number(req.query.count as string);
 
-	const db = new Database();
-	let articles;
+	getArticleList(count).then(async articles => {
+		let i = 0;
+		for (const article of articles) {
+			const populatedArticle: Article = await getArticle(article.id).catch(e => {
+				throw e;
+			});
 
-	try {
-		const res = await db.query('Articles', {
-			status: 'published'
-		}, {
-			count: count || 10,
-			index: 'status',
-			attributes: [
-				'id',
-				'date',
-				'title',
-				'image',
-				'intro',
-				'category',
-				'authors'
-			],
-			order: 'ascending'
-		});
-		const Items = res.Items as unknown;
-		articles = Items;
+			let i2 = 0;
+			for (const author of populatedArticle.authors) {
+				populatedArticle.authors[i2] = await getContributor(author as string).catch(e => {
+					throw e;
+				});
+				i2++;
+			}
 
-		if (articles.length === 0) {
-			throw new TypeError('not found');
+			articles[i] = populatedArticle;
+			i++;
 		}
-	} catch (error) {
+
+		res.status(200);
+		res.setHeader('Cache-control', 'public, max-age=43200, must-revalidate');
+		res.json({articles});
+	}).catch(error => {
 		if (error.message === 'not found') {
 			res.status(404);
 			res.end();
@@ -39,36 +57,5 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		res.status(500);
 		res.json(error);
-		return;
-	}
-
-	try {
-		for (const article of articles) {
-			const authors = [];
-
-			for (const author of article.authors) {
-				/* eslint-disable-next-line no-await-in-loop */
-				const res = await db.query('Contributors', {
-					id: author
-				}, {
-					count: 1,
-					attributes: [
-						'name'
-					]
-				});
-				const Items = res.Items as unknown;
-				authors.push(Items[0]);
-			}
-
-			article.authors = authors;
-		}
-	} catch (_) {
-		res.status(500);
-		res.end('Author not found');
-		return;
-	}
-
-	res.status(200);
-	res.setHeader('Cache-control', 'public, max-age=43200, must-revalidate');
-	res.json({articles});
+	});
 };

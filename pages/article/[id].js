@@ -1,6 +1,3 @@
-/* This is a legacy route we keep for backwards compatibility. */
-// TODO: Leverage /api/legacy-articles/[title] route to get ID of article, and redirect to /article/[id].
-
 import Router from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';

@@ -37,7 +37,8 @@
       "import/no-unassigned-import": 0,
       "react/react-in-jsx-scope": 0,
       "unicorn/prevent-abbreviations": 0,
-      "react/prop-types": 0
+      "react/prop-types": 0,
+      "no-await-in-loop": 0
     }
   },
   "repository": {
