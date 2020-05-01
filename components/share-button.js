@@ -10,7 +10,7 @@ export default class Share extends React.Component {
 			opened: false
 		};
 
-		this.handleSharingQuit = this.onWantClose.bind(this);
+		this.handleSharingQuit = this.handleSharingQuit.bind(this);
 	}
 
 	share() {
@@ -28,7 +28,7 @@ export default class Share extends React.Component {
 		}
 	}
 
-	onWantClose() {
+	handleSharingQuit() {
 		this.setState({
 			opened: false
 		});
@@ -63,15 +63,15 @@ export default class Share extends React.Component {
 						</a>
 					</div>
 					<style jsx>{`
-                        h2, h3 {
-                            margin-bottom: 20px;
-                        }
+						h2, h3 {
+							margin-bottom: 20px;
+						}
 
-                        .buttonContainer {
-                            display: flex;
-                            justify-content: space-evenly;
-                        }
-                    `}
+						.buttonContainer {
+							display: flex;
+							justify-content: space-evenly;
+						}
+					`}
 					</style>
 				</Modal>
 			</>
