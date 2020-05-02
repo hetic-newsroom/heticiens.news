@@ -1,8 +1,8 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import Database from '../../../lib/database';
-import {Article} from '../../../lib/data-validator';
-import {getArticle} from '../article/[id]';
-import {getContributor} from '../contributor/[id]';
+import Database from '../../../../lib/database';
+import {Article} from '../../../../lib/data-validator';
+import {getArticle} from '../[id]';
+import {getContributor} from '../../contributor/[id]';
 
 export async function getArticleList(count = 10): Promise<[{id: string}]> {
 	const db = new Database();

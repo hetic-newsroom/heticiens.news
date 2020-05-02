@@ -66,7 +66,7 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props} = await getProps(ctx, `/latest/${encodeURIComponent(ctx.params.category)}`);
+	const {props} = await getProps(ctx, `/article/latest/${encodeURIComponent(ctx.params.category)}`);
 
 	if (props.error) {
 		return {

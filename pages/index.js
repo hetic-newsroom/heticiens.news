@@ -209,6 +209,6 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props} = await getProps(ctx, '/latest');
+	const {props} = await getProps(ctx, '/article/latest');
 	return {props};
 }
