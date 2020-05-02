@@ -252,7 +252,7 @@ export async function getServerSideProps(ctx) {
 		return;
 	}
 
-	const {props: next} = await getProps(ctx, '/latest?count=4');
+	const {props: next} = await getProps(ctx, '/article/latest?count=4');
 
 	return {
 		props: {...props, next: next.articles}
