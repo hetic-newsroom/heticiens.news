@@ -54,4 +54,4 @@ export const Email = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,4}$/;
 
 export const UnhashedPassword = /^\S{6,}$/;
 
-export const TokenRegex = /^\S{8,}\|\|\S{8,}$/;
+export const TokenRegex = /^\S{4,}\|\|\S{8,}$/;
