@@ -40,7 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		const db = new Database();
 
-		const dbArticle = db.borrow('Articles', {id: articleId}) as any;
+		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
 
 		if (typeof dbArticle.approvals === 'number') {
 			dbArticle.approvals++;
@@ -48,7 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			dbArticle.approvals = 1;
 		}
 
-		await dbArticle.save();
+		await dbArticle.save().catch(e => console.log(e));
 
 		if (dbArticle.approvals < 3) {
 			res.status(200);
