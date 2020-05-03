@@ -122,7 +122,8 @@ dynamodb.createTable(params, async (error, data) => {
 								articles: [
 									'test-article',
 									'sean-connery-et-la-vodka'
-								]
+								],
+								drafts: []
 							}
 						}
 					},
@@ -144,7 +145,8 @@ dynamodb.createTable(params, async (error, data) => {
 								},
 								articles: [
 									'sean-connery-et-la-vodka'
-								]
+								],
+								drafts: []
 							}
 						}
 					}

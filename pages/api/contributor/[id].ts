@@ -1,16 +1,21 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import Database from '../../../lib/database';
 import {Contributor} from '../../../lib/data-validator';
+import {validateToken} from '../auth';
 
-export async function getContributor(id: string, preview = true): Promise<Contributor> {
+export async function getContributor(id: string, preview = true, authenticated = false): Promise<Contributor> {
 	const attributes = [
 		'id',
 		'name',
 		'picture'
 	];
 
-	if (!preview) {
+	if (!preview || authenticated) {
 		attributes.push('sex', 'bio', 'social', 'articles');
+	}
+
+	if (authenticated) {
+		attributes.push('email', 'moderator', 'drafts');
 	}
 
 	const db = new Database();
@@ -30,8 +35,19 @@ export async function getContributor(id: string, preview = true): Promise<Contri
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 	const query = req.query.id as string;
+	const token = req.query.token as string;
 
-	await getContributor(query, false).then(contributor => {
+	let authenticated = false;
+
+	if (token) {
+		const {statusCode: authStatus} = await validateToken(token);
+
+		if (authStatus === 200) {
+			authenticated = true;
+		}
+	}
+
+	await getContributor(query, false, authenticated).then(contributor => {
 		res.status(200);
 		res.setHeader('Cache-control', 'public, max-age=172800, must-revalidate');
 		res.json(contributor);

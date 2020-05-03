@@ -22,6 +22,7 @@ export interface Contributor {
 	picture: string; // URL to s3 resource
 	social: socialLinks;
 	articles: string[]; // IDs of corresponding entries in Articles db
+	drafts: string[]; // IDs of drafted articles
 }
 
 type articleStatus = 'published' | 'waiting' | 'refused' | 'draft';

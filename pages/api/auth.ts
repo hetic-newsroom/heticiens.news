@@ -12,12 +12,12 @@ interface AuthCredentials {
 	password: string;
 }
 
-interface AuthSuccess {
+export interface AuthSuccess {
 	statusCode: number;
 	token: string;
 }
 
-interface AuthFailure {
+export interface AuthFailure {
 	statusCode: number;
 	error: string;
 }
@@ -98,7 +98,7 @@ async function authentify(creds: AuthCredentials): Promise<AuthResponse> {
 }
 
 // Export token validation function to be used in other API endpoints
-export async function validateToken(token: string): Promise<AuthResponse> {
+export async function validateToken(token: string, autorenew = false): Promise<AuthResponse> {
 	if (!token) {
 		return {
 			statusCode: 400,
@@ -150,7 +150,7 @@ export async function validateToken(token: string): Promise<AuthResponse> {
 	}
 
 	let newTokenId: string | null;
-	if ((TOKEN_TIMEOUT - time) <= TOKEN_RENEW) {
+	if ((TOKEN_TIMEOUT - time) <= TOKEN_RENEW && autorenew) {
 		newTokenId = nanoid();
 		user.tokens[user.tokens.indexOf(inDb)] = {
 			token: newTokenId,
@@ -175,7 +175,7 @@ export default async (req: AuthRequest, res: NextApiResponse): Promise<void> => 
 
 	switch (req.method) {
 		case 'GET':
-			response = validateToken(req.query.token as string);
+			response = validateToken(req.query.token as string, true);
 			break;
 		case 'POST':
 			response = authentify(req.body);
