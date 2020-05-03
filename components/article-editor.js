@@ -146,7 +146,6 @@ export default class ArticleEditor extends React.Component {
 			category: this.state.category
 		}));
 
-		console.log(this.state);
 		const request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
 			method: 'POST',
 			headers: {
@@ -228,6 +227,7 @@ export default class ArticleEditor extends React.Component {
 				<Editor
 					data={this.props.content}
 					disabled={this.state.loading}
+					token={this.state.token}
 					onChange={this.setContentValue}
 				/><br/>
 				<select value={this.state.category} onChange={this.setCategoryValue}>
