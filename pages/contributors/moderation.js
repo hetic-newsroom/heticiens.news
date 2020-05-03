@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Page from '../../components/page';
-import Button from '../../components/button';
-import ContributorDashboard from '../../components/contributor-dashboard';
+import ModerationDashboard from '../../components/moderation-dashboard';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
 	ssr: false
@@ -12,21 +11,16 @@ export default () => {
 	return (
 		<NeedAuth>
 			<Page
-				title="Espace contributeur - H|N"
+				title="Espace modérateur - H|N"
 				description="Accès réservé aux contributeurs"
 			>
 				<div className="contribspace">
-					<h1>Espace contributeur</h1>
-					<Link href="/contributors/new">
-						<a>
-							<Button primary icon="chevronRight" value="Rédiger un article"/>
-						</a>
-					</Link>
+					<h1>Espace modérateur</h1>
 
-					<ContributorDashboard/>
+					<ModerationDashboard/>
 
-					<Link href="/">
-						<a>Retourner sur le site</a>
+					<Link href="/contributors">
+						<a>Retourner à l’espace contributeur</a>
 					</Link>
 					<style jsx>{`
 						.contribspace {

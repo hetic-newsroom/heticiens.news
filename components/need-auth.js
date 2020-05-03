@@ -16,7 +16,6 @@ export default class NeedAuth extends React.Component {
 		const parsed = await response.json();
 
 		if (response.ok) {
-			console.log('auth ok:', parsed);
 			if (parsed.token !== token) {
 				// Store updated token
 				window.localStorage.setItem('login_token', parsed.token);
@@ -26,7 +25,6 @@ export default class NeedAuth extends React.Component {
 				progress: 'authenticated'
 			});
 		} else {
-			console.log('auth not ok:', parsed);
 			Router.push('/403');
 		}
 	}
