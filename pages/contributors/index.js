@@ -2,9 +2,12 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Page from '../../components/page';
 import Button from '../../components/button';
-import ContributorDashboard from '../../components/contributor-dashboard';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
+	ssr: false
+});
+
+const ContributorDashboard = dynamic(() => import('../../components/contributor-dashboard'), {
 	ssr: false
 });
 
