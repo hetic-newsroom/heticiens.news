@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import {getArticle} from '../../article/[id]';
-import {getContributor} from '../[id]';
-import {validateToken, AuthFailure} from '../../auth';
+import {getArticle} from '../../../article/[id]';
+import {getContributor} from '../../[id]';
+import {validateToken, AuthFailure} from '../../../auth';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
 	const id = req.query.id as string;
