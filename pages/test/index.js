@@ -7,11 +7,11 @@ const NeedAuth = dynamic(() => import('../../components/need-auth'), {
 
 export default () => {
 	return (
-		<Page
-			title="Espace contributeur - H|N"
-			description="Accès réservé aux contributeurs"
-		>
-			<NeedAuth>
+		<NeedAuth>
+			<Page
+				title="Espace contributeur - H|N"
+				description="Accès réservé aux contributeurs"
+			>
 				<div className="contribspace">
 					<h1>Espace contributeur (authentifié)</h1>
 
@@ -24,7 +24,7 @@ export default () => {
 					`}
 					</style>
 				</div>
-			</NeedAuth>
-		</Page>
+			</Page>
+		</NeedAuth>
 	);
 };

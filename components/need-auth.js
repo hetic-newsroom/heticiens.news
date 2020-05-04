@@ -12,12 +12,19 @@ export default class NeedAuth extends React.Component {
 	}
 
 	async componentDidMount() {
+		if (!window) {
+			console.log('no window'); // Doesn't make sense
+			return;
+		}
+
 		const token = window.localStorage.getItem('login_token');
 		const response = await fetch(`/api/auth?token=${token}`);
 		const parsed = await response.json();
 
 		if (response.ok) {
+			console.log('auth ok');
 			if (parsed.token !== token) {
+				console.log('auth ok and new token');
 				// Store updated token
 				window.localStorage.setItem('login_token', parsed.token);
 			}
@@ -26,6 +33,7 @@ export default class NeedAuth extends React.Component {
 				progress: 'authenticated'
 			});
 		} else {
+			console.log('auth not ok');
 			Router.push('/403');
 		}
 	}

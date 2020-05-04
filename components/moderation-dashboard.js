@@ -3,7 +3,7 @@ import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import ArticleCard from '../components/article-card';
 import DraftCard from '../components/draft-card';
-import {Router} from 'next/router';
+import Router from 'next/router';
 
 export default class ModerationDashboard extends React.Component {
 	constructor(props) {
