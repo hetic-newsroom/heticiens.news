@@ -3,6 +3,10 @@ import dynamic from 'next/dynamic';
 import Page from '../../../components/page';
 import Button from '../../../components/button';
 
+const NeedAuth = dynamic(() => import('../../../components/need-auth'), {
+	ssr: false
+});
+
 const ContributorDashboard = dynamic(() => import('../../../components/contributor-dashboard'), {
 	ssr: false
 });
@@ -22,6 +26,10 @@ export default () => {
 				</Link>
 
 				<ContributorDashboard/>
+
+				<NeedAuth>
+					<h2>Authentifié</h2>
+				</NeedAuth>
 
 				<Link href="/">
 					<a>Retourner sur le site</a>

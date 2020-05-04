@@ -1,5 +1,5 @@
 import * as React from 'react';
-// RouterImport import Router from 'next/router';
+import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
 export default class NeedAuth extends React.Component {
@@ -26,10 +26,7 @@ export default class NeedAuth extends React.Component {
 				progress: 'authenticated'
 			});
 		} else {
-			this.setState({
-				progress: 'forbidden'
-			});
-			// Router.push('/403');
+			Router.push('/403');
 		}
 	}
 
@@ -38,7 +35,7 @@ export default class NeedAuth extends React.Component {
 			case 'authenticated':
 				return this.props.children;
 			default:
-				return (<h1>Chargement...</h1>);
+				return <h1>Chargement...</h1>;
 		}
 	}
 }
