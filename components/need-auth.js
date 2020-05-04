@@ -11,6 +11,8 @@ export default class NeedAuth extends React.Component {
 	}
 
 	async componentDidMount() {
+		console.log('auth root component initiated');
+
 		const token = window.localStorage.getItem('login_token');
 		const response = await window.fetch(`/api/auth?token=${token}`);
 		const parsed = await response.json();
