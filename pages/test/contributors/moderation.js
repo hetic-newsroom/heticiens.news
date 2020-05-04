@@ -6,7 +6,6 @@ const ModerationDashboard = dynamic(() => import('../../../components/moderation
 	ssr: false
 });
 
-
 export default () => {
 	return (
 		<Page

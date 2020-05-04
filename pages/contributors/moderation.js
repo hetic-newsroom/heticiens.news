@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Page from '../../components/page';
-import ModerationDashboard from '../../components/moderation-dashboard';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
+	ssr: false
+});
+
+const ModerationDashboard = dynamic(() => import('../../components/moderation-dashboard'), {
 	ssr: false
 });
 
