@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Router from 'next/router';
+import fetch from 'isomorphic-unfetch';
 
 export default class NeedAuth extends React.Component {
 	constructor(props) {
@@ -12,7 +13,7 @@ export default class NeedAuth extends React.Component {
 
 	async componentDidMount() {
 		const token = window.localStorage.getItem('login_token');
-		const response = await window.fetch(`/api/auth?token=${token}`);
+		const response = await fetch(`/api/auth?token=${token}`);
 		const parsed = await response.json();
 
 		if (response.ok) {
