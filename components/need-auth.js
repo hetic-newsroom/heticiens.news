@@ -35,7 +35,7 @@ export default class NeedAuth extends React.Component {
 			case 'authenticated':
 				return this.props.children;
 			default:
-				return <h1>Chargement...</h1>;
+				return null;
 		}
 	}
 }

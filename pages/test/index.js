@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import Page from '../../components/page';
+import Link from 'next/link';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
 	ssr: false
@@ -8,23 +8,15 @@ const NeedAuth = dynamic(() => import('../../components/need-auth'), {
 export default () => {
 	return (
 		<NeedAuth>
-			<Page
-				title="Espace contributeur - H|N"
-				description="Accès réservé aux contributeurs"
-			>
-				<div className="contribspace">
-					<h1>Espace contributeur (authentifié)</h1>
-
-					<style jsx>{`
-						.contribspace {
-							width: 100%;
-							max-width: 660px;
-							margin: 0 auto;
-						}
+			<div className="contribspace">
+				<h1>Authenticated</h1>
+				<Link href="/">
+					<a>Go home</a>
+				</Link>
+				<style jsx>{`
 					`}
-					</style>
-				</div>
-			</Page>
+				</style>
+			</div>
 		</NeedAuth>
 	);
 };
