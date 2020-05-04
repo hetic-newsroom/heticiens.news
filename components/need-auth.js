@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Router from 'next/router';
-import fetch from 'isomorphic-unfetch';
 
 export default class NeedAuth extends React.Component {
 	constructor(props) {
@@ -13,10 +12,11 @@ export default class NeedAuth extends React.Component {
 
 	async componentDidMount() {
 		const token = window.localStorage.getItem('login_token');
-		const response = await fetch(`/api/auth?token=${token}`);
+		const response = await window.fetch(`/api/auth?token=${token}`);
 		const parsed = await response.json();
 
 		if (response.ok) {
+			console.log('auth ok:', parsed);
 			if (parsed.token !== token) {
 				// Store updated token
 				window.localStorage.setItem('login_token', parsed.token);
@@ -26,6 +26,7 @@ export default class NeedAuth extends React.Component {
 				progress: 'authenticated'
 			});
 		} else {
+			console.log('auth not ok:', parsed);
 			Router.push('/403');
 		}
 	}

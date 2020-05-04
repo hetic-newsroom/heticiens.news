@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
 	ssr: false
@@ -14,7 +14,7 @@ export default () => {
 					<a>Go home</a>
 				</Link>
 				<style jsx>{`
-					`}
+				`}
 				</style>
 			</div>
 		</NeedAuth>
