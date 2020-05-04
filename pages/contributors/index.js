@@ -1,14 +1,8 @@
 import Link from 'next/link';
-// Disabled: import dynamic from 'next/dynamic';
+import NeedAuth from '../../components/need-auth';
 import Page from '../../components/page';
 import Button from '../../components/button';
 import ContributorDashboard from '../../components/contributor-dashboard';
-
-import NeedAuth from '../../components/need-auth';
-
-// Disabled: const NeedAuth = dynamic(() => import('../../components/need-auth'), {
-//    ssr: false
-// });
 
 export default () => {
 	return (
