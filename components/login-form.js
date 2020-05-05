@@ -18,6 +18,16 @@ export default class LoginForm extends React.Component {
 		this.setPasswordValue = this.setPasswordValue.bind(this);
 	}
 
+	async componentDidMount() {
+		const token = window.localStorage.getItem('login_token');
+		const response = await window.fetch(`/api/auth?token=${token}`);
+		const parsed = await response.json();
+
+		if (response.ok && parsed.token === token) {
+			Router.push('/contributors');
+		}
+	}
+
 	setEmailValue(event) {
 		this.setState({
 			email: event.target.value
@@ -30,7 +40,9 @@ export default class LoginForm extends React.Component {
 		});
 	}
 
-	async submit() {
+	async submit(event) {
+		event.preventDefault();
+
 		if (!this.state.email || !Email.test(this.state.email)) {
 			this.setState({
 				badfields: ['email']
@@ -89,7 +101,7 @@ export default class LoginForm extends React.Component {
 				<h2>Espace<br/>Contributeurs</h2>
 				<h3>Connectez-vous pour gérer et éditer vos publications.</h3>
 
-				<div className="inputsContainer">
+				<form className="inputsContainer" onSubmit={this.submit}>
 					<Input value={this.state.email} className={this.state.badfields.includes('email') ? 'invalid stretch' : 'stretch'} type="email" placeholder="email@example.com" onChange={this.setEmailValue}/>
 					{
 						this.state.badfields.includes('email') &&
@@ -104,12 +116,12 @@ export default class LoginForm extends React.Component {
 						this.state.badfields.includes('default') &&
 							<h4 className="error">Une erreur inconnue est survenue, veuillez réessayer plus tard.</h4>
 					}
-				</div>
 
-				<div className="buttonContainer">
-					<Button icon="questionMark"/>
-					<Button primary icon="chevronRight" value="Connexion" onClick={this.submit}/>
-				</div>
+					<div className="buttonContainer">
+						<Button icon="questionMark"/>
+						<Button primary icon="chevronRight" value="Connexion" type="submit"/>
+					</div>
+				</form>
 
 				<style jsx>{`
 			h2 {

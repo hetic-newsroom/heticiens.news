@@ -13,7 +13,7 @@ export default React.forwardRef((props, ref) => (
 			{negative: (props.negative)},
 			{accent: (props.accent)}
 		)}
-		type="button"
+		type={props.type ? props.type : 'button'}
 		onClick={props.onClick}
 	>
 		{props.value ? <span>{props.value}</span> : ''}
