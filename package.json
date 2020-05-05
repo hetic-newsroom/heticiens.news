@@ -40,6 +40,7 @@
       "unicorn/catch-error-name": 0,
       "unicorn/prefer-set-has": 0,
       "react/prop-types": 0,
+      "react/button-has-type": 0,
       "no-await-in-loop": 0,
       "@typescript-eslint/prefer-readonly-parameter-types": 0
     }
