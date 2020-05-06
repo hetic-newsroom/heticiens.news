@@ -60,7 +60,7 @@
   },
   "homepage": "https://github.com/hetic-newsroom/heticiens.news#readme",
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^19.0.0",
+    "@ckeditor/ckeditor5-build-classic": "https://github.com/hetic-newsroom/ckeditor5-build-classic.git#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "aws-sdk": "^2.668.0",
     "canvas": "^2.6.1",

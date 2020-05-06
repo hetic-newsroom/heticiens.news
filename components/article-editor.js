@@ -54,7 +54,6 @@ export default class ArticleEditor extends React.Component {
 				intro: saved.intro,
 				title: saved.title,
 				content: saved.content,
-				image: saved.image,
 				authors: saved.authors,
 				category: saved.category
 			});
@@ -145,7 +144,6 @@ export default class ArticleEditor extends React.Component {
 			intro: this.state.intro,
 			title: this.state.title,
 			content: this.state.content,
-			image: this.state.image,
 			authors: this.state.authors,
 			category: this.state.category
 		}));
