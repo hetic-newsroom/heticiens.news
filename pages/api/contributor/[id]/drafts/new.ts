@@ -167,7 +167,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		await contributor.save();
 	}
 
-	res.status(200);
+	res.status(201);
 	res.setHeader('Cache-Control', 'no-store');
 	res.json({
 		draft: draft.id
