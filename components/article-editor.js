@@ -1,8 +1,16 @@
 import * as React from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import {Email} from '../lib/data-validator';
 import Button from './button';
-import Editor from './editor';
+
+const Editor = dynamic(
+	() => import('./editor'),
+	{
+		loading: () => <h3>Chargement en cours...</h3>,
+		ssr: false
+	}
+);
 
 export default class ArticleEditor extends React.Component {
 	constructor(props) {

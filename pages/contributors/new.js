@@ -1,12 +1,9 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Page from '../../components/page';
+import ArticleEditor from '../../components/article-editor';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
-	ssr: false
-});
-
-const ArticleEditor = dynamic(() => import('../../components/article-editor'), {
 	ssr: false
 });
 
