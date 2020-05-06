@@ -128,6 +128,13 @@ export default class ArticleEditor extends React.Component {
 			return;
 		}
 
+		if (this.state.content === null) {
+			this.setState({
+				error: 'Un contenu est nécessaire pour continuer.'
+			});
+			return;
+		}
+
 		if (this.state.image === null) {
 			this.setState({
 				error: 'Une image est nécessaire pour continuer.'
@@ -157,7 +164,7 @@ export default class ArticleEditor extends React.Component {
 			body: JSON.stringify({
 				token: this.state.token,
 				draft: {
-					authors: [this.state.contributorId, ...this.state.authors.split(', ')],
+					authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
 					title: this.state.title,
 					category: this.state.category,
 					intro: this.state.intro,
