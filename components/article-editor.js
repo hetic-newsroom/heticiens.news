@@ -158,17 +158,6 @@ export default class ArticleEditor extends React.Component {
 			category: this.state.category
 		}));
 
-		console.log({
-			token: this.state.token,
-			draft: {
-				authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
-				title: this.state.title,
-				category: this.state.category,
-				intro: this.state.intro,
-				content: this.state.content,
-				image: this.state.image
-			}
-		});
 		try {
 			const request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
 				method: 'POST',
@@ -224,8 +213,7 @@ export default class ArticleEditor extends React.Component {
 						error: 'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
 					});
 			}
-		} catch (err) {
-			console.log(err);
+		} catch (_) {
 			this.setState({
 				loading: false,
 				error: 'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
