@@ -63,7 +63,6 @@
     "@ckeditor/ckeditor5-build-classic": "https://github.com/hetic-newsroom/ckeditor5-build-classic.git#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "aws-sdk": "^2.668.0",
-    "canvas": "^2.6.1",
     "classnames": "^2.2.6",
     "dompurify": "^2.0.10",
     "isomorphic-unfetch": "^3.0.0",
