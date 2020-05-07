@@ -174,3 +174,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		draft: draft.id
 	});
 };
+
+export const config = {
+	api: {
+		bodyParser: {
+			sizeLimit: '5mb'
+		}
+	}
+};
