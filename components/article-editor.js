@@ -158,25 +158,6 @@ export default class ArticleEditor extends React.Component {
 			category: this.state.category
 		}));
 
-		const request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				token: this.state.token,
-				draft: {
-					authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
-					title: this.state.title,
-					category: this.state.category,
-					intro: this.state.intro,
-					content: this.state.content,
-					image: this.state.image
-				}
-			})
-		});
-
 		console.log({
 			token: this.state.token,
 			draft: {
@@ -188,41 +169,67 @@ export default class ArticleEditor extends React.Component {
 				image: this.state.image
 			}
 		});
+		try {
+			const request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					token: this.state.token,
+					draft: {
+						authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
+						title: this.state.title,
+						category: this.state.category,
+						intro: this.state.intro,
+						content: this.state.content,
+						image: this.state.image
+					}
+				})
+			});
 
-		const response = await request.json();
-		console.log(request);
-		console.log(response);
-		switch (request.status) {
-			case 201:
-				// LocalStorage.removeItem('_editorCache');
-				this.setState({
-					loading: false,
-					previewId: response.draft
-				});
-				break;
-			case 400:
-				this.setState({
-					loading: false,
-					error: response.error
-				});
-				break;
-			case 404:
-				this.setState({
-					loading: false,
-					error: 'Le contributeur n’a pas été trouvé.'
-				});
-				break;
-			case 403:
-				this.setState({
-					loading: false,
-					error: 'Vous n’avez pas l’autorisation de publier un article pour ce contributeur. Essayez de vous connecter à nouveau.'
-				});
-				break;
-			default:
-				this.setState({
-					loading: false,
-					error: 'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
-				});
+			const response = await request.json();
+
+			switch (request.status) {
+				case 201:
+					localStorage.removeItem('_editorCache');
+					this.setState({
+						loading: false,
+						previewId: response.draft
+					});
+					break;
+				case 400:
+					console.log(response);
+					this.setState({
+						loading: false,
+						error: response.error
+					});
+					break;
+				case 404:
+					this.setState({
+						loading: false,
+						error: 'Le contributeur n’a pas été trouvé.'
+					});
+					break;
+				case 403:
+					this.setState({
+						loading: false,
+						error: 'Vous n’avez pas l’autorisation de publier un article pour ce contributeur. Essayez de vous connecter à nouveau.'
+					});
+					break;
+				default:
+					this.setState({
+						loading: false,
+						error: 'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
+					});
+			}
+		} catch (err) {
+			console.log(err);
+			this.setState({
+				loading: false,
+				error: 'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
+			});
 		}
 	}
 
