@@ -16,8 +16,8 @@ export default class Bucket {
 		this._client = new AWS.S3();
 	}
 
-	async upload(base64: string, format: string): Promise<string | Error> {
-		const data = Buffer.from(base64, 'base64');
+	async upload(base64: string, format: string, buffer?: Buffer): Promise<string | Error> {
+		const data = base64 === null ? buffer : Buffer.from(base64, 'base64');
 		const id = nanoid();
 		const key = `${baseFolder}/${id}.${format}`;
 
