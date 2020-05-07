@@ -214,6 +214,7 @@ export default class ArticleEditor extends React.Component {
 					});
 			}
 		} catch (_) {
+			console.log(_);
 			this.setState({
 				loading: false,
 				error: 'Une erreur inconnue est survenue. Veuillez réessayer plus tard.'
