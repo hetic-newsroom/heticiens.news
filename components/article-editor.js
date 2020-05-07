@@ -37,6 +37,7 @@ export default class ArticleEditor extends React.Component {
 		this.setCategoryValue = this.setCategoryValue.bind(this);
 		this.setAuthorsValue = this.setAuthorsValue.bind(this);
 		this.submit = this.submit.bind(this);
+		this.onEditorReady = this.onEditorReady.bind(this);
 	}
 
 	componentDidMount() {
@@ -46,7 +47,9 @@ export default class ArticleEditor extends React.Component {
 			token,
 			contributorId: userId
 		});
+	}
 
+	onEditorReady() {
 		const saved = JSON.parse(window.localStorage.getItem('_editorCache'));
 
 		if (saved !== null) {
@@ -174,11 +177,24 @@ export default class ArticleEditor extends React.Component {
 			})
 		});
 
-		const response = await request.json();
+		console.log({
+			token: this.state.token,
+			draft: {
+				authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
+				title: this.state.title,
+				category: this.state.category,
+				intro: this.state.intro,
+				content: this.state.content,
+				image: this.state.image
+			}
+		});
 
+		const response = await request.json();
+		console.log(request);
+		console.log(response);
 		switch (request.status) {
 			case 201:
-				localStorage.removeItem('_editorCache');
+				// LocalStorage.removeItem('_editorCache');
 				this.setState({
 					loading: false,
 					previewId: response.draft
@@ -234,10 +250,11 @@ export default class ArticleEditor extends React.Component {
 					onChange={this.setIntroValue}
 				/>
 				<Editor
-					data={this.props.content}
+					data={this.state.content}
 					disabled={this.state.loading}
 					token={this.state.token}
 					onChange={this.setContentValue}
+					onInit={this.onEditorReady}
 				/><br/>
 				<select value={this.state.category} onChange={this.setCategoryValue}>
 					<option value="Interviews">Interviews</option>

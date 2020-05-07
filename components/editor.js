@@ -32,6 +32,7 @@ export default class Editor extends React.Component {
 					disabled={this.props.disabled ? this.props.disabled : false}
 					data={this.props.data ? this.props.data : '<p>Montaigne et Darth Vader : les héticiens sont à la fois humanistes et technologues. Il faut que cela se révèle aux yeux du monde !</p>'}
 					onChange={this.props.onChange}
+					onInit={this.props.onInit}
 				/>
 				<style jsx>{`
 				`}
