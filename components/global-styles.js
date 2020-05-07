@@ -117,15 +117,20 @@ export default () => (
 				font-size: ${27 / 16}rem;
 			}
 
-			div.articleHtmlContainer img {
+			div.articleHtmlContainer figure {
+				margin: 0;
+			}
+
+			div.articleHtmlContainer img, div.articleHtmlContainer figure.image img {
 				width: calc(100% + 30px);
 				position: relative;
 				left: -15px;
 			}
 
-			div.articleHtmlContainer img + i {
+			div.articleHtmlContainer img + i, div.articleHtmlContainer figure.image figcaption {
 				display: block;
 				font-family: Lora, serif;
+				font-style: italic;
 				text-align: center;
 				font-size: ${18 / 16}rem;
 				color: var(--color-p);
