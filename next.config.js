@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
 	target: 'serverless',
 	env: {
@@ -10,6 +12,9 @@ module.exports = {
 			// This is used by next.js
 			'@ampproject/toolbox-optimizer'
 		];
+
+		/* eslint-disable-next-line dot-notation */
+		config.resolve.alias['canvas$'] = path.resolve(__dirname, 'lib/fakecanvas.js');
 		return config;
 	}
 };
