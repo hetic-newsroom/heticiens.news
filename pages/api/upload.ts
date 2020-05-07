@@ -1,7 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import Bucket from '../../lib/s3-bucket';
 import {validateToken, AuthFailure} from './auth';
-import multipart from 'parse-multipart';
 
 const acceptedImageFormats = [
 	'jpg',
@@ -30,29 +29,24 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		return;
 	}
 
-	const boundary = multipart.getBoundary(req.headers['content-type']);
-	// eslint-disable-next-line new-cap
-	const image = multipart.Parse(Buffer.from(req.body, 'utf-8'), boundary)[0];
-
 	const bucket = new Bucket();
 
 	// Upload image
-	const fileExtension = image.type.slice(
-		image.type.indexOf('image/') as number + 6,
-		image.type.length
+	const fileExtension = req.body.slice(
+		req.body.indexOf('data:image/') as number + 11,
+		req.body.indexOf(';base64')
 	);
 
 	if (!acceptedImageFormats.includes(fileExtension)) {
 		res.status(400);
 		res.json({
-			error: {
-				message: 'Bad image format'
-			}
+			error: 'Bad image format'
 		});
 		return;
 	}
 
-	const key = await bucket.upload(null, fileExtension, image.data);
+	const base64 = req.body.replace(/^.*,/, ''); // Strip metadata
+	const key = await bucket.upload(base64, fileExtension);
 	const url = `https://bucket.heticiens.news/${key as string}`;
 
 	res.status(201);
