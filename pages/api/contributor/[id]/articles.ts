@@ -33,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		});
 
 		res.status(200);
-		res.setHeader('Cache-control', 'public, max-age=172800, must-revalidate');
+		res.setHeader('Cache-control', 'max-age=10, stale-while-revalidate=10800, must-revalidate');
 		res.json({
 			articles
 		});

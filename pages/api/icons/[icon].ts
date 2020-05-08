@@ -37,7 +37,7 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
 
 	res.status(200);
 	res.setHeader('Content-type', 'image/svg+xml');
-	res.setHeader('Cache-control', 'public, max-age=172800, must-revalidate');
+	res.setHeader('Cache-control', 'public, max-age=604800, immutable');
 	const coloredIcon = icons[icon as string].split('__FILL__').join(`#${fill as string}`);
 	res.end(coloredIcon);
 };
