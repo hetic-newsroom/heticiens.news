@@ -21,7 +21,6 @@ export default class DraftCard extends React.Component {
 		}
 
 		const request = await fetch(`/api/article/${this.props.id}/approve?token=${this.props.token}`);
-		await request.json();
 
 		if (request.status === 200 || request.status === 201) {
 			console.log('response ok');
@@ -37,7 +36,6 @@ export default class DraftCard extends React.Component {
 	}
 
 	render() {
-		console.log(this.state);
 		return (
 			<div className="draftCard">
 				<div className="article">
@@ -61,7 +59,7 @@ export default class DraftCard extends React.Component {
 								</a>
 							</Link>
 
-							<Button primary={!this.state.accepted} positive={this.state.accepted} negative={this.state.error} icon="check" size="32px" onClick={this.approveDraft}/>
+							<Button positive={this.state.accepted} negative={this.state.error} primary={!this.state.accepted} icon="check" size="32px" onClick={this.approveDraft}/>
 						</div>
 				}
 

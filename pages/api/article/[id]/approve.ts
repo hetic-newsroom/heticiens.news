@@ -42,15 +42,24 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
 
-		if (typeof dbArticle.approvals === 'number') {
-			dbArticle.approvals++;
+		if (typeof dbArticle.approvals === 'object') {
+			if (dbArticle.approvals.includes(userId)) {
+				res.status(400);
+				res.json({
+					error: 'Already approved by user'
+				});
+				res.end();
+				return;
+			}
+
+			dbArticle.approvals.push(userId);
 		} else {
-			dbArticle.approvals = 1;
+			dbArticle.approvals = [userId];
 		}
 
 		await dbArticle.save().catch(e => console.log(e));
 
-		if (dbArticle.approvals < 3) {
+		if (dbArticle.approvals.length < 3) {
 			res.status(200);
 			res.setHeader('Cache-Control', 'no-store');
 			res.end();
