@@ -59,7 +59,7 @@ export default class DraftCard extends React.Component {
 								</a>
 							</Link>
 
-							<Button positive={this.state.accepted} negative={this.state.error} primary={!this.state.accepted} icon="check" size="32px" onClick={this.approveDraft}/>
+							<Button positive={this.state.approved} negative={this.state.error} primary={!this.state.approved} icon="check" size="32px" onClick={this.approveDraft}/>
 						</div>
 				}
 
