@@ -111,7 +111,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		P.S: Ce mail vous a été envoyé car vous êtes inscrit à notre newsletter.`;
 		const emailHtmlContent = `<p>Bonjour,</p><br/>
 		<p>Un nouvel article a été publié sur HETIC Newsroom:<br/>
-		<a href="${link}"></a>${dbArticle.title as string}</p>
+		<a href="${link}">${dbArticle.title as string}</a></p>
 		<br/>
 		<p>Bonne lecture!<br/><br/>- Un robot.</p>
 		<br/>
