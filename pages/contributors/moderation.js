@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Page from '../../components/page';
+import Button from '../../components/button';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
 	ssr: false
@@ -20,11 +21,13 @@ export default () => {
 				<div className="contribspace">
 					<h1>Espace modérateur</h1>
 
-					<ModerationDashboard/>
+					<ModerationDashboard/><br/>
 
 					<Link href="/contributors">
-						<a>Retourner à l’espace contributeur</a>
-					</Link>
+						<a>
+							<Button value="Retourner à l'espace contributeur"/>
+						</a>
+					</Link><br/>
 					<style jsx>{`
 						.contribspace {
 							width: 100%;

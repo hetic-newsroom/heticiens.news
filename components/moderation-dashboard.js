@@ -31,7 +31,7 @@ export default class ModerationDashboard extends React.Component {
 			return;
 		}
 
-		const articlesRequest = await fetch('/api/article/latest');
+		const articlesRequest = await fetch('/api/article/latest?count=3');
 		const articles = await articlesRequest.json();
 
 		const draftsRequest = await fetch(`/api/article/drafts?token=${token}`);
