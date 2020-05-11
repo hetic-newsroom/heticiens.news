@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	const count = Number(req.query.count as string);
 
 	getContributor(id, false).then(async contributor => {
-		contributor.articles.slice(0, count);
+		contributor.articles = contributor.articles.slice(0, count);
 
 		const articles = [];
 		for (const article of contributor.articles) {
