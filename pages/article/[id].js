@@ -5,6 +5,7 @@ import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 import Share from '../../components/share-button';
+import FlashMessage from '../../components/flash-message';
 
 function formatDate(timestamp) {
 	const d = new Date(timestamp * 1000);
@@ -120,6 +121,12 @@ export default props => {
 			</Head>
 			<div className="articleContainer">
 				<article>
+					{
+						props.status === 'draft' &&
+							<FlashMessage accent>
+								Vous êtes actuellement en train de prévisualiser un brouillon.
+							</FlashMessage>
+					}
 					<span>{props.category[0].toUpperCase() + props.category.slice(1).slice(0, -1)}</span>
 					<h1>{props.title}</h1>
 					<h3>
