@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Page from '../../components/page';
+import Button from '../../components/button';
 import ArticleEditor from '../../components/article-editor';
 
 const NeedAuth = dynamic(() => import('../../components/need-auth'), {
@@ -15,10 +16,13 @@ export default () => {
 				description="Accès réservé aux contributeurs"
 			>
 				<div className="contribspace">
-					<ArticleEditor/>
+					<ArticleEditor/><br/>
+
 					<Link href="/contributors">
-						<a>Retourner à l’accueil contributeur</a>
-					</Link>
+						<a>
+							<Button value="Retourner à l'espace contributeur"/>
+						</a>
+					</Link><br/>
 					<style jsx>{`
 						.contribspace {
 							width: 100%;
