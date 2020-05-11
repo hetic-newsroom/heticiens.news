@@ -135,6 +135,15 @@ export default () => (
 				font-size: ${18 / 16}rem;
 				color: var(--color-p);
 			}
+
+			div.articleHtmlContainer ul li, div.articleHtmlContainer ol li{
+				font-family: Lora,serif;
+				font-weight: 400;
+				font-size: 1.125rem;
+				line-height: 1.56;
+				color: var(--color-p);
+				max-width: 660px;
+			}
 		`}
 		</style>
 	</>
