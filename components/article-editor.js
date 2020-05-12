@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import {Email} from '../lib/data-validator';
 import Button from './button';
 
 const Editor = dynamic(
@@ -52,7 +51,7 @@ export default class ArticleEditor extends React.Component {
 	onEditorReady() {
 		const saved = JSON.parse(window.localStorage.getItem('_editorCache'));
 
-		if (saved !== null) {
+		if (saved !== null && !this.props.article) {
 			this.setState({
 				intro: saved.intro,
 				title: saved.title,
@@ -62,6 +61,17 @@ export default class ArticleEditor extends React.Component {
 			});
 
 			window.localStorage.removeItem('_editorCache');
+		}
+
+		if (this.props.article) {
+			this.setState({
+				intro: this.props.article.intro,
+				title: this.props.article.title,
+				content: this.props.article.content,
+				authors: this.props.article.authors.map(author => author.id).join(', '),
+				category: this.props.article.category,
+				image: this.props.article.image
+			});
 		}
 	}
 
@@ -113,12 +123,12 @@ export default class ArticleEditor extends React.Component {
 			return valid;
 		}
 
-		this.state.authors.split(', ').forEach(email => {
-			if (!this.state.authors || !Email.test(email)) {
+		this.state.authors.split(', ').forEach(_ => {
+			if (!this.state.authors) { // Useless code?
 				valid = false;
 
 				this.setState({
-					error: 'La liste d’e-mails est incorrecte.'
+					error: 'La liste de contributeurs est incorrecte.'
 				});
 			}
 		});
@@ -159,28 +169,61 @@ export default class ArticleEditor extends React.Component {
 		}));
 
 		try {
-			const request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					token: this.state.token,
-					draft: {
-						authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
-						title: this.state.title,
-						category: this.state.category,
-						intro: this.state.intro,
-						content: this.state.content,
-						image: this.state.image
-					}
-				})
-			});
-
-			const response = await request.json();
+			let request;
+			let response;
+			if (this.props.article) {
+				// Edit an article
+				console.log('edit published');
+				request = await fetch(`/api/article/${this.props.article.id}/edit`, {
+					method: 'POST',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						token: this.state.token,
+						article: {
+							authors: this.state.authors.split(', '),
+							title: this.state.title,
+							category: this.state.category,
+							intro: this.state.intro,
+							content: this.state.content,
+							image: this.state.image
+						}
+					})
+				});
+			} else {
+				// Add a draft
+				console.log('draft');
+				request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
+					method: 'POST',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						token: this.state.token,
+						draft: {
+							authors: this.state.authors.length > 0 ? [this.state.contributorId, ...this.state.authors.split(', ')] : [this.state.contributorId],
+							title: this.state.title,
+							category: this.state.category,
+							intro: this.state.intro,
+							content: this.state.content,
+							image: this.state.image
+						}
+					})
+				});
+				response = await request.json();
+			}
 
 			switch (request.status) {
+				case 200:
+					localStorage.removeItem('_editorCache');
+					this.setState({
+						loading: false,
+						previewId: this.props.article.id
+					});
+					break;
 				case 201:
 					localStorage.removeItem('_editorCache');
 					this.setState({

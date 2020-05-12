@@ -2,7 +2,6 @@ import * as React from 'react';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import Button from '../components/button';
-import ArticleCard from '../components/article-card';
 import DraftCard from '../components/draft-card';
 import Router from 'next/router';
 
@@ -12,7 +11,6 @@ export default class ContributorDashboard extends React.Component {
 		this.props = props;
 		this.state = {
 			contributor: {},
-			articles: [],
 			drafts: []
 		};
 	}
@@ -28,30 +26,10 @@ export default class ContributorDashboard extends React.Component {
 		const contributorRequest = await fetch(`/api/contributor/${userId}?token=${token}`);
 		const contributor = await contributorRequest.json();
 
-		const articlesRequest = await fetch(`/api/contributor/${userId}/articles?count=3`);
-		const articles = await articlesRequest.json();
-		console.log(articles);
-
 		const draftsRequest = await fetch(`/api/contributor/${userId}/drafts?token=${token}`);
 		const drafts = await draftsRequest.json();
 
-		const articlesCards = [];
 		const draftsCards = [];
-
-		articles.articles.forEach(article => {
-			articlesCards.push(
-				<Link key={article.id} href={`/article/${article.id}`}>
-					<a target="_blank" rel="noreferrer nofollow">
-						<ArticleCard
-							title={article.title}
-							category={article.category}
-							authors={article.authors}
-							image={article.image}
-						/>
-					</a>
-				</Link>
-			);
-		});
 
 		drafts.drafts.forEach(article => {
 			draftsCards.push(
@@ -71,7 +49,6 @@ export default class ContributorDashboard extends React.Component {
 
 		this.setState({
 			contributor,
-			articles: articlesCards,
 			drafts: draftsCards
 		});
 	}
@@ -109,14 +86,7 @@ export default class ContributorDashboard extends React.Component {
 					}
 				</div>
 
-				<h2>Mes articles publiés</h2>
-				<div className="articleList">
-					{this.state.articles}
-					{
-						this.state.articles.length === 0 &&
-							<h4>Il n’y a aucun article publié à votre nom pour le moment.</h4>
-					}
-				</div><br/>
+				<br/>
 				<Button value="Déconnexion et retour au site" onClick={this.onDisconnect}/>
 				<br/>
 
