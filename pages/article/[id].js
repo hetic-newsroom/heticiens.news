@@ -6,6 +6,7 @@ import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 import Share from '../../components/share-button';
 import FlashMessage from '../../components/flash-message';
+import ArticleEditButton from '../../components/article-edit-button';
 
 function formatDate(timestamp) {
 	const d = new Date(timestamp * 1000);
@@ -150,6 +151,8 @@ export default props => {
 							__html: content
 						}}
 					/>
+
+					<ArticleEditButton id={props.id}/>
 				</article>
 				<aside>
 					<div className="authorsContainer">

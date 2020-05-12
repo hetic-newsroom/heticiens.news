@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
-import ArticleCard from '../components/article-card';
 import DraftCard from '../components/draft-card';
 import Router from 'next/router';
 
@@ -10,7 +8,6 @@ export default class ModerationDashboard extends React.Component {
 		super(props);
 		this.props = props;
 		this.state = {
-			articles: [],
 			drafts: []
 		};
 	}
@@ -31,29 +28,10 @@ export default class ModerationDashboard extends React.Component {
 			return;
 		}
 
-		const articlesRequest = await fetch('/api/article/latest?count=3');
-		const articles = await articlesRequest.json();
-
 		const draftsRequest = await fetch(`/api/article/drafts?token=${token}`);
 		const drafts = await draftsRequest.json();
 
-		const articlesCards = [];
 		const draftsCards = [];
-
-		articles.articles.forEach(article => {
-			articlesCards.push(
-				<Link key={article.id} href={`/article/${article.id}`}>
-					<a target="_blank" rel="noreferrer nofollow">
-						<ArticleCard
-							title={article.title}
-							category={article.category}
-							authors={article.authors}
-							image={article.image}
-						/>
-					</a>
-				</Link>
-			);
-		});
 
 		drafts.drafts.forEach(article => {
 			draftsCards.push(
@@ -71,7 +49,6 @@ export default class ModerationDashboard extends React.Component {
 		});
 
 		this.setState({
-			articles: articlesCards,
 			drafts: draftsCards
 		});
 	}
@@ -88,14 +65,9 @@ export default class ModerationDashboard extends React.Component {
 					}
 				</div>
 
-				<h2>Derniers articles publiés</h2>
-				<div className="articleList">
-					{this.state.articles}
-				</div>
-
 				<style jsx>{`
 					@media (min-width: 660px) {
-						.articleList, .draftList {
+						.draftList {
 							display: grid;
 							grid-template-columns: 1fr;
 							grid-column-gap: 15px;
