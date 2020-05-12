@@ -50,8 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
 
-		if (JSON.stringify(dbArticle.authors) !== JSON.stringify(edition.authors)) {
-			console.log('not same authors');
+		if (dbArticle.authors.join(', ') !== edition.authors.join(', ')) {
 			// Check & fill authors
 			let i = 0;
 			for (const author of edition.authors) {
@@ -92,27 +91,22 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		}
 
 		if (dbArticle.title !== edition.title) {
-			console.log('not same title');
 			dbArticle.title = edition.title;
 		}
 
 		if (dbArticle.category !== edition.category) {
-			console.log('not same category');
 			dbArticle.category = edition.category;
 		}
 
 		if (dbArticle.intro !== edition.intro) {
-			console.log('not same intro');
 			dbArticle.intro = edition.intro;
 		}
 
 		if (dbArticle.content !== edition.content) {
-			console.log('not same content');
 			dbArticle.content = edition.content;
 		}
 
 		if (edition.content.includes('base64')) {
-			console.log('not same image');
 			const bucket = new Bucket();
 
 			// Upload image
