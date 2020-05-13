@@ -6,6 +6,7 @@ import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 import Button from '../../components/button';
 import Share from '../../components/share-button';
+import AccountEditButton from '../../components/account-edit-button';
 
 export default props => {
 	if (!props) {
@@ -73,6 +74,7 @@ export default props => {
 					<p className="biography">
 						{props.bio}
 					</p>
+					<AccountEditButton id={props.id}/>
 				</article>
 				<aside>
 					<div className="socialLinks">

@@ -59,10 +59,10 @@ export default tprops => {
 					text-decoration: wavy underline var(--color-negative);
 				}
 
-				input[type="email"], input[type="password"], input[type="search"] {
+				input[type="email"], input[type="password"], input[type="search"], input[social] {
 					padding-left: 48px;
 				}
-				input[type="email"] + .input-icon, input[type="password"] + .input-icon, input[type="search"] + .input-icon {
+				input[type="email"] + .input-icon, input[type="password"] + .input-icon, input[type="search"] + .input-icon, input[social] + .input-icon {
 					display: block;
 					position: absolute;
 					top: 11px;
@@ -82,6 +82,26 @@ export default tprops => {
 
 				input[type="search"] + .input-icon {
 					background: center/cover url("/api/icons/search?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+				}
+
+				input[social="twitter"] + .input-icon {
+					background: center/cover url("/api/icons/twitter?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+				}
+
+				input[social="facebook"] + .input-icon {
+					background: center/cover url("/api/icons/facebook?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+				}
+
+				input[social="instagram"] + .input-icon {
+					background: center/cover url("/api/icons/instagram?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+				}
+
+				input[social="linkedin"] + .input-icon {
+					background: center/cover url("/api/icons/linkedin?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+				}
+
+				input[social="website"] + .input-icon {
+					background: center/cover url("/api/icons/website?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
 				}
 
 				label.slim {
