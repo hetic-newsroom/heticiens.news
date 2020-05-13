@@ -19,7 +19,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	}
 
 	getContributor(id, false, true).then(async contributor => {
-		contributor.drafts.slice(0, count);
+		if (!Number.isNaN(count)) {
+			contributor.drafts = contributor.drafts.slice(0, count);
+		}
 
 		const drafts = [];
 		for (const draft of contributor.drafts) {

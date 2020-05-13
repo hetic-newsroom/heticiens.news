@@ -321,7 +321,7 @@ export default class ArticleEditor extends React.Component {
 							<Button
 								primary={this.state.loading === false}
 								icon="chevronRight"
-								value={this.state.loading === true ? 'Ajout de l’article en cours…' : 'Mettre en brouillon'}
+								value={this.state.loading === true ? 'Ajout de l’article en cours…' : (this.props.article ? 'Enregistrer les modifications' : 'Mettre en brouillon')}
 								onClick={this.submit}
 							/> :
 							<Link href={`/article/${this.state.previewId}`}>

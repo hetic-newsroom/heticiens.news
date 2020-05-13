@@ -80,9 +80,9 @@ export default class ContributorDashboard extends React.Component {
 					}
 				</div>
 				<br/>
-				<Link href={`/author/${this.state.userId}/edit`}>
+				<Link href={`/author/${this.state.userId}`}>
 					<a>
-						<Button primary icon="chevronRight" value="Modifier mon profil"/>
+						<Button primary value="Voir mon profil"/>
 					</a>
 				</Link>
 

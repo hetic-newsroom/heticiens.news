@@ -3,7 +3,7 @@ import Database from '../../../lib/database';
 import {Article} from '../../../lib/data-validator';
 import {getContributor} from '../contributor/[id]';
 
-export async function getArticle(id: string, preview = true): Promise<Article> {
+export async function getArticle(id: string, preview = true, auth = false): Promise<Article> {
 	const attributes = [
 		'id',
 		'date',
@@ -14,6 +14,9 @@ export async function getArticle(id: string, preview = true): Promise<Article> {
 		'authors',
 		'status'
 	];
+	if (auth) {
+		attributes.push('approvals');
+	}
 
 	if (!preview) {
 		attributes.push('content', 'readTime');
