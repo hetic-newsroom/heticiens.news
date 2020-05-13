@@ -41,7 +41,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	getDraftsList(count).then(async drafts => {
 		let i = 0;
 		for (const draft of drafts) {
-			const populatedArticle: Article = await getArticle(draft.id).catch(e => {
+			const populatedArticle: Article = await getArticle(draft.id, true, true).catch(e => {
 				throw e;
 			});
 

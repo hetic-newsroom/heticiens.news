@@ -116,9 +116,9 @@ export default class AccountEditor extends React.Component {
 			return;
 		}
 
-		if (!this.state.bio || this.state.bio.length < 100) {
+		if (!this.state.bio || this.state.bio.length < 140 || this.state.bio.length > 2000) {
 			this.setState({
-				error: 'La biographie est trop courte.'
+				error: 'La biographie ne correspond pas au standard. Celle-ci doit faire la taille d\'un tweet boomer minimum, et maximum 2000 caractères.'
 			});
 			return;
 		}

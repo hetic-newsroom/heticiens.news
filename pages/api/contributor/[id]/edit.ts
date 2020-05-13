@@ -95,6 +95,14 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		}
 
 		if (dbContributor.bio !== req.body.new.bio) {
+			if (req.body.new.bio.length < 140 || req.body.new.bio.length > 2000) {
+				res.status(400);
+				res.json({
+					error: 'Bad bio format'
+				});
+				return;
+			}
+
 			dbContributor.bio = req.body.new.bio;
 		}
 

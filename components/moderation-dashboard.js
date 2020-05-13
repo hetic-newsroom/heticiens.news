@@ -34,6 +34,10 @@ export default class ModerationDashboard extends React.Component {
 		const draftsCards = [];
 
 		drafts.drafts.forEach(article => {
+			if (article.approvals && article.approvals.includes(userId)) {
+				return;
+			}
+
 			draftsCards.push(
 				<DraftCard
 					key={article.id}
