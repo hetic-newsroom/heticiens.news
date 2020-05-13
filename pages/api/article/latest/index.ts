@@ -43,7 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 			articles[i] = populatedArticle;
 			i++;
-			if(i === count){
+			if (i === count) {
 				break;
 			}
 		}
