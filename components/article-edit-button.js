@@ -14,7 +14,7 @@ export default class ArticleEditButton extends React.Component {
 	async componentDidMount() {
 		const token = window.localStorage.getItem('login_token');
 
-		if (token === false) {
+		if (token === null) {
 			return;
 		}
 
