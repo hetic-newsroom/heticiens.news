@@ -23,7 +23,7 @@ export default class ArticleEditButton extends React.Component {
 		const contributorRequest = await fetch(`/api/contributor/${userId}?token=${token}`);
 		const contributor = await contributorRequest.json();
 		this.setState({
-			isModerator: contributor.moderator === 1
+			isModerator: contributor.moderator >= 1
 		});
 	}
 
