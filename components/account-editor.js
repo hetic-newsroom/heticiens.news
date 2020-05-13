@@ -274,7 +274,7 @@ export default class AccountEditor extends React.Component {
 					}
 
 					<div className="buttonContainer">
-						<Button primary icon="chevronRight" value="Modifier mon profil" type="submit"/>
+						<Button primary value="Enregistrer les modifications" type="submit"/>
 					</div>
 				</form>
 

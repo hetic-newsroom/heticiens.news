@@ -11,7 +11,8 @@ export default class ContributorDashboard extends React.Component {
 		this.props = props;
 		this.state = {
 			contributor: {},
-			drafts: []
+			drafts: [],
+			userId: null
 		};
 	}
 
@@ -49,7 +50,8 @@ export default class ContributorDashboard extends React.Component {
 
 		this.setState({
 			contributor,
-			drafts: draftsCards
+			drafts: draftsCards,
+			userId
 		});
 	}
 
@@ -67,6 +69,7 @@ export default class ContributorDashboard extends React.Component {
 							<Button primary icon="chevronRight" value="Rédiger un article"/>
 						</a>
 					</Link>
+
 					{
 						this.state.contributor.moderator > 0 &&
 							<Link href="/contributors/moderation">
@@ -76,6 +79,12 @@ export default class ContributorDashboard extends React.Component {
 							</Link>
 					}
 				</div>
+				<br/>
+				<Link href={`/author/${this.state.userId}/edit`}>
+					<a>
+						<Button primary icon="chevronRight" value="Modifier mon profil"/>
+					</a>
+				</Link>
 
 				<h2>Mes brouillons</h2>
 				<div className="draftList">
