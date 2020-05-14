@@ -33,9 +33,9 @@ function makeSlug(title: string): string {
 		.join('')
 		.normalize('NFKC')
 		.toLocaleLowerCase('fr-FR')
+		.replace(/\s/g, '-')
 		.replace(/[^a-z\d- ]/g, '')
-		.trim()
-		.replace(/\s/g, '-');
+		.trim();
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
