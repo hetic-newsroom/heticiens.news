@@ -10,7 +10,7 @@
     "deploy": "serverless",
     "lint": "xo",
     "test": "echo 'no tests yet!'",
-    "commit": "commit"
+    "commit": "npm run lint && commit"
   },
   "husky": {
     "hooks": {
