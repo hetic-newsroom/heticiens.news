@@ -118,7 +118,7 @@ export default class AccountEditor extends React.Component {
 
 		if (!this.state.bio || this.state.bio.length < 140 || this.state.bio.length > 2000) {
 			this.setState({
-				error: 'La biographie ne correspond pas au standard. Celle-ci doit faire la taille d\'un tweet boomer minimum, et maximum 2000 caractères.'
+				error: 'La biographie ne correspond pas au standard : celle-ci doit faire au minimum 140 caractères et au maximum 2000 caractères.'
 			});
 			return;
 		}
