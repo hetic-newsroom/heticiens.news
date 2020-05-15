@@ -37,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	const userId = token.split('||')[0];
 	const user = await getContributor(userId, true, true);
 
-	if (user.moderator !== 1) {
+	if (user.moderator < 1) {
 		res.status(403);
 		res.end();
 		return;
