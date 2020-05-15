@@ -50,6 +50,30 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
 
+		if (dbArticle.status === 'published' && user.moderator < 2) {
+			// Published article can only be edited by supermoderators
+			res.status(403);
+			res.end();
+			return;
+		}
+
+		if (dbArticle.title !== edition.title) {
+			dbArticle.title = edition.title;
+
+			if (dbArticle.status === 'draft') {
+				// If name changed and it's still a draft, we can change slug (useful for DO NOT PUBLISH in title)
+				dbArticle.id = edition.id;
+
+				// Update attribution of authors
+				for (const author of dbArticle.authors) {
+					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					contributor.drafts.splice(contributor.drafts.indexOf(dbArticle.id), 1);
+					contributor.drafts.push(edition.id);
+					await contributor.save();
+				}
+			}
+		}
+
 		if (dbArticle.authors.join(', ') !== edition.authors.join(', ')) {
 			// Check & fill authors
 			let i = 0;
@@ -85,13 +109,25 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				const contributor = Items[0] as Contributor;
 				edition.authors[i] = contributor.id;
 				i++;
+
+				// If authors not in db, we add it to its own drafts
+				if (!dbArticle.authors.includes(author)) {
+					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					contributor.drafts.push(edition.id);
+					await contributor.save();
+				}
+			}
+
+			for (const author of dbArticle.authors) {
+				// If authors not in edition, we remove it from its own drafts
+				if (!edition.authors.includes(author)) {
+					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					contributor.drafts.splice(contributor.drafts.indexOf(dbArticle.id), 1);
+					await contributor.save();
+				}
 			}
 
 			dbArticle.authors = edition.authors;
-		}
-
-		if (dbArticle.title !== edition.title) {
-			dbArticle.title = edition.title;
 		}
 
 		if (dbArticle.category !== edition.category) {
