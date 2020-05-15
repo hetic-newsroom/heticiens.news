@@ -8,7 +8,7 @@ export default class DraftCard extends React.Component {
 		this.props = props;
 
 		this.state = {
-			approved: false,
+			approved: props.approved,
 			error: false
 		};
 
@@ -23,12 +23,10 @@ export default class DraftCard extends React.Component {
 		const request = await fetch(`/api/article/${this.props.id}/approve?token=${this.props.token}`);
 
 		if (request.status === 200 || request.status === 201) {
-			console.log('response ok');
 			this.setState({
 				approved: true
 			});
 		} else {
-			console.log('response no');
 			this.setState({
 				error: true
 			});
