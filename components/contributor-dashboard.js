@@ -80,11 +80,22 @@ export default class ContributorDashboard extends React.Component {
 					}
 				</div>
 				<br/>
-				<Link href={`/author/${this.state.userId}`}>
-					<a>
-						<Button primary value="Voir mon profil"/>
-					</a>
-				</Link>
+				<div className="actionsButtonContainer">
+					<Link href={`/author/${this.state.userId}`}>
+						<a>
+							<Button primary value="Voir mon profil"/>
+						</a>
+					</Link>
+
+					{
+						this.state.contributor.moderator > 1 &&
+							<Link href="/contributors/moderation/new">
+								<a>
+									<Button primary icon="person" value="Créer un contributeur"/>
+								</a>
+							</Link>
+					}
+				</div>
 
 				<h2>Mes brouillons</h2>
 				<div className="draftList">
