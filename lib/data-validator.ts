@@ -7,7 +7,7 @@ export interface Token {
 
 type sex = 'H' | 'F';
 type socialNetwork = 'twitter' | 'facebook' | 'instagram' | 'website' | 'linkedin';
-type socialLinks = Record<socialNetwork, string>;
+export type socialLinks = Record<socialNetwork, string>;
 type booleanNumber = 0 | 1;
 
 export interface Contributor {

@@ -15,7 +15,7 @@ const acceptedImageFormats = [
 	'gif'
 ];
 
-function makeSlug(title: string): string {
+export function makeSlug(title: string): string {
 	const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
 	const accentsNormalized = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
 	const titleNormalized = [];
