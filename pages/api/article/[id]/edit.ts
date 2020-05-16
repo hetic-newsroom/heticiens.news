@@ -3,6 +3,7 @@ import Database from '../../../../lib/database';
 import Bucket from '../../../../lib/s3-bucket';
 import {getArticle} from '../[id]';
 import {getContributor} from '../../contributor/[id]';
+import {makeSlug} from '../../contributor/[id]/drafts/new';
 import {Article, Email, Contributor} from '../../../../lib/data-validator';
 import {validateToken, AuthFailure} from '../../auth';
 
@@ -47,7 +48,10 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		const edition = req.body.article as Article;
 
 		const db = new Database();
-		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
+		let dbArticle = await db.borrow('Articles', {id: articleId}) as any;
+
+		const changeSlug = dbArticle.title !== edition.title;
+		console.log('changeSlug?', changeSlug);
 
 		if (dbArticle.status === 'published' && user.moderator < 2) {
 			// Published article can only be edited by supermoderators
@@ -56,21 +60,28 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			return;
 		}
 
+		if (changeSlug) {
+			const deltaArticle = Object.assign({}, dbArticle);
+			await dbArticle.drop();
+			dbArticle = deltaArticle as Article;
+		}
+
 		if (dbArticle.title !== edition.title) {
 			dbArticle.title = edition.title;
 
 			if (dbArticle.status === 'draft') {
+				const newSlug = makeSlug(edition.title);
 				// Update attribution of authors
 				for (const author of dbArticle.authors) {
 					const contributor = await db.borrow('Contributors', {id: author}) as any;
 					contributor.drafts.splice(contributor.drafts.indexOf(dbArticle.id), 1);
-					contributor.drafts.push(edition.id);
+					contributor.drafts.push(newSlug);
 					await contributor.save();
 				}
 
 				// If name changed and it's still a draft, we can change slug (useful for DO NOT PUBLISH in title)
 				try {
-					dbArticle.id = edition.id;
+					dbArticle.id = newSlug;
 				} catch (err) {
 					console.log(err);
 					res.status(500);
@@ -171,7 +182,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		}
 
 		try {
-			await dbArticle.save();
+			if (changeSlug) {
+				await db.put('Articles', {...dbArticle});
+			} else {
+				await dbArticle.save();
+			}
 		} catch (error) {
 			console.log(error);
 			res.status(500);

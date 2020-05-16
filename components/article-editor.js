@@ -170,7 +170,6 @@ export default class ArticleEditor extends React.Component {
 
 		try {
 			let request;
-			let response;
 			if (this.props.article) {
 				// Edit an article
 				console.log('edit published');
@@ -213,15 +212,16 @@ export default class ArticleEditor extends React.Component {
 						}
 					})
 				});
-				response = await request.json();
 			}
+
+			const response = await request.json();
 
 			switch (request.status) {
 				case 200:
 					localStorage.removeItem('_editorCache');
 					this.setState({
 						loading: false,
-						previewId: this.props.article.id
+						previewId: response.slug
 					});
 					break;
 				case 201:
