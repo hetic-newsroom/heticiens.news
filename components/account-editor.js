@@ -40,7 +40,7 @@ export default class AccountEditor extends React.Component {
 			return;
 		}
 
-		if (contributor.moderator > 1 || this.props.id === userId) {
+		if (this.props.id === userId) {
 			// Access allowed to super-moderators and auth user own profile
 			this.setState({
 				token,
@@ -53,6 +53,29 @@ export default class AccountEditor extends React.Component {
 					instagram: contributor.social.instagram || '',
 					linkedin: contributor.social.linkedin || '',
 					website: contributor.social.website || ''
+				}
+			});
+		} else if (contributor.moderator > 1) {
+			const profileRequest = await fetch(`/api/contributor/${this.props.id}?token=${token}`);
+			let profile;
+			try {
+				profile = await profileRequest.json();
+			} catch (_) {
+				Router.push('/403');
+				return;
+			}
+
+			this.setState({
+				token,
+				email: profile.email,
+				picture: profile.picture,
+				bio: profile.bio,
+				social: {
+					twitter: profile.social.twitter || '',
+					facebook: profile.social.facebook || '',
+					instagram: profile.social.instagram || '',
+					linkedin: profile.social.linkedin || '',
+					website: profile.social.website || ''
 				}
 			});
 		} else {
