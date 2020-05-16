@@ -47,7 +47,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		const edition = req.body.article as Article;
 
 		const db = new Database();
-
 		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
 
 		if (dbArticle.status === 'published' && user.moderator < 2) {
@@ -61,15 +60,22 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			dbArticle.title = edition.title;
 
 			if (dbArticle.status === 'draft') {
-				// If name changed and it's still a draft, we can change slug (useful for DO NOT PUBLISH in title)
-				dbArticle.id = edition.id;
-
 				// Update attribution of authors
 				for (const author of dbArticle.authors) {
 					const contributor = await db.borrow('Contributors', {id: author}) as any;
 					contributor.drafts.splice(contributor.drafts.indexOf(dbArticle.id), 1);
 					contributor.drafts.push(edition.id);
 					await contributor.save();
+				}
+
+				// If name changed and it's still a draft, we can change slug (useful for DO NOT PUBLISH in title)
+				try {
+					dbArticle.id = edition.id;
+				} catch (err) {
+					console.log(err);
+					res.status(500);
+					res.end();
+					return;
 				}
 			}
 		}
@@ -170,10 +176,14 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			console.log(error);
 			res.status(500);
 			res.end();
+			return;
 		}
 
 		res.status(200);
 		res.setHeader('Cache-Control', 'no-store');
+		res.json({
+			slug: dbArticle.id
+		});
 		res.end();
 	}).catch(error => {
 		if (error.message === 'not found') {
