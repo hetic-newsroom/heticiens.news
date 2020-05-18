@@ -141,7 +141,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	res.json({
 		id: contributor.id
 	});
-	res.end();
 };
 
 export const config = {
