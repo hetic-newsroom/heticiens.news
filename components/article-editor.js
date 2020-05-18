@@ -214,7 +214,6 @@ export default class ArticleEditor extends React.Component {
 				});
 			}
 
-			console.log(await request.text());
 			const response = await request.json();
 			console.log(response);
 

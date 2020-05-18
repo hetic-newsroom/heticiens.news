@@ -170,9 +170,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		} catch (error) {
 			res.status(400);
 			res.json({
-				error
+				error: error.message
 			});
-			res.end();
 			return;
 		}
 
@@ -181,7 +180,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		res.json({
 			slug: dbArticle.id
 		});
-		res.end();
 	}).catch(error => {
 		if (error.message === 'not found') {
 			res.status(404);
@@ -189,7 +187,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			return;
 		}
 
-		res.status(500);
+		res.status(400);
 		res.json(error);
 	});
 };
