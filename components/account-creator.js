@@ -161,6 +161,7 @@ export default class AccountCreator extends React.Component {
 
 		switch (response.status) {
 			case 201:
+				console.log(parsed.id);
 				Router.push(`/author/${parsed.id}`);
 				break;
 			case 400:
