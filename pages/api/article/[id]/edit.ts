@@ -48,22 +48,13 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		const edition = req.body.article as Article;
 
 		const db = new Database();
-		let dbArticle = await db.borrow('Articles', {id: articleId}) as any;
-
-		const changeSlug = dbArticle.title !== edition.title;
-		console.log('changeSlug?', changeSlug);
+		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
 
 		if (dbArticle.status === 'published' && user.moderator < 2) {
 			// Published article can only be edited by supermoderators
 			res.status(403);
 			res.end();
 			return;
-		}
-
-		if (changeSlug) {
-			const deltaArticle = Object.assign({}, dbArticle);
-			await dbArticle.drop();
-			dbArticle = deltaArticle as Article;
 		}
 
 		if (dbArticle.title !== edition.title) {
@@ -182,11 +173,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		}
 
 		try {
-			if (changeSlug) {
-				await db.put('Articles', {...dbArticle});
-			} else {
-				await dbArticle.save();
-			}
+			await dbArticle.save();
 		} catch (error) {
 			console.log(error);
 			res.status(500);
