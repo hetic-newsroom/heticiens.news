@@ -172,7 +172,7 @@ export default class ArticleEditor extends React.Component {
 			let request;
 			if (this.props.article) {
 				// Edit an article
-				console.log('edit published');
+				console.log('edit');
 				request = await fetch(`/api/article/${this.props.article.id}/edit`, {
 					method: 'POST',
 					headers: {
@@ -193,7 +193,7 @@ export default class ArticleEditor extends React.Component {
 				});
 			} else {
 				// Add a draft
-				console.log('draft');
+				console.log('add');
 				request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
 					method: 'POST',
 					headers: {
@@ -214,6 +214,7 @@ export default class ArticleEditor extends React.Component {
 				});
 			}
 
+			console.log(await request.text());
 			const response = await request.json();
 			console.log(response);
 
