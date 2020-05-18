@@ -71,14 +71,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				}
 
 				// If name changed and it's still a draft, we can change slug (useful for DO NOT PUBLISH in title)
-				try {
-					dbArticle.id = newSlug;
-				} catch (err) {
-					console.log(err);
-					res.status(500);
-					res.end();
-					return;
-				}
+				dbArticle.id = newSlug;
 			}
 		}
 
@@ -175,8 +168,10 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		try {
 			await dbArticle.save();
 		} catch (error) {
-			console.log(error);
-			res.status(500);
+			res.status(400);
+			res.json({
+				error
+			});
 			res.end();
 			return;
 		}

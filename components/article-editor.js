@@ -215,6 +215,7 @@ export default class ArticleEditor extends React.Component {
 			}
 
 			const response = await request.json();
+			console.log(response);
 
 			switch (request.status) {
 				case 200:
