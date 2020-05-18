@@ -152,16 +152,11 @@ export default class AccountCreator extends React.Component {
 			})
 		});
 
-		let parsed;
-		try {
-			parsed = await response.json();
-		} catch (_) {
-			parsed = {};
-		}
+		const parsed = await response.json();
 
 		switch (response.status) {
 			case 201:
-				console.log(parsed.id);
+				console.log(parsed);
 				Router.push(`/author/${parsed.id}`);
 				break;
 			case 400:
