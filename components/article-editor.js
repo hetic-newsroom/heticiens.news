@@ -170,10 +170,9 @@ export default class ArticleEditor extends React.Component {
 
 		try {
 			let request;
-			let response;
 			if (this.props.article) {
 				// Edit an article
-				console.log('edit published');
+				console.log('edit');
 				request = await fetch(`/api/article/${this.props.article.id}/edit`, {
 					method: 'POST',
 					headers: {
@@ -194,7 +193,7 @@ export default class ArticleEditor extends React.Component {
 				});
 			} else {
 				// Add a draft
-				console.log('draft');
+				console.log('add');
 				request = await fetch(`/api/contributor/${this.state.contributorId}/drafts/new`, {
 					method: 'POST',
 					headers: {
@@ -213,15 +212,17 @@ export default class ArticleEditor extends React.Component {
 						}
 					})
 				});
-				response = await request.json();
 			}
+
+			const response = await request.json();
+			console.log(response);
 
 			switch (request.status) {
 				case 200:
 					localStorage.removeItem('_editorCache');
 					this.setState({
 						loading: false,
-						previewId: this.props.article.id
+						previewId: response.slug
 					});
 					break;
 				case 201:

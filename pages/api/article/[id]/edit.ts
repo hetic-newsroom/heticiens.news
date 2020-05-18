@@ -3,6 +3,7 @@ import Database from '../../../../lib/database';
 import Bucket from '../../../../lib/s3-bucket';
 import {getArticle} from '../[id]';
 import {getContributor} from '../../contributor/[id]';
+import {makeSlug} from '../../contributor/[id]/drafts/new';
 import {Article, Email, Contributor} from '../../../../lib/data-validator';
 import {validateToken, AuthFailure} from '../../auth';
 
@@ -47,8 +48,32 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		const edition = req.body.article as Article;
 
 		const db = new Database();
-
 		const dbArticle = await db.borrow('Articles', {id: articleId}) as any;
+
+		if (dbArticle.status === 'published' && user.moderator < 2) {
+			// Published article can only be edited by supermoderators
+			res.status(403);
+			res.end();
+			return;
+		}
+
+		if (dbArticle.title !== edition.title) {
+			dbArticle.title = edition.title;
+
+			if (dbArticle.status === 'draft') {
+				const newSlug = makeSlug(edition.title);
+				// Update attribution of authors
+				for (const author of dbArticle.authors) {
+					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					contributor.drafts.splice(contributor.drafts.indexOf(dbArticle.id), 1);
+					contributor.drafts.push(newSlug);
+					await contributor.save();
+				}
+
+				// If name changed and it's still a draft, we can change slug (useful for DO NOT PUBLISH in title)
+				dbArticle.id = newSlug;
+			}
+		}
 
 		if (dbArticle.authors.join(', ') !== edition.authors.join(', ')) {
 			// Check & fill authors
@@ -85,13 +110,25 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				const contributor = Items[0] as Contributor;
 				edition.authors[i] = contributor.id;
 				i++;
+
+				// If authors not in db, we add it to its own drafts
+				if (!dbArticle.authors.includes(author)) {
+					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					contributor.drafts.push(edition.id);
+					await contributor.save();
+				}
+			}
+
+			for (const author of dbArticle.authors) {
+				// If authors not in edition, we remove it from its own drafts
+				if (!edition.authors.includes(author)) {
+					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					contributor.drafts.splice(contributor.drafts.indexOf(dbArticle.id), 1);
+					await contributor.save();
+				}
 			}
 
 			dbArticle.authors = edition.authors;
-		}
-
-		if (dbArticle.title !== edition.title) {
-			dbArticle.title = edition.title;
 		}
 
 		if (dbArticle.category !== edition.category) {
@@ -131,14 +168,18 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		try {
 			await dbArticle.save();
 		} catch (error) {
-			console.log(error);
-			res.status(500);
-			res.end();
+			res.status(400);
+			res.json({
+				error: error.message
+			});
+			return;
 		}
 
 		res.status(200);
 		res.setHeader('Cache-Control', 'no-store');
-		res.end();
+		res.json({
+			slug: dbArticle.id
+		});
 	}).catch(error => {
 		if (error.message === 'not found') {
 			res.status(404);
@@ -146,7 +187,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			return;
 		}
 
-		res.status(500);
+		res.status(400);
 		res.json(error);
 	});
 };

@@ -4,12 +4,14 @@ import {Email, UnhashedPassword} from '../lib/data-validator';
 import Input from './input';
 import Button from './button';
 
-export default class AccountEditor extends React.Component {
+export default class AccountCreator extends React.Component {
 	constructor(props) {
 		super(props);
 		this.props = props;
 
 		this.state = {
+			sex: 'F',
+			name: '',
 			email: '',
 			password: '',
 			picture: null,
@@ -18,12 +20,14 @@ export default class AccountEditor extends React.Component {
 			social: {}
 		};
 
-		this.submit				= this.submit.bind(this);
-		this.setEmailValue		= this.setEmailValue.bind(this);
-		this.setPasswordValue	= this.setPasswordValue.bind(this);
-		this.setBioValue		= this.setBioValue.bind(this);
-		this.setFileValue		= this.setFileValue.bind(this);
-		this.setSocialValue		= this.setSocialValue.bind(this);
+		this.submit = this.submit.bind(this);
+		this.setNameValue = this.setNameValue.bind(this);
+		this.setEmailValue = this.setEmailValue.bind(this);
+		this.setPasswordValue = this.setPasswordValue.bind(this);
+		this.setSexValue = this.setSexValue.bind(this);
+		this.setBioValue = this.setBioValue.bind(this);
+		this.setFileValue = this.setFileValue.bind(this);
+		this.setSocialValue = this.setSocialValue.bind(this);
 	}
 
 	async componentDidMount() {
@@ -40,47 +44,20 @@ export default class AccountEditor extends React.Component {
 			return;
 		}
 
-		if (this.props.id === userId) {
-			// Access allowed to super-moderators and auth user own profile
-			this.setState({
-				token,
-				email: contributor.email,
-				picture: contributor.picture,
-				bio: contributor.bio,
-				social: {
-					twitter: contributor.social.twitter || '',
-					facebook: contributor.social.facebook || '',
-					instagram: contributor.social.instagram || '',
-					linkedin: contributor.social.linkedin || '',
-					website: contributor.social.website || ''
-				}
-			});
-		} else if (contributor.moderator > 1) {
-			const profileRequest = await fetch(`/api/contributor/${this.props.id}?token=${token}`);
-			let profile;
-			try {
-				profile = await profileRequest.json();
-			} catch (_) {
-				Router.push('/403');
-				return;
-			}
-
-			this.setState({
-				token,
-				email: profile.email,
-				picture: profile.picture,
-				bio: profile.bio,
-				social: {
-					twitter: profile.social.twitter || '',
-					facebook: profile.social.facebook || '',
-					instagram: profile.social.instagram || '',
-					linkedin: profile.social.linkedin || '',
-					website: profile.social.website || ''
-				}
-			});
-		} else {
+		if (contributor.moderator < 2) {
 			Router.push('/403');
+			return;
 		}
+
+		this.setState({
+			token
+		});
+	}
+
+	setNameValue(event) {
+		this.setState({
+			name: event.target.value
+		});
 	}
 
 	setEmailValue(event) {
@@ -92,6 +69,12 @@ export default class AccountEditor extends React.Component {
 	setPasswordValue(event) {
 		this.setState({
 			password: event.target.value
+		});
+	}
+
+	setSexValue(event) {
+		this.setState({
+			sex: event.target.value
 		});
 	}
 
@@ -150,16 +133,18 @@ export default class AccountEditor extends React.Component {
 			loading: true
 		});
 
-		const response = await window.fetch(`/api/contributor/${this.props.id}/edit`, {
+		const response = await window.fetch('/api/contributor/new', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				token: this.state.token,
-				new: {
+				contributor: {
+					name: this.state.name,
+					sex: this.state.sex,
 					email: this.state.email,
-					picture: this.state.picture,
+					picture: this.state.picture || 'no-picture',
 					bio: this.state.bio,
 					password: this.state.password,
 					social: this.state.social
@@ -167,16 +152,11 @@ export default class AccountEditor extends React.Component {
 			})
 		});
 
-		let parsed;
-		try {
-			parsed = await response.json();
-		} catch (_) {
-			parsed = {};
-		}
+		const parsed = await response.json();
 
 		switch (response.status) {
-			case 200:
-				Router.push(`/author/${this.props.id}`);
+			case 201:
+				Router.push(`/author/${parsed.id}`);
 				break;
 			case 400:
 			case 404:
@@ -202,12 +182,11 @@ export default class AccountEditor extends React.Component {
 	render() {
 		return (
 			<div className="loginForm">
-				<h2>Modifier le profil</h2>
-				<h4>Laissez comme tel si vous ne souhaitez pas modifier un champ.</h4>
+				<h2>Créer un profil contributeur</h2>
 
 				<br/>
 				<form className="inputsContainer" onSubmit={this.submit}>
-					<h2>Changer les identifiants de connexion</h2>
+					<h2>Identifiants de connexion</h2>
 					<Input
 						value={this.state.email}
 						disabled={this.state.loading}
@@ -226,7 +205,15 @@ export default class AccountEditor extends React.Component {
 						onChange={this.setPasswordValue}
 					/>
 
-					<h2>Changer le profil public</h2>
+					<h2>Profil public</h2>
+					<Input
+						value={this.state.name}
+						disabled={this.state.loading}
+						className="stretch"
+						type="text"
+						placeholder="John Dupont"
+						onChange={this.setNameValue}
+					/>
 					<input
 						type="file"
 						value={this.state.file}
@@ -240,6 +227,11 @@ export default class AccountEditor extends React.Component {
 						placeholder="Cursus Héticien (Promo 2011) • Intéressé par <?>. Encore plus d'informations sur moi"
 						onChange={this.setBioValue}
 					/>
+
+					<select value={this.state.sex} onChange={this.setSexValue}>
+						<option value="F">Femme</option>
+						<option value="H">Homme</option>
+					</select>
 
 					<Input
 						value={this.state.social.twitter}
@@ -297,7 +289,7 @@ export default class AccountEditor extends React.Component {
 					}
 
 					<div className="buttonContainer">
-						<Button primary value="Enregistrer les modifications" type="submit"/>
+						<Button primary value="Créer le profil" type="submit"/>
 					</div>
 				</form>
 
