@@ -4,10 +4,31 @@ import SESV2 from 'aws-sdk/clients/sesv2';
 import Database, {Key} from '../../../../lib/database';
 import {Email, NewsletterRegistration} from '../../../../lib/data-validator';
 
-export default async function (req: NextApiRequest, res: NextApiResponse): Promise<void> {
-	const email = req.query.email as string;
+const banlist = [
+	'etudiants@hetic.net',
+	'p2024@hetic.net',
+	'p2023@hetic.net',
+	'p2022@hetic.net',
+	'p2021@hetic.net',
+	'p2020@hetic.net',
+	'3dp2020@hetic.net',
+	'3dp2021@hetic.net',
+	'3dp2022@hetic.net',
+	'w3p2020@hetic.net',
+	'webp2021@hetic.net',
+	'webp2022@hetic.net',
+	'wmp2020@hetic.net',
+	'wmp2021@hetic.net',
+	'mdp2021@hetic.net',
+	'mmp2021@hetic.net',
+	'mmp2020@hetic.net',
+	'mdp2020@hetic.net'
+];
 
-	if (!Email.test(email)) {
+export default async function (req: NextApiRequest, res: NextApiResponse): Promise<void> {
+	const email = (req.query.email as string).toLowerCase();
+
+	if (!Email.test(email) || banlist.includes(email)) {
 		res.status(400);
 		res.json({
 			error: 'Bad email'
