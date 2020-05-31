@@ -45,6 +45,7 @@ export default class ModerationDashboard extends React.Component {
 					contributor={contributor}
 					token={token}
 					approved={article.approvals && article.approvals.includes(userId)}
+					approvals={article.approvals && article.approvals.length}
 				/>
 			);
 		});

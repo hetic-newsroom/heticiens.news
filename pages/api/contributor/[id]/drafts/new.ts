@@ -156,6 +156,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	draft.date = Math.round(Date.now() / 1000);
 	draft.status = 'draft';
 
+	draft.category = draft.category.toLowerCase();
+
 	// Make slug
 	draft.id = makeSlug(draft.title);
 

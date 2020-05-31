@@ -9,6 +9,7 @@ export default class DraftCard extends React.Component {
 
 		this.state = {
 			approved: props.approved,
+			approvals: props.approvals,
 			error: false
 		};
 
@@ -23,7 +24,9 @@ export default class DraftCard extends React.Component {
 		const request = await fetch(`/api/article/${this.props.id}/approve?token=${this.props.token}`);
 
 		if (request.status === 200 || request.status === 201) {
+			const approvals = this.state.approvals;
 			this.setState({
+				approvals: approvals ? approvals + 1 : 1,
 				approved: true
 			});
 		} else {
@@ -57,7 +60,10 @@ export default class DraftCard extends React.Component {
 								</a>
 							</Link>
 
-							<Button positive={this.state.approved} negative={this.state.error} primary={!this.state.approved} icon="check" size="32px" onClick={this.approveDraft}/>
+							<div>
+								<span className="approvalsIndicator">{this.state.approvals ? this.state.approvals : 0}/3</span>
+								<Button positive={this.state.approved} negative={this.state.error} primary={!this.state.approved} icon="check" size="32px" onClick={this.approveDraft}/>
+							</div>
 						</div>
 				}
 
@@ -79,10 +85,27 @@ export default class DraftCard extends React.Component {
 						transform: scale(1.05);
 					}
 					
-					div.draftCard .moderation{
+					div.draftCard .moderation {
 						display: flex;
 						justify-content: space-evenly;
 						align-items: center;
+					}
+
+					div.draftCard .moderation > div {
+						position: relative;
+					}
+
+					div.draftCard .moderation .approvalsIndicator {
+						position: absolute;
+						left: 80%;
+						top: -20px;
+						font-size: 14px;
+						z-index: 2;
+
+						background: var(--color-light-grey);
+						color: black;
+						padding: 5px;
+						border-radius: 8px;
 					}
 					
 					.draftCard .imgContainer {

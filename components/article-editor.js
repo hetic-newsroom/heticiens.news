@@ -2,6 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Button from './button';
+import BannerArticle from './banner-article';
 
 const Editor = dynamic(
 	() => import('./editor'),
@@ -268,119 +269,129 @@ export default class ArticleEditor extends React.Component {
 
 	render() {
 		return (
-			<div className="articleForm">
-				<input
-					type="text"
-					value={this.state.title}
-					disabled={this.state.loading}
-					placeholder="Un titre percutant"
-					onChange={this.setTitleValue}
-				/>
-				<input
-					type="file"
-					value={this.state.file}
-					disabled={this.state.loading}
-					accept=".jpg,.jpeg,.png,.gif,.svg"
-					onChange={this.setFileValue}
-				/>
-				<textarea
-					value={this.state.intro}
-					disabled={this.state.loading}
-					placeholder="Dans un monde où le changement s’accélère, les écoles doivent s’adapter en permanence aux besoins des entreprises. Directeur général de HETIC, Frédéric Sitterlé veut associer les étudiants à cette évolution, via un conseil de perfectionnement pédagogique."
-					onChange={this.setIntroValue}
-				/>
-				<Editor
-					data={this.state.content}
-					disabled={this.state.loading}
-					token={this.state.token}
-					onChange={this.setContentValue}
-					onInit={this.onEditorReady}
-				/><br/>
-				<select value={this.state.category} onChange={this.setCategoryValue}>
-					<option value="Interviews">Interviews</option>
-					<option value="Reportages">Reportages</option>
-					<option value="Enquêtes">Enquêtes</option>
-					<option value="Opinions">Opinions</option>
-					<option value="Portraits">Portraits</option>
-				</select>
-				<input
-					type="text"
-					value={this.state.authors}
-					disabled={this.state.loading}
-					placeholder="E-mails des co-auteurs, séparés par ’, ’"
-					onChange={this.setAuthorsValue}
-				/>
+			<div>
+				<BannerArticle preview article={this.state} className="nocontainer"/>
+				<div className="articleForm">
+					<input
+						type="text"
+						value={this.state.title}
+						disabled={this.state.loading}
+						placeholder="Un titre percutant"
+						onChange={this.setTitleValue}
+					/>
+					<input
+						type="file"
+						value={this.state.file}
+						disabled={this.state.loading}
+						accept=".jpg,.jpeg,.png,.gif,.svg"
+						onChange={this.setFileValue}
+					/>
+					<textarea
+						value={this.state.intro}
+						disabled={this.state.loading}
+						placeholder="Dans un monde où le changement s’accélère, les écoles doivent s’adapter en permanence aux besoins des entreprises. Directeur général de HETIC, Frédéric Sitterlé veut associer les étudiants à cette évolution, via un conseil de perfectionnement pédagogique."
+						onChange={this.setIntroValue}
+					/>
+					<Editor
+						data={this.state.content}
+						disabled={this.state.loading}
+						token={this.state.token}
+						onChange={this.setContentValue}
+						onInit={this.onEditorReady}
+					/><br/>
+					<select value={this.state.category} onChange={this.setCategoryValue}>
+						<option value="Interviews">Interviews</option>
+						<option value="Reportages">Reportages</option>
+						<option value="Enquêtes">Enquêtes</option>
+						<option value="Opinions">Opinions</option>
+						<option value="Portraits">Portraits</option>
+					</select>
+					<input
+						type="text"
+						value={this.state.authors}
+						disabled={this.state.loading}
+						placeholder="E-mails des co-auteurs, séparés par ’, ’"
+						onChange={this.setAuthorsValue}
+					/>
 
-				{
-					this.state.error !== null &&
-						<h4 className="error">{this.state.error}</h4>
-				}
-				<div className="horizontal">
-					<div>&nbsp;</div>
 					{
-						this.state.previewId === null ?
-							<Button
-								primary={this.state.loading === false}
-								icon="chevronRight"
-								value={this.state.loading === true ? 'Ajout de l’article en cours…' : (this.props.article ? 'Enregistrer les modifications' : 'Mettre en brouillon')}
-								onClick={this.submit}
-							/> :
-							<Link href={`/article/${this.state.previewId}`}>
-								<a>
-									<Button
-										positive
-										icon="chevronRight"
-										value="Prévisualiser l’article"
-									/>
-								</a>
-							</Link>
+						this.state.error !== null &&
+							<h4 className="error">{this.state.error}</h4>
 					}
+					<div className="horizontal">
+						<div>&nbsp;</div>
+						{
+							this.state.previewId === null ?
+								<Button
+									primary={this.state.loading === false}
+									icon="chevronRight"
+									value={this.state.loading === true ? 'Ajout de l’article en cours…' : (this.props.article ? 'Enregistrer les modifications' : 'Mettre en brouillon')}
+									onClick={this.submit}
+								/> :
+								<Link href={`/article/${this.state.previewId}`}>
+									<a>
+										<Button
+											positive
+											icon="chevronRight"
+											value="Prévisualiser l’article"
+										/>
+									</a>
+								</Link>
+						}
+					</div>
+
+					<style jsx>{`
+						.articleForm{
+							display: flex;
+							flex-direction: column;
+							width: 100%;
+							max-width: 660px;
+							margin: 0 auto;
+						}
+						.articleForm > *{
+							margin-bottom: 20px;
+						}
+						.articleForm .horizontal{
+							display: flex;
+						}
+						.articleForm .horizontal > *{
+							flex: 1;
+						}
+
+						.nocontainer{
+							position: absolute;left:0;right:0;
+						}
+
+						h4.error{
+							padding-left: 15px;
+							color: var(--color-negative);
+							font-weight: 500;
+						}
+
+						input[type="text"], textarea {
+							--bg: var(--color-light-grey);
+							--fg: var(--color-black);
+
+							-webkit-appearance: none;
+							outline: none;
+							// max-width: 100%;
+							padding: 10px 15px;
+
+							background: var(--bg);
+							color: var(--fg);
+							border: 4px solid var(--bg);
+							border-radius: 15px;
+							box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+						}
+
+						textarea {
+							font-size: 1.125rem;
+							resize: vertical;
+							min-height: 150px;
+						}
+					`}
+					</style>
 				</div>
-
-				<style jsx>{`
-					.articleForm{
-						display: flex;
-						flex-direction: column;
-					}
-					.articleForm > *{
-						margin-bottom: 20px;
-					}
-					.articleForm .horizontal{
-						display: flex;
-					}
-					.articleForm .horizontal > *{
-						flex: 1;
-					}
-
-					h4.error{
-						padding-left: 15px;
-						color: var(--color-negative);
-						font-weight: 500;
-					}
-
-					input[type="text"], textarea {
-						--bg: var(--color-light-grey);
-						--fg: var(--color-black);
-
-						-webkit-appearance: none;
-						outline: none;
-						// max-width: 100%;
-						padding: 10px 15px;
-
-						background: var(--bg);
-						color: var(--fg);
-						border: 4px solid var(--bg);
-						border-radius: 15px;
-						box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-					}
-
-					textarea {
-						font-size: 1.125rem;
-						resize: vertical;
-						min-height: 150px;
-					}
-				`}
-				</style>
 			</div>
 		);
 	}

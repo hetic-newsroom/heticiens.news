@@ -97,9 +97,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		const bucket = new Bucket();
 
 		// Upload image
-		const fileExtension = req.body.new.picture.slice(
-			req.body.new.picture.indexOf('data:image/') as number + 11,
-			req.body.new.picture.indexOf(';base64')
+		const fileExtension = req.body.contributor.picture.slice(
+			req.body.contributor.picture.indexOf('data:image/') as number + 11,
+			req.body.contributor.picture.indexOf(';base64')
 		);
 
 		if (!acceptedImageFormats.includes(fileExtension)) {
@@ -110,7 +110,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			return;
 		}
 
-		const base64 = req.body.new.picture.replace(/^.*,/, ''); // Strip metadata
+		const base64 = req.body.contributor.picture.replace(/^.*,/, ''); // Strip metadata
 		const key = await bucket.upload(base64, fileExtension);
 		contributor.picture = `https://bucket.heticiens.news/${key as string}`;
 	} else {
@@ -131,9 +131,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	try {
 		await db.put('Contributors', {...contributor});
 	} catch (error) {
-		console.log(error);
-		res.status(500);
-		res.end();
+		res.status(400);
+		res.json({error});
 	}
 
 	res.status(201);
