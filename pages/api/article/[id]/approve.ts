@@ -69,6 +69,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		// Enough approvals, publish!
 		delete dbArticle.approvals;
 		dbArticle.status = 'published';
+		dbArticle.date = Math.round(Date.now() / 1000);
 
 		await dbArticle.save();
 
