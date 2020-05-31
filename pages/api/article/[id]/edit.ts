@@ -113,7 +113,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 				// If authors not in db, we add it to its own drafts
 				if (!dbArticle.authors.includes(author)) {
-					const contributor = await db.borrow('Contributors', {id: author}) as any;
+					const contributor = await db.borrow('Contributors', {id: edition.authors[i - 1]}) as any;
 					contributor.drafts.push(edition.id);
 					await contributor.save();
 				}
