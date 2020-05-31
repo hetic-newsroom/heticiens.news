@@ -143,7 +143,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			dbArticle.content = edition.content;
 		}
 
-		if (edition.content.includes('base64')) {
+		if (edition.image.includes('base64')) {
 			const bucket = new Bucket();
 
 			// Upload image
