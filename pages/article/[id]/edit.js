@@ -43,7 +43,7 @@ export default props => {
 					<style jsx>{`
 						.contribspace {
 							width: 100%;
-							max-width: 660px;
+							// max-width: 660px;
 							margin: 0 auto;
 						}
 					`}
