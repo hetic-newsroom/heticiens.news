@@ -6,7 +6,7 @@ export interface Token {
 }
 
 type sex = 'H' | 'F';
-type socialNetwork = 'twitter' | 'facebook' | 'instagram' | 'website' | 'linkedin';
+type socialNetwork = 'twitter' | 'facebook' | 'instagram' | 'website' | 'linkedin' | 'flickr';
 export type socialLinks = Record<socialNetwork, string>;
 type booleanNumber = 0 | 1;
 

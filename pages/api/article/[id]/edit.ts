@@ -1,6 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import Database from '../../../../lib/database';
 import Bucket from '../../../../lib/s3-bucket';
+import readingTime from 'reading-time';
 import {getArticle} from '../[id]';
 import {getContributor} from '../../contributor/[id]';
 import {makeSlug} from '../../contributor/[id]/drafts/new';
@@ -141,6 +142,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
 		if (dbArticle.content !== edition.content) {
 			dbArticle.content = edition.content;
+
+			dbArticle.readTime = Math.round(
+				readingTime(`${edition.intro}${edition.content}`)
+					.time
+			);
 		}
 
 		if (edition.image.includes('base64')) {

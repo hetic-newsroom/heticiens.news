@@ -51,6 +51,7 @@ export default class AccountEditor extends React.Component {
 					twitter: contributor.social.twitter || '',
 					facebook: contributor.social.facebook || '',
 					instagram: contributor.social.instagram || '',
+					flickr: contributor.social.flickr || '',
 					linkedin: contributor.social.linkedin || '',
 					website: contributor.social.website || ''
 				}
@@ -74,6 +75,7 @@ export default class AccountEditor extends React.Component {
 					twitter: profile.social.twitter || '',
 					facebook: profile.social.facebook || '',
 					instagram: profile.social.instagram || '',
+					flickr: profile.social.flickr || '',
 					linkedin: profile.social.linkedin || '',
 					website: profile.social.website || ''
 				}
@@ -279,6 +281,16 @@ export default class AccountEditor extends React.Component {
 						social="instagram"
 						placeholder="https://instagram.com/"
 						onChange={event => this.setSocialValue('instagram', event)}
+					/>
+
+					<Input
+						value={this.state.social.flickr}
+						disabled={this.state.loading}
+						className="stretch"
+						type="url"
+						social="flickr"
+						placeholder="https://flickr.com/"
+						onChange={event => this.setSocialValue('flickr', event)}
 					/>
 
 					<Input

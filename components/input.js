@@ -96,6 +96,10 @@ export default tprops => {
 					background: center/cover url("/api/icons/instagram?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
 				}
 
+				input[social="flickr"] + .input-icon {
+					background: center/cover url("/api/icons/flickr?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
+				}
+
 				input[social="linkedin"] + .input-icon {
 					background: center/cover url("/api/icons/linkedin?fill=${DefaultColorScheme.darkGrey.replace('#', '')}") no-repeat;
 				}
