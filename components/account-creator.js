@@ -274,6 +274,16 @@ export default class AccountCreator extends React.Component {
 					/>
 
 					<Input
+						value={this.state.social.flickr}
+						disabled={this.state.loading}
+						className="stretch"
+						type="url"
+						social="flickr"
+						placeholder="https://flickr.com/"
+						onChange={event => this.setSocialValue('flickr', event)}
+					/>
+
+					<Input
 						value={this.state.social.website}
 						disabled={this.state.loading}
 						className="stretch"
