@@ -24,7 +24,7 @@ export async function getArticleList(count = 10): Promise<[{id: string}]> {
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-	const count = Number(req.query.count as string);
+	const count = Number(req.query.count as string) || 10;
 
 	getArticleList(count).then(async articles => {
 		let i = 0;
