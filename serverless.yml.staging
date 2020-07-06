@@ -1,5 +1,5 @@
 heticiensNews:
-  component: serverless-next.js
+  component: "serverless-next.js@1.11.0"
   inputs:
     domain: ['staging', 'heticiens.news']
     bucketName: heticiensnewsstaging
