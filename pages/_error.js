@@ -1,9 +1,16 @@
+import {useRouter} from 'next/router';
 import ErrorPage from '../components/error-page';
 
-// Note: this is straight-from-nextjs code so some linting is disabled to ot break stuff
+// Note: this is straight-from-nextjs code so some linting is disabled to not break stuff
 
 /* eslint-disable-next-line react/function-component-definition */
 function Error({statusCode}) {
+	const router = useRouter();
+
+	if (typeof window !== 'undefined' && statusCode === 200) {
+		router.push('/');
+	}
+
 	return (
 		<ErrorPage code={statusCode || '000'}/>
 	);
