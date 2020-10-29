@@ -16,7 +16,7 @@ export default props => (
 				max-width: 100%;
 				display: grid;
 				grid-template: ${(props.title.length > 25) ? `
-										"img" 7rem
+										"img" 14rem
 										"category" auto
 										"title" auto
 										"author" auto / auto

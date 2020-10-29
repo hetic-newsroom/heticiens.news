@@ -25,7 +25,7 @@ export default props => (
 						width: calc(100% + 30px);
 						position: relative;
 						left: -15px;
-						padding: 10vmax 15px 15px;
+						padding: 15vmax 15px 15px;
 						margin-bottom: 0;
 					}
 				}
