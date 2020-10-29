@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 				i++;
 			}
 
-			articles.push(populatedArticle);
+			articles.unshift(populatedArticle);
 		}
 
 		articles.forEach((article, i) => {
