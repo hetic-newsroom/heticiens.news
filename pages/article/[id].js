@@ -108,11 +108,11 @@ export default props => {
 
 	return (
 		<Page
-			title={`${props.title} - H|N`}
+			title={`${props.title} - HETIC Newsroom`}
 			description={`${props.intro} À lire sur HETIC Newsroom !`}
 		>
 			<Head>
-				<meta property="og:title" content={`${props.title} - H|N`}/>
+				<meta property="og:title" content={`${props.title} - HETIC Newsroom`}/>
 				<meta property="og:type" content="article"/>
 				<meta property="og:image" content={props.image}/>
 				<meta property="og:description" content={props.intro}/>
