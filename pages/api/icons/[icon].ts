@@ -29,7 +29,7 @@ const icons = {
 };
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
-	const icon = req.query.icon;
+	const icon = req.query.icon as string;
 	const fill = req.query.fill || '000';
 
 	if (!(icon in icons)) {
@@ -41,6 +41,6 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
 	res.status(200);
 	res.setHeader('Content-type', 'image/svg+xml');
 	res.setHeader('Cache-control', 'public, max-age=604800, immutable');
-	const coloredIcon = icons[icon as string].split('__FILL__').join(`#${fill as string}`);
+	const coloredIcon = icons[icon].split('__FILL__').join(`#${fill as string}`);
 	res.end(coloredIcon);
 };
