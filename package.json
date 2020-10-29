@@ -41,8 +41,14 @@
       "unicorn/prefer-set-has": 0,
       "react/prop-types": 0,
       "react/button-has-type": 0,
+		"unicorn/no-abusive-eslint-disable": 0,
       "no-await-in-loop": 0,
-      "@typescript-eslint/prefer-readonly-parameter-types": 0
+		"unicorn/no-reduce": 0,
+		"unicorn/prefer-ternary": 0,
+		"unicorn/prefer-optional-catch-binding": 0,
+		"import/no-anonymous-default-export": 0,
+      "@typescript-eslint/prefer-readonly-parameter-types": 0,
+		"@typescript-eslint/no-implicit-any-catch": 0
     }
   },
   "repository": {
@@ -62,30 +68,30 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "https://github.com/hetic-newsroom/ckeditor5-build-classic.git#master",
     "@ckeditor/ckeditor5-react": "^2.1.0",
-    "aws-sdk": "^2.668.0",
+    "aws-sdk": "^2.781.0",
     "classnames": "^2.2.6",
-    "dompurify": "^2.0.10",
-    "isomorphic-unfetch": "^3.0.0",
-    "jsdom": "^16.2.2",
-    "nanoid": "^3.1.3",
-    "next": "^9.3.6",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "dompurify": "^2.2.0",
+    "isomorphic-unfetch": "^3.1.0",
+    "jsdom": "^16.4.0",
+    "nanoid": "^3.1.16",
+    "next": "^9.5.5",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "reading-time": "^1.2.0",
-    "scrypt-js": "^3.0.0"
+    "scrypt-js": "^3.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@commitlint/prompt-cli": "^8.3.5",
-    "@types/react": "^16.9.34",
-    "eslint-config-xo": "^0.29.1",
+    "@types/react": "^16.9.55",
+    "eslint-config-xo": "^0.33.1",
     "eslint-config-xo-react": "^0.23.0",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^4.0.0",
-    "husky": "^4.2.5",
-    "serverless": "^1.69.0",
-    "serverless-next.js": "^1.11.0",
-    "xo": "^0.30.0"
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "serverless": "^1.83.0",
+    "serverless-next.js": "^1.14.0",
+    "xo": "^0.34.1"
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import AWS from 'aws-sdk/global';
 import Request from 'aws-sdk/lib/request';
 import DynamoDB from 'aws-sdk/clients/dynamodb';
@@ -132,7 +133,6 @@ export default class Database {
 				}
 			},
 			set: (Item, prop, value): boolean => {
-				/* eslint-disable-next-line no-return-assign */
 				return Item[prop as string] = value;
 			}
 		});
