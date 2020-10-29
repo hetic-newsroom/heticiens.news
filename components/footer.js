@@ -19,8 +19,8 @@ export default () => (
 						</a>
 					</li>
 					<li>
-						<a target="_blank" href="https://www.facebook.com/HETIC-Newsroom-114058820257237/" rel="noopener noreferrer">
-							<Icon name="facebook" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
+						<a target="_blank" href="https://www.youtube.com/channel/UCUdr_JzbdkV6bVvOTSpseEA" rel="noopener noreferrer">
+							<Icon name="youtube" width="2.5rem" height="2.5rem" color={DefaultColorScheme.white}/>
 						</a>
 					</li>
 					<li>
