@@ -14,17 +14,21 @@ export async function getArticleListByCategory(category: string, count = 10): Pr
 	});
 	const Items = res.Items as unknown[];
 
-	Items.forEach((article: Article, index) => {
-		if (article.status !== 'published') {
-			Items.splice(index, 1);
-		}
-	});
+	// Items.forEach((article: Article, index) => {
+	// 	if (article.status !== 'published') {
+	// 		Items.splice(index, 1);
+	// 	}
+	// });
 
 	if (Items.length === 0) {
 		throw new Error('not found');
 	}
 
-	return Items as [{id: string}];
+	const articles = Items.filter((article: Article) => {
+		return article.status === 'published';
+	});
+
+	return articles as [{id: string}];
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
