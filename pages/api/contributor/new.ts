@@ -92,6 +92,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 	contributor.moderator = 0;
 	contributor.drafts = [];
 	contributor.articles = [];
+	contributor.tokens = [];
 
 	if (contributor.picture.includes('base64')) {
 		const bucket = new Bucket();
