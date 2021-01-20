@@ -1,56 +1,27 @@
 {
   "name": "heticiens.news",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
+    "lint": "eslint --color --ignore-path .gitignore \"**/*.js\" \"**/*.ts\" \"**/*.tsx\"",
+    "test": "tsc --noEmit",
     "start": "next",
     "build": "next build",
     "serve": "next start",
-    "deploy": "serverless",
-    "lint": "xo",
-    "test": "echo 'no tests yet!'",
-    "commit": "npm run lint && commit"
+    "deploy": "vc"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm run lint && npm test",
-      "pre-push": "npm run build"
+      "pre-commit": "lint-staged",
+      "prepare-commit-msg": "komit $HUSKY_GIT_PARAMS",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "xo": {
-    "envs": [
-      "browser",
-      "node"
-    ],
-    "extends": "xo-react",
-    "ignores": [
-      "local/**",
-      "components/head.js"
-    ],
-    "rules": {
-      "react/state-in-constructor": [
-        1,
-        "always"
-      ],
-      "new-cap": 1,
-      "import/no-unassigned-import": 0,
-      "react/react-in-jsx-scope": 0,
-      "unicorn/prevent-abbreviations": 0,
-      "unicorn/catch-error-name": 0,
-      "unicorn/prefer-set-has": 0,
-      "react/prop-types": 0,
-      "react/button-has-type": 0,
-      "unicorn/no-abusive-eslint-disable": 0,
-      "no-await-in-loop": 0,
-      "unicorn/no-reduce": 0,
-      "unicorn/prefer-ternary": 0,
-      "unicorn/prefer-optional-catch-binding": 0,
-      "import/no-anonymous-default-export": 0,
-      "@typescript-eslint/prefer-readonly-parameter-types": 0,
-      "@typescript-eslint/no-implicit-any-catch": 0
-    }
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.ts": "eslint --cache --fix",
+    "*.tsx": "eslint --cache --fix"
   },
   "repository": {
     "type": "git",
@@ -68,31 +39,29 @@
   "homepage": "https://github.com/hetic-newsroom/heticiens.news#readme",
   "dependencies": {
     "@prismicio/client": "^4.0.0",
-    "aws-sdk": "^2.781.0",
+    "aws-sdk": "^2.829.0",
     "classnames": "^2.2.6",
-    "dompurify": "^2.2.0",
     "isomorphic-unfetch": "^3.1.0",
-    "jsdom": "^16.4.0",
-    "nanoid": "^3.1.16",
     "next": "^10.0.5",
     "prismic-reactjs": "^1.3.3",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "reading-time": "^1.2.0",
-    "scrypt-js": "^3.0.1"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "reading-time": "^1.2.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "@commitlint/prompt-cli": "^8.3.5",
-    "@types/react": "^16.9.55",
-    "eslint-config-xo": "^0.33.1",
-    "eslint-config-xo-react": "^0.23.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.0",
-    "serverless": "^1.83.0",
-    "serverless-next.js": "^1.14.0",
-    "xo": "^0.34.1"
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "@vercel/node": "^1.9.0",
+    "eslint": "^7.18.0",
+    "husky": "^4.3.8",
+    "komit": "^1.0.5",
+    "lint-staged": "^10.5.3",
+    "sass": "^1.32.5",
+    "typescript": "^4.1.3",
+    "vercel": "^21.1.0"
   }
 }

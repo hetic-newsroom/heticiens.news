@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
 	target: 'serverless',
@@ -7,11 +7,5 @@ module.exports = {
 	},
 	images: {
 		domains: ['bucket.heticiens.news', 'images.prismic.io']
-	},
-	webpack: config => {
-		// Used to fix build errors with jsdom
-		/* eslint-disable-next-line dot-notation */
-		config.resolve.alias['canvas$'] = path.resolve(__dirname, 'lib/fakecanvas.js');
-		return config;
 	}
-};
+}
