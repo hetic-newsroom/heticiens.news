@@ -1,7 +1,5 @@
 User-agent: *
 Disallow: /api
-Disallow: /contributors
-Disallow: /login
 Disallow: /403
 Disallow: /404
 Disallow: /_error
