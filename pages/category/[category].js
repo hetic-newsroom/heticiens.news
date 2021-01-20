@@ -66,12 +66,9 @@ const CategoryPage = props => {
 };
 
 export async function getServerSideProps(ctx) {
-	// Const {props} = await getProps(ctx, `/article/latest/${encodeURIComponent(ctx.params.category)}`);
 	const client = Client();
 
 	const category = await client.getByUID('categories', ctx.params.category);
-
-	console.log(category);
 
 	if (category === undefined) {
 		if (ctx.res) {
