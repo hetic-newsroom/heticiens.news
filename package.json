@@ -67,8 +67,6 @@
   },
   "homepage": "https://github.com/hetic-newsroom/heticiens.news#readme",
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "https://github.com/hetic-newsroom/ckeditor5-build-classic.git#master",
-    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@prismicio/client": "^4.0.0",
     "aws-sdk": "^2.781.0",
     "classnames": "^2.2.6",
