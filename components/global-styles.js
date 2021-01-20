@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import DefaultColorScheme from '../lib/colors-default';
 
-export default () => (
+const GlobalStyles = () => (
 	<>
 		<Head>
 			<meta key="viewport" name="viewport" content="initial-scale=1.0, width=device-width"/>
@@ -148,3 +148,5 @@ export default () => (
 		</style>
 	</>
 );
+
+export default GlobalStyles;

@@ -1,21 +1,22 @@
 import * as React from 'react';
+import {RichText} from 'prismic-reactjs';
 
-export default props => (
+const ArticleCard = props => (
 	<div className="articleCard">
 		<div className="imgContainer"/>
-		<h3>{props.category.slice(0, -1)}</h3>
-		<h2>{props.title}</h2>
+		<h3>{RichText.asText(props.article.category.data.title)}</h3>
+		<h2>{RichText.asText(props.article.title)}</h2>
 		<h4>
-			par {props.authors.reduce((accumulator, author, index) => {
-				return (index === 0) ? `${author.name}` : `${accumulator} et ${author.name}`;
-			}, props.authors[0].name)}
+			par {props.article.authors.reduce((accumulator, author, index) => {
+				return (index === 0) ? `${RichText.asText(author.author.data.name)}` : `${accumulator} et ${RichText.asText(author.author.data.name)}`;
+			}, RichText.asText(props.article.authors[0].author.data.name))}
 		</h4>
 
 		<style jsx>{`
 			div.articleCard {
 				max-width: 100%;
 				display: grid;
-				grid-template: ${(props.title.length > 25) ? `
+				grid-template: ${(RichText.asText(props.article.title).length > 25) ? `
 										"img" 14rem
 										"category" auto
 										"title" auto
@@ -26,7 +27,7 @@ export default props => (
 										"img author" auto / 50% auto
 									`};
 				grid-column-gap: 15px;
-				grid-${(props.title.length > 25) ? 'column' : 'row'}-gap: 0;
+				grid-${(RichText.asText(props.article.title).length > 25) ? 'column' : 'row'}-gap: 0;
 				transform: scale(1);
 				transition: transform .2s ease-out;
 				padding: 15px 0;
@@ -40,13 +41,13 @@ export default props => (
 				grid-area: img;
 				height: 100%;
 				width: 100%;
-				background: center/cover url("${props.image}") no-repeat;
+				background: center/cover url("${props.article.image.url}") no-repeat;
 			}
 
 			h3 {
 				grid-area: category;
 				font-weight: 400;
-				${(props.title.length > 25) ? 'margin-top: 15px;' : ''}
+				${(RichText.asText(props.article.title).length > 25) ? 'margin-top: 15px;' : ''}
 				text-transform: capitalize;
 			}
 
@@ -64,3 +65,5 @@ export default props => (
 		</style>
 	</div>
 );
+
+export default ArticleCard;

@@ -1,22 +1,23 @@
 import * as React from 'react';
+import {RichText} from 'prismic-reactjs';
 
-export default props => (
+const BannerArticle = props => (
 	<div className={['bannerArticle', props.className].join(' ')}>
-		<h3>{props.article.category.slice(0, -1)}</h3>
-		<h2>{props.article.title}</h2>
+		<h3>{RichText.asText(props.article.category.data.title)}</h3>
+		<h2>{RichText.asText(props.article.title)}</h2>
 		{ !props.preview &&
 			<h4>
 				par {props.article.authors.reduce((accumulator, author, index) => {
-					return (index === 0) ? `${author.name}` : `${accumulator} et ${author.name}`;
-				}, props.article.authors[0].name)}
+					return (index === 0) ? `${RichText.asText(author.author.data.name)}` : `${accumulator} et ${RichText.asText(author.author.data.name)}`;
+				}, RichText.asText(props.article.authors[0].author.data.name))}
 			</h4>}
-		<p>{props.article.intro}</p>
+		<p>{props.article.intro[0].text}</p>
 
 		<style jsx>{`
 				.bannerArticle {
 					width: 100%;
 					padding: 15vmax calc((100% - 660px) / 2) 15px;
-					background: center/cover url("${props.article.image}") no-repeat;
+					background: center/cover url("${props.article.image.url}") no-repeat;
 					margin-bottom: 30px;
 				}
 
@@ -68,3 +69,5 @@ export default props => (
 		</style>
 	</div>
 );
+
+export default BannerArticle;

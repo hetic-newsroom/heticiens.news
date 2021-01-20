@@ -1,14 +1,15 @@
 import Router from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
-import getProps from '../../lib/get-props';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 import Button from '../../components/button';
 import Share from '../../components/share-button';
-import AccountEditButton from '../../components/account-edit-button';
+import {RichText} from 'prismic-reactjs';
+import Prismic from '@prismicio/client';
+import {Client} from '../../prismic-configuration';
 
-export default props => {
+const AuthorPage = props => {
 	if (!props) {
 		return (
 			<Page>
@@ -18,10 +19,14 @@ export default props => {
 	}
 
 	const socialLinks = [];
-	Object.keys(props.social).forEach(network => {
+	Object.keys(props.social[0]).forEach(network => {
+		if (!props.social[0][network].url) {
+			return;
+		}
+
 		socialLinks.push(
 			<div className="socialLink">
-				<a key={network} href={props.social[network]} target="_blank" rel="noopener noreferrer">
+				<a key={network} href={props.social[0][network].url} target="_blank" rel="noopener noreferrer">
 					<Button icon={network}/>
 				</a>
 				<style jsx>{`
@@ -37,13 +42,10 @@ export default props => {
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<Link key={article.id} href={`/article/${article.id}`}>
+			<Link key={article.uid} href={`/article/${article.uid}`}>
 				<a>
 					<ArticleCard
-						title={article.title}
-						category={article.category}
-						image={article.image}
-						authors={article.authors}
+						article={article.data}
 					/>
 				</a>
 			</Link>
@@ -52,29 +54,28 @@ export default props => {
 
 	return (
 		<Page
-			title={`${props.name} - H|N`}
-			description={props.bio}
+			title={`${RichText.asText(props.name)} - H|N - HETIC Newsroom`}
+			description={RichText.asText(props.bio)}
 		>
 			<Head>
-				<meta property="og:title" content={`${props.name} - H|N`}/>
+				<meta property="og:title" content={`${RichText.asText(props.name)} - H|N`}/>
 				<meta property="og:type" content="profile"/>
-				<meta property="og:image" content={props.picture}/>
-				<meta property="og:description" content={props.bio}/>
-				<meta property="og:url" content={`https://heticiens.news/author/${props.id}`}/>
+				<meta property="og:image" content={props.picture.url}/>
+				<meta property="og:description" content={RichText.asText(props.bio)}/>
+				<meta property="og:url" content={`https://heticiens.news/author/${props.uid}`}/>
 				<meta property="og:locale" content="fr_FR"/>
 				<meta property="og:site_name" content="HETIC Newsroom"/>
 			</Head>
 			<div className="articleContainer">
 				<article>
 					<header>
-						<img src={(props.picture === 'no-picture') ? '/api/icons/person' : props.picture} alt={props.name}/>
+						<img src={props.picture.url} alt={RichText.asText(props.name)}/>
 						<span>Contributeur</span>
-						<h1>{props.name}</h1>
+						<h1>{RichText.asText(props.name)}</h1>
 					</header>
 					<p className="biography">
-						{props.bio}
+						{RichText.asText(props.bio)}
 					</p>
-					<AccountEditButton id={props.id}/>
 				</article>
 				<aside>
 					<div className="socialLinks">
@@ -83,7 +84,7 @@ export default props => {
 					<div className="shareButtonContainer">
 						<Share
 							type="author"
-							link={`https://heticiens.news/author/${props.id}`}
+							link={`https://heticiens.news/author/${props.uid}`}
 						/>
 					</div>
 				</aside>
@@ -186,12 +187,13 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props, host} = await getProps(ctx, `/contributor/${ctx.params.id}`);
+	const client = Client();
+	const contributor = await client.getByUID('authors', ctx.params.id);
 
-	if (props.error) {
+	if (contributor === undefined) {
 		if (ctx.res) {
 			ctx.res.writeHead(302, {
-				Location: `${host}/404`,
+				Location: '/404',
 				'Content-Type': 'text/html; charset=utf-8'
 			});
 			ctx.res.end();
@@ -202,9 +204,20 @@ export async function getServerSideProps(ctx) {
 		return;
 	}
 
-	const {props: props2} = await getProps(ctx, `/contributor/${ctx.params.id}/articles`);
+	const articles = await client.query([
+		Prismic.Predicates.at('document.type', 'articles'),
+		Prismic.Predicates.at('my.articles.authors.author', contributor.id)
+	],
+	{pageSize: 100, fetchLinks: ['categories.title', 'authors.name', 'authors.picture', 'authors.uid']}
+	); // TODO: Order by published DESC?
 
 	return {
-		props: {...props, articles: props2.articles}
+		props: {
+			uid: contributor.uid,
+			...contributor.data,
+			articles: articles.results
+		}
 	};
 }
+
+export default AuthorPage;

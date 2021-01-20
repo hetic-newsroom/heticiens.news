@@ -3,7 +3,7 @@ import Header from './header';
 import GlobalStyles from './global-styles';
 import Footer from './footer';
 
-export default props => (
+const Page = props => (
 	<main id="pageRoot">
 		<Head title={props.title} description={props.description}/>
 		<div id="pageWidthContainer">
@@ -43,3 +43,5 @@ export default props => (
 		</style>
 	</main>
 );
+
+export default Page;

@@ -1,23 +1,19 @@
 import Router from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
-import getProps from '../../lib/get-props';
+import Prismic from '@prismicio/client';
+import {Client} from '../../prismic-configuration';
+import {Date, RichText} from 'prismic-reactjs';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
 import Share from '../../components/share-button';
 import FlashMessage from '../../components/flash-message';
-import ArticleEditButton from '../../components/article-edit-button';
-
-function formatDate(timestamp) {
-	const d = new Date(timestamp * 1000);
-	return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-}
 
 function formatReadingTime(ms) {
 	return `${Math.round(ms / 1000 / 60)} min`;
 }
 
-export default props => {
+const ArticlePage = props => {
 	if (!props) {
 		return (
 			<Page>
@@ -34,7 +30,8 @@ export default props => {
 	}
 
 	const authors = [];
-	props.authors.forEach((author, index) => {
+	props.authors.forEach((_author, index) => {
+		const author = _author.author;
 		let title = 'Avec';
 
 		if (index === 0) {
@@ -42,12 +39,12 @@ export default props => {
 		}
 
 		authors.push(
-			<Link key={author.id} href={`/author/${author.id}`}>
+			<Link key={author.uid} href={`/author/${author.uid}`}>
 				<a>
 					<div className="author">
-						<img src={(author.picture === 'no-picture') ? '/api/icons/person' : author.picture} alt={author.name}/>
+						<img src={author.data.picture.url} alt={RichText.asText(author.data.name)}/>
 						<h3>{title}</h3>
-						<h2>{author.name}</h2>
+						<h2>{RichText.asText(author.data.name)}</h2>
 						<style jsx>{`
 							div.author {
 								display: grid;
@@ -87,19 +84,16 @@ export default props => {
 
 	const cards = [];
 	props.next.forEach(article => {
-		if (article.title === props.title) {
+		if (RichText.asText(article.data.title) === RichText.asText(props.title)) {
 			// Do not recommend current article
 			return;
 		}
 
 		cards.push(
-			<Link key={article.id} href={`/article/${article.id}`}>
+			<Link key={article.uid} href={`/article/${article.uid}`}>
 				<a>
 					<ArticleCard
-						title={article.title}
-						category={article.category}
-						image={article.image}
-						authors={article.authors}
+						article={article.data}
 					/>
 				</a>
 			</Link>
@@ -108,51 +102,45 @@ export default props => {
 
 	return (
 		<Page
-			title={`${props.title} - HETIC Newsroom`}
-			description={`${props.intro} À lire sur HETIC Newsroom !`}
+			title={`${RichText.asText(props.title)} - HETIC Newsroom`}
+			description={`${RichText.asText(props.intro)} À lire sur HETIC Newsroom !`}
 		>
 			<Head>
-				<meta property="og:title" content={`${props.title} - HETIC Newsroom`}/>
+				<meta property="og:title" content={`${RichText.asText(props.title)} - HETIC Newsroom`}/>
 				<meta property="og:type" content="article"/>
-				<meta property="og:image" content={props.image}/>
-				<meta property="og:description" content={props.intro}/>
-				<meta property="og:url" content={`https://heticiens.news/article/${props.id}`}/>
+				<meta property="og:image" content={props.image.url}/>
+				<meta property="og:description" content={RichText.asText(props.intro)}/>
+				<meta property="og:url" content={`https://heticiens.news/article/${props.uid}`}/>
 				<meta property="og:locale" content="fr_FR"/>
 				<meta property="og:site_name" content="HETIC Newsroom"/>
 			</Head>
 			<div className="articleContainer">
 				<article>
 					{
+						// TODO: Fix this for Prismic
 						props.status === 'draft' &&
 							<FlashMessage accent>
 								Vous êtes actuellement en train de prévisualiser un brouillon.
 							</FlashMessage>
 					}
-					<span>{props.category[0].toUpperCase() + props.category.slice(1).slice(0, -1)}</span>
-					<h1>{props.title}</h1>
+					<span>{RichText.asText(props.category.data.title)}</span>
+					<h1>{RichText.asText(props.title)}</h1>
 					<h3>
-						Publié le <strong>{formatDate(props.date)}</strong><br/>par {props.authors.reduce((accumulator, author, index) => {
+						Publié le <strong>{Date(props.first_publication_date)}</strong><br/>par {props.authors.reduce((accumulator, author, index) => {
 							if (index === 0) {
-								return <strong key={author.id}>{`${author.name}`}</strong>;
+								return <strong key={author.uid}>{`${RichText.asText(author.author.data.name)}`}</strong>;
 							}
 
-							return [accumulator, ' et ', <strong key={author.id}>{`${author.name}`}</strong>];
-						}, props.authors[0].name)}
+							return [accumulator, ' et ', <strong key={author.uid}>{`${RichText.asText(author.author.data.name)}`}</strong>];
+						}, RichText.asText(props.authors[0].author.data.name))}
 					</h3>
-					<h5>Temps de lecture: {formatReadingTime(props.readTime)}</h5>
+					<h5>Temps de lecture: {formatReadingTime(props.readTime || 20000)}</h5>
 					<p className="intro">
-						{props.intro}
+						{RichText.asText(props.intro)}
 					</p>
-					<div
-						className="articleHtmlContainer"
-						// Html is sanitized...
-						/* eslint-disable-next-line react/no-danger */
-						dangerouslySetInnerHTML={{
-							__html: content
-						}}
-					/>
-
-					<ArticleEditButton id={props.id}/>
+					<div className="articleHtmlContainer">
+						{RichText.render(content)}
+					</div>
 				</article>
 				<aside>
 					<div className="authorsContainer">
@@ -161,7 +149,7 @@ export default props => {
 					<div className="shareButtonContainer">
 						<Share
 							type="article"
-							link={`https://heticiens.news/article/${props.id}`}
+							link={`https://heticiens.news/article/${props.uid}`}
 						/>
 					</div>
 				</aside>
@@ -246,12 +234,13 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props, host} = await getProps(ctx, `/article/${encodeURIComponent(ctx.params.id)}`);
+	const client = Client();
+	const article = await client.getByUID('articles', ctx.params.id, {fetchLinks: ['categories.title', 'authors.name', 'authors.picture', 'authors.uid']});
 
-	if (props.error) {
+	if (article === undefined) {
 		if (ctx.res) {
 			ctx.res.writeHead(302, {
-				Location: `${host}/404`,
+				Location: '/404',
 				'Content-Type': 'text/html; charset=utf-8'
 			});
 			ctx.res.end();
@@ -262,9 +251,19 @@ export async function getServerSideProps(ctx) {
 		return;
 	}
 
-	const {props: next} = await getProps(ctx, '/article/latest?count=4');
+	const next = await client.query(
+		Prismic.Predicates.at('document.type', 'articles'),
+		{pageSize: 4, fetchLinks: ['categories.title', 'authors.name', 'authors.picture', 'authors.uid']}
+	); // TODO: Order by published DESC?
 
 	return {
-		props: {...props, next: next.articles}
+		props: {
+			firstRelease: article.first_publication_date,
+			uid: article.uid,
+			...article.data,
+			next: next.results
+		}
 	};
 }
+
+export default ArticlePage;

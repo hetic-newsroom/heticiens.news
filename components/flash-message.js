@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-export default props => (
+const FlashMessage = props => (
 	<div
 		className={classNames(
 			{flashMessage: true},
@@ -69,3 +69,5 @@ export default props => (
 		</style>
 	</div>
 );
+
+export default FlashMessage;

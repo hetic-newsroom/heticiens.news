@@ -8,7 +8,7 @@ const errors = {
 	500: 'Tout est cassé. On va s’en occuper!'
 };
 
-export default props => (
+const ErrorPage = props => (
 	<Page>
 		<h1>{props.code}</h1>
 		<h3>{errors[props.code]}</h3>
@@ -195,3 +195,5 @@ export default props => (
 		</style>
 	</Page>
 );
+
+export default ErrorPage;

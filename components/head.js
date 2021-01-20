@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-export default props => (
+const HNHead = (props) => (
 	<Head>
 		{/* Google Analytics */}
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159035556-2"/>
@@ -17,3 +17,5 @@ export default props => (
 		/>
 	</Head>
 );
+
+export default HNHead;

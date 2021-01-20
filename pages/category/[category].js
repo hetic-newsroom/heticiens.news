@@ -1,9 +1,12 @@
 import Link from 'next/link';
-import getProps from '../../lib/get-props';
+import Router from 'next/router';
 import Page from '../../components/page';
 import ArticleCard from '../../components/article-card';
+import Prismic from '@prismicio/client';
+import {RichText} from 'prismic-reactjs';
+import {Client} from '../../prismic-configuration';
 
-export default props => {
+const CategoryPage = props => {
 	if (!props) {
 		return (
 			<Page>
@@ -12,17 +15,14 @@ export default props => {
 		);
 	}
 
-	const category = props.category[0].toUpperCase() + props.category.slice(1);
+	const category = props.category;
 	const cards = [];
 	props.articles.forEach(article => {
 		cards.push(
-			<Link key={article.id} href={`/article/${article.id}`}>
+			<Link key={article.uid} href={`/article/${article.uid}`}>
 				<a>
 					<ArticleCard
-						title={article.title}
-						category={article.category}
-						authors={article.authors}
-						image={article.image}
+						article={article.data}
 					/>
 				</a>
 			</Link>
@@ -32,7 +32,7 @@ export default props => {
 	const notFoundMessage = (cards.length === 0) ? <h3>Aucun article n&apos;a été trouvé.</h3> : null;
 
 	return (
-		<Page title={`${category} - H|N`}>
+		<Page title={`${category} - H|N - HETIC Newsroom`}>
 			<article>
 				<h1>{category}</h1>
 
@@ -66,16 +66,40 @@ export default props => {
 };
 
 export async function getServerSideProps(ctx) {
-	const {props} = await getProps(ctx, `/article/latest/${encodeURIComponent(ctx.params.category)}`);
+	// Const {props} = await getProps(ctx, `/article/latest/${encodeURIComponent(ctx.params.category)}`);
+	const client = Client();
 
-	if (props.error) {
-		return {
-			props: {
-				category: ctx.params.category,
-				articles: []
-			}
-		};
+	const category = await client.getByUID('categories', ctx.params.category);
+
+	console.log(category);
+
+	if (category === undefined) {
+		if (ctx.res) {
+			ctx.res.writeHead(302, {
+				Location: '/404',
+				'Content-Type': 'text/html; charset=utf-8'
+			});
+			ctx.res.end();
+			return;
+		}
+
+		Router.replace('/404');
+		return;
 	}
 
-	return {props};
+	const articles = await client.query([
+		Prismic.Predicates.at('document.type', 'articles'),
+		Prismic.Predicates.at('my.articles.category', category.id)
+	],
+	{pageSize: 100, fetchLinks: ['categories.title', 'authors.name', 'authors.picture', 'authors.uid']}
+	); // TODO: Order by published DESC?
+
+	return {
+		props: {
+			category: RichText.asText(category.data.title),
+			articles: articles.results
+		}
+	};
 }
+
+export default CategoryPage;

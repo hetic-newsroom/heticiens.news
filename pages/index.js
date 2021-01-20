@@ -1,19 +1,20 @@
 import Link from 'next/link';
 import Head from 'next/head';
-import getProps from '../lib/get-props';
 import Page from '../components/page';
 import ArticleCard from '../components/article-card';
 import BannerArticle from '../components/banner-article';
+import Prismic from '@prismicio/client';
+import {Client} from '../prismic-configuration';
 
-export default props => {
+const Home = props => {
 	const cards = [];
 	let bannerArticle;
 	props.articles.forEach(article => {
 		if (!bannerArticle) {
 			bannerArticle = (
-				<Link href={`/article/${article.id}`}>
+				<Link href={`/article/${article.uid}`}>
 					<a>
-						<BannerArticle article={article}/>
+						<BannerArticle article={article.data}/>
 					</a>
 				</Link>
 			);
@@ -21,13 +22,10 @@ export default props => {
 		}
 
 		cards.push(
-			<Link key={article.id} href={`/article/${article.id}`}>
+			<Link key={article.uid} href={`/article/${article.uid}`}>
 				<a>
 					<ArticleCard
-						title={article.title}
-						category={article.category}
-						authors={article.authors}
-						image={article.image}
+						article={article.data}
 					/>
 				</a>
 			</Link>
@@ -145,7 +143,19 @@ export default props => {
 	);
 };
 
-export async function getServerSideProps(ctx) {
-	const {props} = await getProps(ctx, '/article/latest');
-	return {props};
+export async function getServerSideProps() {
+	const client = Client();
+
+	const articles = await client.query(
+		Prismic.Predicates.at('document.type', 'articles'),
+		{pageSize: 9, fetchLinks: ['categories.title', 'authors.name', 'authors.picture', 'authors.uid']}
+	); // TODO: Order by published DESC?
+
+	return {
+		props: {
+			articles: articles.results
+		}
+	};
 }
+
+export default Home;

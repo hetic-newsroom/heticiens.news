@@ -1,7 +1,7 @@
 import Icon from './icon';
 import DefaultColorScheme from '../lib/colors-default';
 
-export default () => (
+const Footer = () => (
 	<footer>
 		<div className="widthContainer">
 			<h2>HETIC Newsroom</h2>
@@ -122,3 +122,5 @@ export default () => (
 		</style>
 	</footer>
 );
+
+export default Footer;

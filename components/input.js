@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import DefaultColorScheme from '../lib/colors-default';
 
-export default tprops => {
+const Input = tprops => {
 	const props = {...tprops};
 	delete props.slim;
 	delete props.stretch;
@@ -162,3 +162,5 @@ export default tprops => {
 		</>
 	);
 };
+
+export default Input;

@@ -88,8 +88,8 @@ export default class NavMenu extends React.Component {
 										<a><span>Reportages</span></a>
 									</Link>
 								</li>
-								<li className={classNames({active: (this.state.url === '/category/enquêtes')})}>
-									<Link href="/category/enquêtes">
+								<li className={classNames({active: (this.state.url === '/category/enquetes')})}>
+									<Link href="/category/enquetes">
 										<a><span>Enquêtes</span></a>
 									</Link>
 								</li>

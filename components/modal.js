@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-export default props => (
+const Modal = props => (
 	<>
 		<div
 			className={classNames(
@@ -46,3 +46,5 @@ export default props => (
 		</style>
 	</>
 );
+
+export default Modal;
