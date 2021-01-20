@@ -21,6 +21,7 @@ module.exports = {
 	},
 	rules: {
 		indent: [2, 'tab', {
+			/* eslint-disable-next-line @typescript-eslint/naming-convention */
 			SwitchCase: 1
 		}],
 		semi: [2, 'never'],
@@ -43,12 +44,12 @@ module.exports = {
 				requireLast: false
 			}
 		}],
+		'@typescript-eslint/explicit-module-boundary-types': 0,
 		'@typescript-eslint/naming-convention': [1,
 			{
 				selector: 'default',
-				format: ['camelCase'],
-				leadingUnderscore: 'allow',
-				trailingUnderscore: 'allow'
+				format: ['strictCamelCase', 'StrictPascalCase'],
+				leadingUnderscore: 'allow'
 			},
 			{
 				selector: 'variable',
