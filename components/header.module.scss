@@ -4,10 +4,10 @@
 	width: 100%;
 	position: sticky;
 	top: 0;
-	@include lib.layout-main-side-padding;
 	padding-top: max(#{lib.$layout-spacing-medium}, 7vmin);
 	padding-bottom: lib.$layout-spacing-medium;
-	@include lib.layout-centered-column-wrapper;
+
+	@include lib.layout-full-width-container;
 
 	// See menuToggle below
 	stroke: lib.$color-foreground;
@@ -60,11 +60,10 @@
 	left: 0;
 	right: 0;
 	height: 100vh;
-	@include lib.layout-main-side-padding;
 	overflow: hidden;
 	background: lib.$color-foreground;
 
-	@include lib.layout-centered-column-wrapper;
+	@include lib.layout-full-width-container;
 
 	nav {
 		display: grid;
