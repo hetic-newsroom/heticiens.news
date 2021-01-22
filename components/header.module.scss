@@ -4,11 +4,10 @@
 	width: 100%;
 	position: sticky;
 	top: 0;
-	padding: lib.$layout-spacing-medium lib.$layout-spacing-large;
-	display: flex;
-	flex-direction: row;
-	gap: lib.$layout-spacing-x-small;
-	align-items: center;
+	@include lib.layout-main-side-padding;
+	padding-top: max(#{lib.$layout-spacing-medium}, 7vmin);
+	padding-bottom: lib.$layout-spacing-medium;
+	@include lib.layout-centered-column-wrapper;
 
 	// See menuToggle below
 	stroke: lib.$color-foreground;
@@ -20,6 +19,17 @@
 		color: lib.$color-background;
 		stroke: lib.$color-background;
 		transition: none;
+	}
+}
+
+.barContainer {
+	display: flex;
+	flex-direction: row;
+	gap: lib.$layout-spacing-x-small;
+	align-items: center;
+
+	a {
+		text-decoration: none;
 	}
 
 	h1 {
@@ -50,22 +60,30 @@
 	left: 0;
 	right: 0;
 	height: 100vh;
-	padding: 0 lib.$layout-spacing-large;
+	@include lib.layout-main-side-padding;
 	overflow: hidden;
 	background: lib.$color-foreground;
 
-	ul {
-		padding: 0;
+	@include lib.layout-centered-column-wrapper;
 
-		li {
-			display: block;
-			margin-bottom: lib.$layout-spacing-x-small;
+	nav {
+		display: grid;
+		@include lib.layout-grid-2-columns-thirds;
 
-			a {
-				@include lib.typo-font-family-brand;
-				@include lib.typo-font-large;
-				font-weight: 700;
-				text-decoration: none;
+		ul {
+			margin: 0;
+			padding: 0;
+
+			li {
+				display: block;
+				margin-bottom: lib.$layout-spacing-small;
+
+				a {
+					@include lib.typo-font-family-brand;
+					@include lib.typo-font-large;
+					font-weight: 700;
+					text-decoration: none;
+				}
 			}
 		}
 	}
