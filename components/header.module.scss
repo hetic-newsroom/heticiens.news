@@ -1,0 +1,74 @@
+@use 'stylelib/colors';
+@use 'stylelib/typography';
+@use 'stylelib/spacing';
+
+.header {
+	width: 100%;
+	position: sticky;
+	top: 0;
+	padding: spacing.$medium spacing.$large;
+	display: flex;
+	flex-direction: row;
+	gap: spacing.$x-small;
+	align-items: center;
+
+	// See menuToggle below
+	stroke: colors.$foreground;
+	// Transition used when rolling up menu
+	transition: background .2s ease-out .2s, color .2s ease-out .2s, stroke .2s ease-out .2s;
+
+	&.menuOpened {
+		background: colors.$foreground;
+		color: colors.$background;
+		stroke: colors.$background;
+		transition: none;
+	}
+
+	h1 {
+		@include typography.font-large;
+		white-space: nowrap;
+	}
+}
+
+.menuToggle {
+	cursor: pointer;
+	display: flex;
+
+	svg {
+		stroke: inherit;
+		transition: stroke .2s ease-out;
+	}
+
+	&:hover, &:focus {
+		svg {
+			stroke: colors.$accent3;
+		}
+	}
+}
+
+.menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	height: 100vh;
+	padding: 0 spacing.$large;
+	overflow: hidden;
+	background: colors.$foreground;
+
+	ul {
+		padding: 0;
+
+		li {
+			display: block;
+			margin-bottom: spacing.$x-small;
+
+			a {
+				@include typography.font-family-brand;
+				@include typography.font-large;
+				font-weight: 700;
+				text-decoration: none;
+			}
+		}
+	}
+}

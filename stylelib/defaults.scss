@@ -1,0 +1,77 @@
+@use 'typography';
+@use 'colors';
+
+* {
+	box-sizing: border-box;
+}
+
+::selection {
+	background-color: colors.$accent;
+}
+
+html, body {
+	padding: 0;
+	margin: 0;
+	@include typography.font-family-normal;
+	color: colors.$foreground;
+}
+
+h1, h2, h3, h4, h5, h6, span, p {
+	margin: 0;
+}
+
+h1, h2, h3 {
+	@include typography.font-family-brand;
+	@include typography.font-xlarge;
+	font-weight: 900;
+	line-height: 1.2;
+	letter-spacing: 0.01rem;
+}
+
+h3 { font-weight: 700; }
+
+h4, h5, h6 {
+	@include typography.font-large;
+	line-height: 1.2;
+}
+
+h4 { font-weight: 700; }
+h5 { font-weight: 500; }
+
+h6 {
+	@include typography.font-small;
+	font-weight: 400;
+}
+
+span, input {
+	@include typography.font-normal;
+}
+
+span { font-weight: 500; }
+input { font-weight: 400; }
+
+p {
+	@include typography.font-reading;
+	font-weight: 400;
+	max-width: 65ch;
+	hyphens: auto;
+
+	& strong {
+		font-weight: 700;
+	}
+
+	& em {
+		font-style: italic;
+	}
+}
+
+a {
+	color: inherit;
+	font-weight: 500;
+	text-decoration: underline;
+	transition: color .15s ease-out;
+
+	&:hover, &:focus {
+		color: colors.$accent;
+	}
+}

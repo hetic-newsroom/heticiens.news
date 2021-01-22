@@ -106,3 +106,5 @@ serverless.yml
 
 # TernJS port file
 .tern-port
+
+.vercel
