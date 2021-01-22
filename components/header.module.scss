@@ -1,31 +1,29 @@
-@use 'stylelib/colors';
-@use 'stylelib/typography';
-@use 'stylelib/spacing';
+@use 'stylelib/index' as lib;
 
 .header {
 	width: 100%;
 	position: sticky;
 	top: 0;
-	padding: spacing.$medium spacing.$large;
+	padding: lib.$layout-spacing-medium lib.$layout-spacing-large;
 	display: flex;
 	flex-direction: row;
-	gap: spacing.$x-small;
+	gap: lib.$layout-spacing-x-small;
 	align-items: center;
 
 	// See menuToggle below
-	stroke: colors.$foreground;
+	stroke: lib.$color-foreground;
 	// Transition used when rolling up menu
 	transition: background .2s ease-out .2s, color .2s ease-out .2s, stroke .2s ease-out .2s;
 
 	&.menuOpened {
-		background: colors.$foreground;
-		color: colors.$background;
-		stroke: colors.$background;
+		background: lib.$color-foreground;
+		color: lib.$color-background;
+		stroke: lib.$color-background;
 		transition: none;
 	}
 
 	h1 {
-		@include typography.font-large;
+		@include lib.typo-font-large;
 		white-space: nowrap;
 	}
 }
@@ -41,7 +39,7 @@
 
 	&:hover, &:focus {
 		svg {
-			stroke: colors.$accent3;
+			stroke: lib.$color-accent3;
 		}
 	}
 }
@@ -52,20 +50,20 @@
 	left: 0;
 	right: 0;
 	height: 100vh;
-	padding: 0 spacing.$large;
+	padding: 0 lib.$layout-spacing-large;
 	overflow: hidden;
-	background: colors.$foreground;
+	background: lib.$color-foreground;
 
 	ul {
 		padding: 0;
 
 		li {
 			display: block;
-			margin-bottom: spacing.$x-small;
+			margin-bottom: lib.$layout-spacing-x-small;
 
 			a {
-				@include typography.font-family-brand;
-				@include typography.font-large;
+				@include lib.typo-font-family-brand;
+				@include lib.typo-font-large;
 				font-weight: 700;
 				text-decoration: none;
 			}

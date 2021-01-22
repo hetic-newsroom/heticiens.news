@@ -1,0 +1,9 @@
+$spacing-large: 40px;
+$spacing-medium: 25px;
+$spacing-small: 15px;
+$spacing-x-small: 10px;
+
+@mixin centered-column-wrapper {
+	display: grid;
+	grid-template-columns: minmax(900px, 100%);
+}

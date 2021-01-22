@@ -1,19 +1,18 @@
-@use 'typography';
-@use 'colors';
+@use 'index' as lib;
 
 * {
 	box-sizing: border-box;
 }
 
 ::selection {
-	background-color: colors.$accent;
+	background-color: lib.$color-accent;
 }
 
 html, body {
 	padding: 0;
 	margin: 0;
-	@include typography.font-family-normal;
-	color: colors.$foreground;
+	@include lib.typo-font-family-normal;
+	color: lib.$color-foreground;
 }
 
 h1, h2, h3, h4, h5, h6, span, p {
@@ -21,8 +20,8 @@ h1, h2, h3, h4, h5, h6, span, p {
 }
 
 h1, h2, h3 {
-	@include typography.font-family-brand;
-	@include typography.font-xlarge;
+	@include lib.typo-font-family-brand;
+	@include lib.typo-font-xlarge;
 	font-weight: 900;
 	line-height: 1.2;
 	letter-spacing: 0.01rem;
@@ -31,7 +30,7 @@ h1, h2, h3 {
 h3 { font-weight: 700; }
 
 h4, h5, h6 {
-	@include typography.font-large;
+	@include lib.typo-font-large;
 	line-height: 1.2;
 }
 
@@ -39,19 +38,19 @@ h4 { font-weight: 700; }
 h5 { font-weight: 500; }
 
 h6 {
-	@include typography.font-small;
+	@include lib.typo-font-small;
 	font-weight: 400;
 }
 
 span, input {
-	@include typography.font-normal;
+	@include lib.typo-font-normal;
 }
 
 span { font-weight: 500; }
 input { font-weight: 400; }
 
 p {
-	@include typography.font-reading;
+	@include lib.typo-font-reading;
 	font-weight: 400;
 	max-width: 65ch;
 	hyphens: auto;
@@ -72,6 +71,6 @@ a {
 	transition: color .15s ease-out;
 
 	&:hover, &:focus {
-		color: colors.$accent;
+		color: lib.$color-accent;
 	}
 }
