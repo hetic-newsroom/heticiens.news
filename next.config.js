@@ -1,11 +1,10 @@
-const path = require('path')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+	enabled: process.env.ANALYZE === 'true'
+})
 
-module.exports = {
-	target: 'serverless',
-	env: {
-		stage: (process.env.NODE_ENV === 'production') ? 'prod' : 'staging'
-	},
+module.exports = withBundleAnalyzer({
+	reactStrictMode: true,
 	images: {
 		domains: ['bucket.heticiens.news', 'images.prismic.io']
 	}
-}
+})
