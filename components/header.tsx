@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useToggle, useLockBodyScroll, useIsomorphicLayoutEffect } from 'react-use'
+import { useToggle, useIsomorphicLayoutEffect } from 'react-use'
 import Link from 'next/link'
 import { Menu, X } from 'react-feather'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import classNames from 'classnames/bind'
 import styles from './header.module.scss'
 
@@ -16,8 +16,6 @@ export interface HeaderProps {
 export default function Header(props: HeaderProps) {
 	const [menuOpen, toggleMenu] = useToggle(false)
 	const [headerHeight, setHeaderHeight] = useState(0)
-
-	useLockBodyScroll(menuOpen)
 
 	useIsomorphicLayoutEffect(() => {
 		const headerElement = document.getElementById('main-header')
@@ -46,9 +44,8 @@ export default function Header(props: HeaderProps) {
 		animate={{ opacity: 1 }}
 	>
 		<div className={styles.barContainer}>
-			<motion.a
+			<motion.button
 				className={styles.menuToggle}
-				href="#"
 				onClick={toggleMenu}
 				initial={{
 					opacity: 0,
@@ -61,58 +58,55 @@ export default function Header(props: HeaderProps) {
 				key={`menu-toggle-${menuOpen}`}
 			>
 				{ (menuOpen) ? <X/> : <Menu/> }
-			</motion.a>
+			</motion.button>
 			<Link href="/"><a>
 				<h1>HETIC Newsroom</h1>
 			</a></Link>
 			<p>{ props.route }</p>
-
-			<AnimatePresence>{menuOpen &&
-				<motion.section
-					className={styles.menu}
-					variants={{
-						hidden: {
-							height: '0vh',
-							transition: {
-								ease: 'anticipate',
-								duration: 0.3
-							}
-						},
-						opened: {
-							height: `calc(100vh - ${headerHeight}px)`,
-							transition: {
-								ease: 'anticipate',
-								staggerChildren: 0.15,
-								staggerDirection: 1
-							}
-						}
-					}}
-					initial="hidden"
-					animate="opened"
-					exit="hidden"
-				>
-					<nav>
-						<ul>
-							{props.categories.map(e => (
-								<motion.li
-									variants={{
-										hidden: { opacity: 0 },
-										opened: { opacity: 1 }
-									}}
-									key={e[1]}
-								>
-									<span>
-										<Link href={e[1] || '#'}>
-											<a>{e[0]}</a>
-										</Link>
-									</span>
-								</motion.li>
-							))}
-						</ul>
-						<div style={{ background: 'red' }}></div>
-					</nav>
-				</motion.section>
-			}</AnimatePresence>
 		</div>
+
+		<motion.section
+			className={styles.menu}
+			variants={{
+				hidden: {
+					height: '0vh',
+					transition: {
+						ease: 'anticipate',
+						duration: 0.3
+					}
+				},
+				opened: {
+					height: `calc(100vh - ${headerHeight}px)`,
+					transition: {
+						ease: 'anticipate',
+						staggerChildren: 0.15,
+						staggerDirection: 1
+					}
+				}
+			}}
+			initial="hidden"
+			animate={(menuOpen) ? 'opened' : 'hidden'}
+		>
+			<nav>
+				<ul>
+					{props.categories.map(e => (
+						<motion.li
+							variants={{
+								hidden: { opacity: 0 },
+								opened: { opacity: 1 }
+							}}
+							key={e[1]}
+						>
+							<span>
+								<Link href={(e[1]) ? `/category/${e[1]}` : '#'}>
+									<a>{e[0]}</a>
+								</Link>
+							</span>
+						</motion.li>
+					))}
+				</ul>
+				<div style={{ background: 'red' }}></div>
+			</nav>
+		</motion.section>
 	</motion.header>
 }

@@ -1,13 +1,27 @@
 @use 'stylelib/index' as lib;
 
+@mixin blurry-background {
+	background: lib.$color-background;
+	@supports (backdrop-filter: saturate(180%) blur(5px)) {
+		backdrop-filter: saturate(180%) blur(5px);
+		background: change-color(lib.$color-background, $alpha: 0.8);
+	}
+}
+
 .header {
 	width: 100%;
 	position: sticky;
 	top: 0;
-	padding-top: max(#{lib.$layout-spacing-medium}, 7vmin);
-	padding-bottom: lib.$layout-spacing-medium;
+	z-index: 800;
+	@media (min-width: lib.$layout-max-content-width) {
+		margin-top: 6vmin;
+	}
+	padding: lib.$layout-spacing-small;
 
 	@include lib.layout-full-width-container;
+
+	@include blurry-background;
+	color: lib.$color-foreground;
 
 	// See menuToggle below
 	stroke: lib.$color-foreground;
@@ -15,9 +29,9 @@
 	transition: background .2s ease-out .2s, color .2s ease-out .2s, stroke .2s ease-out .2s;
 
 	&.menuOpened {
-		background: lib.$color-foreground;
-		color: lib.$color-background;
-		stroke: lib.$color-background;
+		@supports (backdrop-filter: saturate(180%) blur(5px)) {
+			background: lib.$color-background;
+		}
 		transition: none;
 	}
 }
@@ -59,9 +73,9 @@
 	top: 100%;
 	left: 0;
 	right: 0;
-	height: 100vh;
+	height: 0;
 	overflow: hidden;
-	background: lib.$color-foreground;
+	background: lib.$color-background;
 
 	@include lib.layout-full-width-container;
 
