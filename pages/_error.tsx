@@ -1,13 +1,13 @@
-import type { GetServerSideProps } from 'next'
+import type { NextPageContext } from 'next'
 import Error from 'components/error'
 
-export default function ErrorPage({ statusCode }: { statusCode: number }) {
+function ErrorPage({ statusCode }: { statusCode: number }) {
 	return <Error code={statusCode}/>
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	const statusCode = context.res.statusCode
-	
+ErrorPage.getInitialProps = async (context: NextPageContext) => {
+	const statusCode = context.res?.statusCode || 500
+
 	// Prevent directly accessing the /_error URL
 	if (statusCode === 200) {
 		return {
@@ -24,3 +24,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		}
 	}
 }
+
+export default ErrorPage
