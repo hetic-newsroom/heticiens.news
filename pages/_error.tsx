@@ -6,23 +6,19 @@ function ErrorPage({ statusCode }: { statusCode: number }) {
 }
 
 ErrorPage.getInitialProps = async (context: NextPageContext) => {
-	const statusCode = context.res?.statusCode || 500
+	const statusCode = context.err?.statusCode || context.res?.statusCode
 
 	// Prevent directly accessing the /_error URL
-	if (statusCode === 200) {
+	if (!statusCode || statusCode === 200) {
+		if (!context.res) throw "we're doomed"
+		context.res.statusCode = 404
+
 		return {
-			props: {
-				statusCode: 404
-			},
-			notFound: true
+			statusCode: 404
 		}
 	}
 
-	return {
-		props: {
-			statusCode
-		}
-	}
+	return { statusCode }
 }
 
 export default ErrorPage
