@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styles from './error.module.scss'
 
-const errors = {
+const errors: Record<number, string> = {
 	404: 'Cette page n’a pas été trouvée.',
 	403: 'Vous n’avez pas accès à cette page.',
 	500: 'Tout est cassé. On va s’en occuper!'
