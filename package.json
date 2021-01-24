@@ -50,7 +50,8 @@
     "react-dom": "^17.0.1",
     "react-feather": "^2.0.9",
     "react-use": "^15.3.8",
-    "reading-time": "^1.2.1"
+    "reading-time": "^1.2.1",
+    "url-parse": "^1.4.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
@@ -60,6 +61,7 @@
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@types/resize-observer-browser": "^0.1.5",
+    "@types/url-parse": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "@vercel/node": "^1.9.0",
