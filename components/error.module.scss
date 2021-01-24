@@ -1,0 +1,56 @@
+@use 'stylelib/index' as lib;
+
+@keyframes noise-anim-1 {
+	$steps: 20;
+	@for $i from 0 through $steps {
+		#{percentage($i*(1/$steps))} {
+			clip: rect(random(150)+px, 350px, random(150)+px, 30px);
+		}
+	}
+}
+
+@keyframes noise-anim-2 {
+	$steps: 20;
+	@for $i from 0 through $steps {
+		#{percentage($i*(1/$steps))} {
+			clip: rect(random(150)+px, 350px, random(150)+px, 30px);
+		}
+	}
+}
+
+.error {
+	@include lib.layout-full-width-container;
+	justify-items: center;
+	text-align: center;
+	margin: lib.$layout-spacing-large 0;
+	row-gap: lib.$layout-spacing-x-small;
+
+	h1 {
+		display: block;
+		position: relative;
+		font-size: 25vmin;
+		width: min-content;
+	}
+
+	h1::before {
+		content: var(--error-code);
+		position: absolute;
+		left: -2px;
+		text-shadow: 1px 0 blue;
+		top: 0;
+		color: lib.$color-foreground;
+		overflow: hidden;
+		animation: noise-anim-1 2s infinite linear alternate-reverse;
+	}
+
+	h1::after {
+		content: var(--error-code);
+		position: absolute;
+		left: 2px;
+		text-shadow: -1px 0 red;
+		top: 0;
+		color: lib.$color-foreground;
+		overflow: hidden;
+		animation: noise-anim-2 2s infinite linear alternate-reverse;
+	}
+}

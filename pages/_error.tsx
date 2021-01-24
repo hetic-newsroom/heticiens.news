@@ -1,22 +1,26 @@
-import { useRouter } from 'next/router'
-// import ErrorPage from '../components/error-page'
+import type { GetServerSideProps } from 'next'
+import Error from 'components/error'
 
-function Error({ statusCode }: { statusCode: number }) {
-	const router = useRouter()
-
-	if (typeof window !== 'undefined' && statusCode === 200) {
-		router.push('/')
-	}
-
-	return (
-		// <ErrorPage code={statusCode || 404}/>
-		<p>pls make error page { statusCode }</p>
-	)
+export default function ErrorPage({ statusCode }: { statusCode: number }) {
+	return <Error code={statusCode}/>
 }
 
-// Error.getInitialProps = ({ res, err }: { res: string, err: string }) => {
-//    const statusCode = res?.statusCode || err?.statusCode
-//    return { statusCode }
-// }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const statusCode = context.res.statusCode
+	
+	// Prevent directly accessing the /_error URL
+	if (statusCode === 200) {
+		return {
+			props: {
+				statusCode: 404
+			},
+			notFound: true
+		}
+	}
 
-export default Error
+	return {
+		props: {
+			statusCode
+		}
+	}
+}

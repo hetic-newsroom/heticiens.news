@@ -1,6 +1,5 @@
-// import ErrorPage from '../components/error-page'
+import Error from 'components/error'
 
-export default () => (
-	// <ErrorPage code="404"/>
-	<p>in construction</p>
-)
+export default function NotFoundPage() {
+	return <Error code="404"/>
+}
