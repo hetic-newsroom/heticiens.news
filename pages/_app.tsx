@@ -30,13 +30,13 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 			<link rel="preconnect" href="https://images.prismic.io"/>
 			<link rel="dns-prefetch" href="https://images.prismic.io"/>
 		</Head>
-		<Header route={router.route} categories={pageProps.categories}/>
+		<Header route={router.asPath} categories={pageProps.categories}/>
 		<AnimatePresence exitBeforeEnter>
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
-				key={router.route} // Force motion wrapper to re-render on route change, triggering mount/unmount animations
+				key={router.asPath} // Force motion wrapper to re-render on route change, triggering mount/unmount animations
 			>
 				<Component {...pageProps}/>
 			</motion.div>
@@ -49,10 +49,9 @@ HeticNewsroom.getInitialProps = async (appContext: AppContext): Promise<Pick<App
 		const { pageProps } = await App.getInitialProps(appContext)
 
 		const { default: query } = await import('lib/prismic')
+		const { toCategory, prismicTypeName: prCategory } = await import('types/category')
 
-		const categories = (await query('document.type', 'categories')).results.map(cat => {
-			return [cat.data.title[0].text, cat.uid]
-		})
+		const categories = (await query('document.type', prCategory)).results.map(x => toCategory(x))
 
 		return {
 			pageProps: {

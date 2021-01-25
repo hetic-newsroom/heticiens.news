@@ -4,13 +4,13 @@ import Link from 'next/link'
 import { Menu, X } from 'react-feather'
 import { motion } from 'framer-motion'
 import classNames from 'classnames/bind'
+import type Category from 'types/category'
 import styles from './header.module.scss'
 
 const cx = classNames.bind(styles)
 
-type Uid = string
 export interface HeaderProps {
-	categories: [string, Uid][]
+	categories: Category[]
 	route: string
 }
 export default function Header(props: HeaderProps) {
@@ -74,17 +74,17 @@ export default function Header(props: HeaderProps) {
 		>
 			<nav>
 				<ul>
-					{props.categories.map(e => (
+					{props.categories.map(c => (
 						<motion.li
 							variants={{
 								hidden: { opacity: 0 },
 								opened: { opacity: 1 }
 							}}
-							key={e[1]}
+							key={c.uid}
 						>
 							<span>
-								<Link href={(e[1]) ? `/category/${e[1]}` : '#'}>
-									<a>{e[0]}</a>
+								<Link href={`/category/${c.uid}`}>
+									<a>{c.name}</a>
 								</Link>
 							</span>
 						</motion.li>
