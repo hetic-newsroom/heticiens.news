@@ -49,7 +49,7 @@ HeticNewsroom.getInitialProps = async (appContext: AppContext): Promise<Pick<App
 		const { pageProps } = await App.getInitialProps(appContext)
 
 		const { default: query } = await import('lib/prismic')
-		const { toCategory, prismicTypeName: prCategory } = await import('types/category')
+		const { toCategory, prCategory } = await import('types/category')
 
 		const categories = (await query('document.type', prCategory)).results.map(x => toCategory(x))
 

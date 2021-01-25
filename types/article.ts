@@ -1,48 +1,58 @@
 import type { Document } from '@prismicio/client/types/documents'
 import type { RichTextBlock } from 'prismic-reactjs'
-import type Category from './category'
-import type Author from './author'
 import Image, { toImage } from './image'
+import Category, { toCategory } from './category'
+import Author, { toAuthor } from './author'
 
-export const prismicTypeName = 'articles'
+export const prArticle = 'articles'
 
-type UID = string
 export default interface Article {
 	id: string
 	uid: string
 	title: string
 	date: Date | string
-	category: Category | UID
-	authors: Author[] | UID[]
-	poster: Image
-	intro: string
-	content: RichTextBlock[]
-}
-
-export interface ResolvedArticle extends Article {
 	category: Category
 	authors: Author[]
+	poster: Image
+	intro: string
+	content?: RichTextBlock[]
 }
 
-interface ConvertedArticle extends Article {
-	category: UID
-	authors: UID[]
-	date: string
-}
+export const prArticleMinFields: string[] = [
+	'title',
+	'date',
+	'category',
+	'authors',
+	'image',
+	'intro'
+].map(x => `${prArticle}.${x}`)
 
-export function toArticle(doc: Document): ConvertedArticle {
-	if (doc.type !== prismicTypeName) throw new Error('type conversion failed: wrong initial type name')
+export const prArticleAllFields: string[] = [
+	...prArticleMinFields,
+	...[
+		'content'
+	].map(x => `${prArticle}.${x}`)
+]
+
+export function toArticle(doc: Document): Article {
+	if (doc.type !== prArticle) throw new Error('type conversion failed: wrong initial type name')
 	if (!doc.uid) throw new Error('type conversion failed: missing UID')
+
+	const append: Partial<Article> = {}
+
+	if (doc.data.content) {
+		append.content = doc.data.content
+	}
 
 	return {
 		id: doc.id,
 		uid: doc.uid,
 		title: doc.data.title[0].text,
 		date: doc.data.date,
-		category: doc.data.category.uid,
-		authors: doc.data.authors.map((doc: { author: { uid: string } }) => doc.author.uid),
+		category: toCategory(doc.data.category),
+		authors: doc.data.authors.map(({ author }: { author: Document }) => toAuthor(author)),
 		poster: toImage(doc.data.image),
 		intro: doc.data.intro[0].text,
-		content: doc.data.content
+		...append
 	}
 }
