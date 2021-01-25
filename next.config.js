@@ -6,5 +6,10 @@ module.exports = withBundleAnalyzer({
 	reactStrictMode: true,
 	images: {
 		domains: ['bucket.heticiens.news', 'images.prismic.io']
+	},
+	async rewrites() {
+		return [
+			{ source: '/rss', destination: '/api/rss' }
+		]
 	}
 })
