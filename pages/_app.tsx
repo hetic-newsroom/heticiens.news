@@ -3,6 +3,7 @@ import App from 'next/app'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { AnimatePresence, motion } from 'framer-motion'
+import LoadingBar from 'components/loading-bar'
 import Header from 'components/header'
 import 'stylelib/defaults.scss'
 
@@ -30,6 +31,7 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 			<link rel="preconnect" href="https://images.prismic.io"/>
 			<link rel="dns-prefetch" href="https://images.prismic.io"/>
 		</Head>
+		<LoadingBar/>
 		<Header route={router.asPath} categories={pageProps.categories}/>
 		<AnimatePresence exitBeforeEnter>
 			<motion.div

@@ -1,0 +1,27 @@
+@use 'stylelib/index' as lib;
+
+@keyframes loadingFakeProgress {
+	0% { width: 0vw; }
+	1% { width: 30vw; }
+	3% { width: 32vw; }
+	4% { width: 60vw; }
+	100% { width: 85vw; }
+}
+
+.loadingBar {
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	background: lib.$color-accent;
+	height: 7px;
+	width: 100vw;
+	opacity: 0;
+	transition: opacity .7s ease-out, width .2s ease-in;
+
+	&.loading {
+		opacity: 1;
+		animation: loadingFakeProgress 15s ease-out forwards;
+		transition: none;
+	}
+}
