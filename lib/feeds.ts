@@ -15,7 +15,6 @@ export default function makeFeed(items: ResolvedArticle[]): Feed {
 
 	for (const i of items) {
 		feed.addItem({
-			id: i.uid,
 			title: i.title,
 			link: `https://heticiens.news/article/${i.uid}`,
 			date: new Date(i.date),
