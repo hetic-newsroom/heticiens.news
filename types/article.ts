@@ -1,22 +1,36 @@
 import type { Document } from '@prismicio/client/types/documents'
 import type { RichTextBlock } from 'prismic-reactjs'
-import Category, { toCategory } from './category'
+import type Category from './category'
+import type Author from './author'
 import Image, { toImage } from './image'
 
 export const prismicTypeName = 'articles'
 
+type UID = string
 export default interface Article {
 	id: string
 	uid: string
 	title: string
-	category: Category
+	date: Date | string
+	category: Category | UID
+	authors: Author[] | UID[]
 	poster: Image
-	date: Date
 	intro: string
 	content: RichTextBlock[]
 }
 
-export function toArticle(doc: Document): Article {
+export interface ResolvedArticle extends Article {
+	category: Category
+	authors: Author[]
+}
+
+interface ConvertedArticle extends Article {
+	category: UID
+	authors: UID[]
+	date: string
+}
+
+export function toArticle(doc: Document): ConvertedArticle {
 	if (doc.type !== prismicTypeName) throw new Error('type conversion failed: wrong initial type name')
 	if (!doc.uid) throw new Error('type conversion failed: missing UID')
 
@@ -24,9 +38,10 @@ export function toArticle(doc: Document): Article {
 		id: doc.id,
 		uid: doc.uid,
 		title: doc.data.title[0].text,
-		category: toCategory(doc.data.category),
+		date: doc.data.date,
+		category: doc.data.category.uid,
+		authors: doc.data.authors.map((doc: { author: { uid: string } }) => doc.author.uid),
 		poster: toImage(doc.data.image),
-		date: new Date(doc.data.date),
 		intro: doc.data.intro[0].text,
 		content: doc.data.content
 	}
