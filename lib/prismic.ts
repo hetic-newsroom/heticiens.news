@@ -8,6 +8,8 @@ if (!apiEndpoint || !accessToken) throw new Error('missing Prismic env variables
 
 export const client = () => Prismic.client(apiEndpoint, { accessToken })
 
+export const predicates = Prismic.Predicates
+
 export default async function query(path: Parameters<typeof Prismic.Predicates.at>[0], type: Parameters<typeof Prismic.Predicates.at>[1], options?: Parameters<Client['query']>[1]): Promise<ReturnType<Client['query']>> {
 	const predicate = Prismic.Predicates.at(path, type)
 	const res = await client().query(predicate, options)
