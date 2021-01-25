@@ -8,6 +8,7 @@ export default function makeFeed(items: ResolvedArticle[]): Feed {
 		language: 'fr',
 		link: 'https://heticiens.news',
 		favicon: 'https://heticiens.news/favicon.png',
+		description: 'Collectif d’étudiants, qui regroupe l’ensemble des filières de l’école HETIC. Indépendant, HETIC Newsroom se propose de raconter ce qui fait l’expérience des héticiens.',
 		copyright: `Tout droits réservés ${new Date().getFullYear()}`,
 		generator: 'hn-api'
 	})
