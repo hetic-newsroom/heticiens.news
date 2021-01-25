@@ -1,11 +1,10 @@
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import query from 'lib/prismic'
 import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
 import { prAuthorMinFields } from 'types/author'
 
-export const getStaticProps: GetStaticProps = async () => {
+export async function getStaticProps(): Promise<{ props: { items: Article[] } }> {
 	const articles: Article[] = (await query('document.type', prArticle, {
 		orderings: `[my.${prArticle}.date desc]`,
 		fetch: prArticleMinFields,
@@ -23,7 +22,7 @@ export const getStaticProps: GetStaticProps = async () => {
 	}
 }
 
-export default function HomeFeed({ items }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function HomeFeed({ items }: { items: Article[] }) {
 	return <ul>
 		{items.map((article: Article) => (
 			<li key={article.uid}>

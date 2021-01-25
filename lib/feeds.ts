@@ -1,7 +1,7 @@
-import type { ResolvedArticle } from 'types/article'
+import type Article from 'types/article'
 import { Feed } from 'feed'
 
-export default function makeFeed(items: ResolvedArticle[]): Feed {
+export default function makeFeed(items: Article[]): Feed {
 	const feed = new Feed({
 		id: 'https://heticiens.news',
 		title: 'HETIC Newsroom',
