@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { useToggle, useLockBodyScroll } from 'react-use'
 import Link from 'next/link'
 import { Menu, X } from 'react-feather'
@@ -11,13 +12,27 @@ const cx = classNames.bind(styles)
 
 export interface HeaderProps {
 	categories: Category[]
-	route: string
 }
 export default function Header(props: HeaderProps) {
 	const [menuOpen, toggleMenu] = useToggle(false)
 	const headerRef = useRef<HTMLElement>(null)
+	const router = useRouter()
 
 	useLockBodyScroll(menuOpen)
+
+	useEffect(() => {
+		const handleRouteChange = () => {
+			if (menuOpen) toggleMenu()
+			// Fix for links staying :focused through router navigation in _app-mounted components
+			;(document.activeElement as HTMLElement)?.blur()
+		}
+
+		router.events.on('routeChangeStart', handleRouteChange)
+
+		return () => {
+			router.events.off('routeChangeStart', handleRouteChange)
+		}
+	})
 
 	return <motion.header
 		ref={headerRef}
@@ -47,7 +62,7 @@ export default function Header(props: HeaderProps) {
 			<Link href="/"><a>
 				<h1>HETIC Newsroom</h1>
 			</a></Link>
-			<p>{ props.route }</p>
+			<p>{ router.asPath }</p>
 		</div>
 
 		<motion.section

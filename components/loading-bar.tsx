@@ -12,8 +12,6 @@ export default function AutoLoadingBar() {
 	useEffect(() => {
 		const handleRouteChange = () => {
 			setLoading(true)
-			// Fix for links staying :focused through router navigation in _app-mounted components
-			;(document.activeElement as HTMLElement)?.blur()
 		}
 
 		const handleRouteChangeStop = () => {

@@ -32,7 +32,7 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 			<link rel="dns-prefetch" href="https://images.prismic.io"/>
 		</Head>
 		<LoadingBar/>
-		<Header route={router.asPath} categories={pageProps.categories}/>
+		<Header categories={pageProps.categories}/>
 		<AnimatePresence exitBeforeEnter>
 			<motion.div
 				initial={{ opacity: 0 }}
