@@ -4,6 +4,21 @@
 	box-sizing: border-box;
 }
 
+/* Color linking */
+:root {
+	--background: #{lib.$color-light-background};
+	--foreground: #{lib.$color-light-foreground};
+	--subtle-background: #{lib.$color-light-subtle-background};
+
+	@media (prefers-color-scheme: dark) {
+		& {
+			--background: #{lib.$color-dark-background};
+			--foreground: #{lib.$color-dark-foreground};
+			--subtle-background: #{lib.$color-dark-subtle-background};
+		}
+	}
+}
+
 ::selection {
 	background-color: lib.$color-accent;
 }
@@ -13,6 +28,7 @@ html, body {
 	margin: 0;
 	@include lib.typo-font-family-normal;
 	color: lib.$color-foreground;
+	background: lib.$color-background;
 }
 
 h1, h2, h3, h4, h5, h6, span, p {
