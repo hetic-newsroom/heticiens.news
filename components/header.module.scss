@@ -2,9 +2,11 @@
 
 @mixin blurry-background {
 	background: lib.$color-background;
-	@supports (backdrop-filter: saturate(180%) blur(5px)) {
-		backdrop-filter: saturate(180%) blur(5px);
-		background: change-color(lib.$color-background, $alpha: 0.8);
+	@supports (backdrop-filter: saturate(180%) blur(5px))  {
+		@media (prefers-color-scheme: light) {
+			backdrop-filter: saturate(180%) blur(5px);
+			background: change-color(lib.$color-light-background, $alpha: 0.8);
+		}
 	}
 }
 
