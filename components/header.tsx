@@ -62,7 +62,6 @@ export default function Header(props: HeaderProps) {
 			<Link href="/"><a>
 				<h1>HETIC Newsroom</h1>
 			</a></Link>
-			<p>{ router.asPath }</p>
 		</div>
 
 		<motion.section
