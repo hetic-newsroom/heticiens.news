@@ -1,0 +1,81 @@
+@use 'stylelib/index' as lib;
+
+.articleContainer {
+	@include lib.layout-full-width-container;
+	grid-row-gap: lib.$layout-spacing-medium;
+	// max-width: 65ch;
+}
+
+.head {
+	display: grid;
+	@include lib.layout-grid-2-columns-thirds;
+	grid-gap: lib.$layout-spacing-medium;
+	justify-content: start;
+
+	.posterContainer {
+		position: relative;
+		grid-row: 1;
+		height: min(calc(100vw * 0.75), calc(#{lib.$layout-max-content-width} * 0.75 ));
+	}
+
+	.titleSection {
+		display: grid;
+		grid-template-columns: min(100%, 75ch);
+		justify-content: center;
+		align-content: center;
+		grid-gap: lib.$layout-spacing-small;
+
+		.category {
+			@include lib.typo-font-large;
+
+			a {
+				text-decoration: none;
+			}
+		}
+
+		.title {
+			@include lib.typo-font-xxlarge;
+		}
+
+		.authorPreviewsContainer {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+
+			a { text-decoration: none; }
+
+			.authorPreview {
+				display: flex;
+				gap: lib.$layout-spacing-small;
+				align-items: center;
+
+				.authorImgContainer {
+					position: relative;
+					width: 35px;
+					height: 35px;
+					clip-path: circle(17.5px at center center);
+				}
+
+				.authorName {
+					font-style: italic;
+				}
+			}
+		}
+
+		.intro {
+			padding-top: lib.$layout-spacing-large;
+		}
+	}
+
+	@media (min-width: lib.$layout-max-content-width / 1.3) {
+		.posterContainer {
+			height: min(calc(66.66vw * 0.75), calc((2/3) * #{lib.$layout-max-content-width} * 0.75 ));
+			grid-column: 2;
+		}
+	}
+}
+
+.mainTextContainer {
+	display: grid;
+	grid-template-columns: min(100%, 75ch);
+	justify-content: center;
+}
