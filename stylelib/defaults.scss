@@ -8,13 +8,11 @@
 :root {
 	--background: #{lib.$color-light-background};
 	--foreground: #{lib.$color-light-foreground};
-	--subtle-background: #{lib.$color-light-subtle-background};
 
 	@media (prefers-color-scheme: dark) {
 		& {
 			--background: #{lib.$color-dark-background};
 			--foreground: #{lib.$color-dark-foreground};
-			--subtle-background: #{lib.$color-dark-subtle-background};
 		}
 	}
 }
