@@ -15,10 +15,7 @@
 	position: sticky;
 	top: 0;
 	z-index: 800;
-	@media (min-width: lib.$layout-max-content-width) {
-		margin-top: 6vmin;
-	}
-	padding: lib.$layout-spacing-small;
+	padding: lib.$layout-spacing-medium;
 
 	@include lib.layout-full-width-container;
 
