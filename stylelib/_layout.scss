@@ -3,7 +3,7 @@ $spacing-medium: 25px;
 $spacing-small: 15px;
 $spacing-x-small: 10px;
 
-$max-content-width: 1100px;
+$max-content-width: 1400px;
 
 @mixin full-width-container {
 	display: grid;
@@ -35,15 +35,10 @@ $max-content-width: 1100px;
 }
 
 @mixin grid-2-columns-thirds {
-	grid-template-columns: 2fr $max-content-width / 3;
+	grid-template-columns: 1fr 2fr;
 
 	@media (max-width: $max-content-width / 1.3) {
-		grid-template-columns: 2fr $max-content-width / 4;
-	}
-
-	@media (max-width: $max-content-width / 1.5) {
 		grid-template-columns: 1fr;
-		grid-template-rows: 2fr 1fr;
 	}
 }
 
