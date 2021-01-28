@@ -11,11 +11,12 @@ const htmlSerializer: HTMLSerializer<ReactNode> = (type, element, _, children, k
 	switch(type) {
 		case Elements.image: {
 			const img: Img = toImage(element)
-			return <Image
-				{ ...img }
-				className="imagetest"
-				key={key}
-			/>
+			return <aside style={{ position: 'relative' }} key={key}>
+				<Image
+					{ ...img }
+					layout="responsive"
+				/>
+			</aside>
 		}
 		case Elements.hyperlink: {
 			const { url } = element.data
