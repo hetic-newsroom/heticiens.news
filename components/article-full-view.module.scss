@@ -55,10 +55,6 @@ $max-p-width: 690px;
 					height: 35px;
 					clip-path: circle(17.5px at center center);
 				}
-
-				.authorName {
-					font-style: italic;
-				}
 			}
 		}
 
@@ -92,8 +88,13 @@ $max-p-width: 690px;
 	align-items: center;
 	gap: lib.$layout-spacing-small;
 
-	p {
+	> * {
 		width: min(100%, #{$max-p-width});
+	}
+
+	h2 {
+		margin-top: lib.$layout-spacing-large;
+		margin-bottom: lib.$layout-spacing-medium;
 	}
 
 	/* Embedded images */

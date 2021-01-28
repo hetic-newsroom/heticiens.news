@@ -30,9 +30,7 @@ export default function ArticleFullView({ article: props }: { article: Article }
 		)
 	}, [props.content])
 
-	return <article
-		className={styles.articleContainer}
-	>
+	return <article className={styles.articleContainer}>
 		<div className={styles.head}>
 			<header className={styles.titleSection}>
 				<span className={styles.category}>
