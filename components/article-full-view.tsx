@@ -61,17 +61,22 @@ export default function ArticleFullView({ article: props }: { article: Article }
 						</a></Link>
 					))}
 				</div>
-				<span className={styles.timeDisplays}>
-					Publié le { dateString } — Temps de lecture { readTime } min
-				</span>
 				<motion.p
 					className={styles.intro}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					transition={{ delay: 0.6 }}
+					transition={{ delay: 0.7 }}
 				>
 					{ props.intro }
 				</motion.p>
+				<motion.span
+					className={styles.timeDisplays}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 0.7 }}
+					transition={{ delay: 0.9 }}
+				>
+					Publié le { dateString } — Temps de lecture { readTime } min
+				</motion.span>
 			</header>
 			<aside className={styles.posterContainer}>
 				<Image
@@ -85,8 +90,13 @@ export default function ArticleFullView({ article: props }: { article: Article }
 				/>
 			</aside>
 		</div>
-		<div className={styles.mainTextContainer}>
+		<motion.div
+			className={styles.mainTextContainer}
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ ease: 'easeOut', delay: 1.1 }}
+		>
 			<RichText render={props.content} htmlSerializer={htmlSerializer}/>
-		</div>
+		</motion.div>
 	</article>
 }
