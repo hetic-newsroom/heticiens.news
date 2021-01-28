@@ -21,7 +21,7 @@
 
 	&.loading {
 		opacity: 1;
-		animation: loadingFakeProgress 15s ease-out forwards;
-		transition: none;
+		animation: loadingFakeProgress 15s ease-out .2s forwards;
+		transition: opacity 0s linear .2s;
 	}
 }
