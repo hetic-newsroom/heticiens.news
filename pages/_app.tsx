@@ -2,7 +2,7 @@ import type { AppProps, AppContext } from 'next/app'
 import App from 'next/app'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimateSharedLayout } from 'framer-motion'
 import LoadingBar from 'components/loading-bar'
 import Header from 'components/header'
 import 'stylelib/defaults.scss'
@@ -33,16 +33,9 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 		</Head>
 		<LoadingBar/>
 		<Header categories={pageProps.categories}/>
-		<AnimatePresence exitBeforeEnter>
-			<motion.div
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				key={router.asPath} // Force motion wrapper to re-render on route change, triggering mount/unmount animations
-			>
-				<Component {...pageProps}/>
-			</motion.div>
-		</AnimatePresence>
+		<AnimateSharedLayout>
+			<Component {...pageProps}/>
+		</AnimateSharedLayout>
 	</>
 }
 
