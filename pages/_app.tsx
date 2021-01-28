@@ -1,6 +1,5 @@
 import type { AppProps, AppContext } from 'next/app'
 import App from 'next/app'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { AnimateSharedLayout } from 'framer-motion'
 import LoadingBar from 'components/loading-bar'
@@ -8,8 +7,6 @@ import Header from 'components/header'
 import 'stylelib/defaults.scss'
 
 function HeticNewsroom({ Component, pageProps }: AppProps) {
-	const router = useRouter()
-
 	return <>
 		<Head>
 			<title>HETIC Newsroom</title>
