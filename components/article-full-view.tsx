@@ -1,10 +1,34 @@
 import type Article from 'types/article'
+import { useMemo } from 'react'
+import { RichText } from 'prismic-reactjs'
+import readingTime from 'reading-time'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from './article-full-view.module.scss'
 
 export default function ArticleFullView({ article: props }: { article: Article }) {
+	const dateString = useMemo(() => {
+		const date = new Date(props.date)
+		const day = date.getDate()
+		const month = (m => {
+			if (m.toString().length < 2) {
+				return '0'+m
+			}
+			return m
+		})(date.getMonth() + 1)
+		const year = date.getFullYear()
+
+		return [day, month, year].join('/')
+	}, [props.date])
+
+	const readTime = useMemo(() => {
+		if (!props.content) return 0
+		return Math.round(
+			readingTime(RichText.asText(props.content)).minutes
+		)
+	}, [props.content])
+
 	return <article
 		className={styles.articleContainer}
 	>
@@ -36,6 +60,9 @@ export default function ArticleFullView({ article: props }: { article: Article }
 						</a></Link>
 					))}
 				</div>
+				<span className={styles.timeDisplays}>
+					Publié le { dateString } — Temps de lecture { readTime } min
+				</span>
 				<motion.p
 					className={styles.intro}
 					initial={{ opacity: 0 }}
