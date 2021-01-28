@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import query from 'lib/prismic'
 import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
@@ -26,11 +27,11 @@ export default function HomeFeed({ items }: { items: Article[] }) {
 	return <ul>
 		{items.map((article: Article) => (
 			<li key={article.uid}>
-				<p>
+				<motion.p layoutId={`articleTitle-${article.uid}`}>
 					<Link href={`/article/${article.uid}`}>
 						<a>{article.title}</a>
 					</Link>
-				</p>
+				</motion.p>
 			</li>
 		))}
 	</ul>
