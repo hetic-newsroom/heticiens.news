@@ -128,9 +128,8 @@ $max-p-width: 690px;
 				grid-column: 2;
 			}
 
-			div, aside {
+			> div, aside {
 				grid-column: 1 / span 2;
-				justify-self: center;
 			}
 		}
 	}
