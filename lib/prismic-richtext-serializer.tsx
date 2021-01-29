@@ -25,7 +25,7 @@ const htmlSerializer: HTMLSerializer<ReactNode> = (type, element, _, children, k
 					<a>{ children }</a>
 				</Link>
 			} else {
-				return <a href={url} target="_blank" rel="noopener">{ children }</a>
+				return <a href={url} target="_blank" rel="noopener" key={key}>{ children }</a>
 			}
 		}
 		default:
