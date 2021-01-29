@@ -35,21 +35,21 @@ h1, h2, h3, h4, h5, h6, span, p {
 
 h1, h2, h3 {
 	@include lib.typo-font-family-brand;
-	@include lib.typo-font-xlarge;
 	font-weight: 900;
 	line-height: 1.2;
 	letter-spacing: 0.01rem;
 }
 
-h3 { font-weight: 700; }
+h1 { @include lib.typo-font-xxlarge; }
+h2 { @include lib.typo-font-xlarge; }
+h3 { font-weight: 700; @include lib.typo-font-large }
 
 h4, h5, h6 {
-	@include lib.typo-font-large;
 	line-height: 1.2;
 }
 
-h4 { font-weight: 700; }
-h5 { font-weight: 500; }
+h4 { font-weight: 700; @include lib.typo-font-reading; }
+h5 { font-weight: 500; @include lib.typo-font-small; }
 
 h6 {
 	@include lib.typo-font-small;
