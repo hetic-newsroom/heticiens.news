@@ -60,7 +60,12 @@ export default function Header(props: HeaderProps) {
 				{ (menuOpen) ? <X/> : <Menu/> }
 			</motion.button>
 			<Link href="/"><a>
-				<h1>HETIC Newsroom</h1>
+				{router.asPath === '/' &&
+					<h1>HETIC Newsroom</h1>
+				}
+				{router.asPath !== '/' &&
+					<h2>HETIC Newsroom</h2>
+				}
 			</a></Link>
 		</div>
 

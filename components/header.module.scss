@@ -45,7 +45,7 @@
 		text-decoration: none;
 	}
 
-	h1 {
+	h1, h2 {
 		@include lib.typo-font-large;
 		white-space: nowrap;
 	}
