@@ -76,17 +76,16 @@ export default function ArticleFullView({ article: props }: { article: Article }
 					Publié le { dateString } — Temps de lecture { readTime } min
 				</motion.span>
 			</header>
-			<aside className={styles.posterContainer}>
+			<motion.aside layoutId={`articlePoster-${props.uid}`} className={styles.posterContainer}>
 				<Image
 					src={props.poster.src}
 					alt={props.poster.alt}
 					layout="fill"
 					objectFit="cover"
-					objectPosition="center top"
 					sizes="(max-width: 1400px) 100vw, 1400px"
 					priority
 				/>
-			</aside>
+			</motion.aside>
 		</div>
 		<motion.div
 			className={styles.mainTextContainer}
