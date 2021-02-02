@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { motion } from 'framer-motion'
 import query from 'lib/prismic'
 import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
 import { prAuthorMinFields } from 'types/author'
+import Columns from 'components/columns'
+import ArticleCard from 'components/article-card'
 
-export async function getStaticProps(): Promise<{ props: { items: Article[] } }> {
+export async function getStaticProps(): Promise<{ props: { items: Article[] }; revalidate: number }> {
 	const articles: Article[] = (await query('document.type', prArticle, {
 		orderings: `[my.${prArticle}.date desc]`,
 		fetch: prArticleMinFields,
@@ -19,20 +19,18 @@ export async function getStaticProps(): Promise<{ props: { items: Article[] } }>
 	return {
 		props: {
 			items: articles
-		}
+		},
+		revalidate: 60
 	}
 }
 
 export default function HomeFeed({ items }: { items: Article[] }) {
-	return <ul>
-		{items.map((article: Article) => (
-			<li key={article.uid}>
-				<motion.p layoutId={`articleTitle-${article.uid}`}>
-					<Link href={`/article/${article.uid}`}>
-						<a>{article.title}</a>
-					</Link>
-				</motion.p>
-			</li>
-		))}
-	</ul>
+	return <Columns no="1">
+		<h2>À la Une</h2>
+		<Columns no="3">
+			{items.map((article: Article) => (
+				<ArticleCard article={article} key={article.uid}/>
+			))}
+		</Columns>
+	</Columns>
 }

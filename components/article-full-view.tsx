@@ -33,11 +33,11 @@ export default function ArticleFullView({ article: props }: { article: Article }
 	return <article className={styles.articleContainer}>
 		<div className={styles.head}>
 			<header className={styles.titleSection}>
-				<span className={styles.category}>
+				<motion.span layoutId={`articleCategory-${props.uid}`} className={styles.category}>
 					<Link href={`/category/${props.category.uid}`}>
 						<a>{ props.category.name.replace(/s$/, '') }</a>
 					</Link>
-				</span>
+				</motion.span>
 				<motion.h1 layoutId={`articleTitle-${props.uid}`} className={styles.title}>
 					{ props.title }
 				</motion.h1>

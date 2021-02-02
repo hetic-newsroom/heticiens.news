@@ -1,0 +1,33 @@
+@use 'stylelib/index' as lib;
+
+.card {
+	display: grid;
+	grid-template-columns: 1fr;
+	$width: min(#{lib.$layout-max-content-width / 3}, 100vw);
+	grid-template-rows: calc(#{$width} * 0.75 ) auto;
+}
+
+.imageContainer {
+	position: relative;
+}
+
+.articleInfo {
+	display: flex;
+	flex-direction: column;
+	padding: lib.$layout-spacing-large;
+	gap: lib.$layout-spacing-small;
+
+	a {
+		text-decoration: none;
+	}
+}
+
+.intro {
+	max-height: 9rem;
+	overflow: hidden;
+	// @include lib.typo-font-normal;
+}
+
+.details {
+	opacity: 0.8;
+}
