@@ -1,0 +1,21 @@
+@use 'stylelib/index' as lib;
+
+.columns4 {
+	@include lib.layout-grid-4-columns;
+}
+
+.columns3 {
+	@include lib.layout-grid-3-columns;
+}
+
+.columns2_3 {
+	@include lib.layout-grid-2-columns-thirds;
+}
+
+.columns2 {
+	@include lib.layout-grid-2-columns;
+}
+
+.column1 {
+	@include lib.layout-full-width-container;
+}
