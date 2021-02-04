@@ -4,6 +4,7 @@ import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article
 import { prCategoryMinFields } from 'types/category'
 import { prAuthorMinFields } from 'types/author'
 import Columns from 'components/columns'
+import InfiniteScroller from 'components/infinite-scroller'
 import ArticleCard from 'components/article-card'
 
 export async function fetchHomeFeed(pageSize: number, page = 1): Promise<Article[]> {
@@ -36,9 +37,16 @@ export default function HomeFeed({ items }: InferGetStaticPropsType<typeof getSt
 			article={items[0]}
 		/>
 		<Columns no="3" revealAnimation>
-			{items.slice(1).map((article: Article) => (
-				<ArticleCard article={article} key={article.uid}/>
-			))}
+			<InfiniteScroller
+				forwardRevealAnimation
+				initial={items.slice(1).map((article: Article) => (
+					<ArticleCard article={article} key={article.uid}/>
+				))}
+				getMore={async page => {
+					const articles = await fetchHomeFeed(13, page)
+					return articles.map(article => <ArticleCard article={article} key={article.uid}/>)
+				}}
+			/>
 		</Columns>
 	</Columns>
 }
