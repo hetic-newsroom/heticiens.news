@@ -11,8 +11,9 @@ export interface InfiniteScrollerProps {
 
 export default function InfiniteScroller(props: InfiniteScrollerProps) {
 	const [items, setItems] = useState(props.initial)
-	const [loading, setLoading] = useState(false)
 	const [currentPage, setCurrentPage] = useState(1)
+	const [loading, setLoading] = useState(false)
+	const [done, setDone] = useState(false)
 
 	const triggerRef = useRef<HTMLDivElement>(null)
 	const intersection = useIntersection(triggerRef, {
@@ -21,10 +22,15 @@ export default function InfiniteScroller(props: InfiniteScrollerProps) {
 	})
 
 	useEffect(() => {
-		if (intersection?.isIntersecting && !loading) {
+		if (intersection?.isIntersecting && !loading && !done) {
 			setLoading(true)
 
 			props.getMore(currentPage + 1).then(newItems => {
+				if (newItems.length < 1) {
+					// End of the show!
+					setDone(true)
+					return
+				}
 				setCurrentPage(currentPage + 1)
 				setItems([...items, ...newItems])
 			}).catch(e => { throw e }).finally(() => {
