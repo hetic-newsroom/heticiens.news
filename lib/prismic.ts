@@ -1,12 +1,11 @@
 import type { Client } from '@prismicio/client/types/client'
 import Prismic from '@prismicio/client'
 
-const apiEndpoint = process.env.PRISMIC_API_ENDPOINT
-const accessToken = process.env.PRISMIC_KEY
+const apiEndpoint = process.env.NEXT_PUBLIC_PRISMIC_API_ENDPOINT
 
-if (!apiEndpoint || !accessToken) throw new Error('missing Prismic env variables')
+if (!apiEndpoint) throw new Error('missing Prismic API endpoint')
 
-export const client = () => Prismic.client(apiEndpoint, { accessToken })
+export const client = () => Prismic.client(apiEndpoint)
 
 export const predicates = Prismic.Predicates
 
