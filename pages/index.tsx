@@ -13,7 +13,7 @@ export async function getStaticProps(): Promise<{ props: { items: Article[] }; r
 			...prCategoryMinFields,
 			...prAuthorMinFields
 		],
-		pageSize: 20
+		pageSize: 13
 	})).results.map(x => toArticle(x))
 
 	return {
@@ -25,9 +25,12 @@ export async function getStaticProps(): Promise<{ props: { items: Article[] }; r
 }
 
 export default function HomeFeed({ items }: { items: Article[] }) {
-	return <Columns no="1">
-		<ArticleCard size="large" article={items[0]}/>
-		<Columns no="3">
+	return <Columns no="1" revealAnimation>
+		<ArticleCard
+			size="large"
+			article={items[0]}
+		/>
+		<Columns no="3" revealAnimation>
 			{items.slice(1).map((article: Article) => (
 				<ArticleCard article={article} key={article.uid}/>
 			))}
