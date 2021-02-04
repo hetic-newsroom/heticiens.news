@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react'
+import type { PropsWithChildren } from 'react'
 import { motion } from 'framer-motion'
 import classNames from 'classnames/bind'
 import styles from './columns.module.scss'
@@ -7,11 +7,10 @@ const cx = classNames.bind(styles)
 
 export interface ColumnsProps {
 	no: '4'  | '3' | '23' | '2' | '1'
-	children: ReactElement[]
 	revealAnimation?: boolean
 }
 
-export default function Columns({ no, children, revealAnimation }: ColumnsProps) {
+export default function Columns({ no, children, revealAnimation }: PropsWithChildren<ColumnsProps>) {
 	const cns = cx({
 		columns4: (no === '4'),
 		columns3: (no === '3'),
@@ -37,17 +36,21 @@ export default function Columns({ no, children, revealAnimation }: ColumnsProps)
 			initial="hidden"
 			animate="show"
 		>
-			{children.map(child => 
+			{children && Array.isArray(children) && children.map((child, i) =>
 				<motion.div
 					variants={variants}
+					key={i}
 				>
 					{ child }
 				</motion.div>
 			)}
+			{children && !Array.isArray(children) &&
+				<>{ children }</>
+			}
 		</motion.div>
-	} else {
-		return <div className={cns}>
-			{ children }
-		</div>
 	}
+
+	return <div className={cns}>
+		{ children }
+	</div>
 }
