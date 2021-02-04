@@ -26,9 +26,9 @@ export async function getStaticProps(): Promise<{ props: { items: Article[] }; r
 
 export default function HomeFeed({ items }: { items: Article[] }) {
 	return <Columns no="1">
-		<h2>À la Une</h2>
+		<ArticleCard size="large" article={items[0]}/>
 		<Columns no="3">
-			{items.map((article: Article) => (
+			{items.slice(1).map((article: Article) => (
 				<ArticleCard article={article} key={article.uid}/>
 			))}
 		</Columns>

@@ -3,9 +3,18 @@ import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import shortenText from 'lib/text-shortener'
+import classNames from 'classnames/bind'
 import styles from './article-card.module.scss'
 
-export default function ArticleCard({ article: props }: { article: Article }) {
+const cx = classNames.bind(styles)
+
+export interface ArticleCardProps {
+	article: Article
+	size?: 'large' | 'medium' | 'small'
+}
+
+export default function ArticleCard({ article: props, size }: ArticleCardProps) {
 	const dateString = useMemo(() => {
 		const date = new Date(props.date)
 		const day = date.getDate()
@@ -20,7 +29,12 @@ export default function ArticleCard({ article: props }: { article: Article }) {
 		return [day, month, year].join('/')
 	}, [props.date])
 
-	return <div className={styles.card}>
+	return <div
+		className={cx({
+			card: true,
+			largeCard: (size === 'large')
+		})}
+	>
 		<motion.div layoutId={`articlePoster-${props.uid}`} className={styles.imageContainer}>
 			<Link href={`/article/${props.uid}`}><a>
 				<Image
@@ -28,12 +42,16 @@ export default function ArticleCard({ article: props }: { article: Article }) {
 					alt={props.poster.alt}
 					layout="fill"
 					objectFit="cover"
+					priority={(size === 'large')}
 				/>
 			</a></Link>
 		</motion.div>
 		<div className={styles.articleInfo}>
+			{(size === 'large') &&
+				<h2>À la Une</h2>
+			}
 			<Link href={`/category/${props.category.uid}`}><a>
-				<motion.span layoutId={`articleCategory-${props.uid}`}>
+				<motion.span layoutId={`articleCategory-${props.uid}`} className={styles.category}>
 					{ props.category.name.replace(/s$/, '') }
 				</motion.span>
 			</a></Link>
@@ -44,7 +62,7 @@ export default function ArticleCard({ article: props }: { article: Article }) {
 			</a></Link>
 			<Link href={`/article/${props.uid}`}><a>
 				<p className={styles.intro}>
-					{ props.intro }
+					{ shortenText(props.intro) }
 				</p>
 			</a></Link>
 			<span className={styles.details}>

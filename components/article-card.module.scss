@@ -5,10 +5,69 @@
 	grid-template-columns: 1fr;
 	$width: min(#{lib.$layout-max-content-width / 3}, 100vw);
 	grid-template-rows: calc(#{$width} * 0.75 ) auto;
+
+	a:hover, a:focus {
+		color: inherit;
+	}
+
+	&:hover, &:focus {
+		.imageContainer img {
+			transform: scale(1.15);
+		}
+
+		.articleInfo {
+			background: lib.$color-accent;
+		}
+	}
+
+	a[href~="/category"] {
+		color: red;
+	}
+}
+
+.largeCard {
+	@include lib.layout-grid-2-columns-thirds;
+	grid-template-columns: 2fr 1fr;
+	grid-template-rows: auto;
+
+	.imageContainer {
+		width: 100%;
+		height: min(calc(100vw * 0.75), calc(#{lib.$layout-max-content-width} * 0.75 ));
+	}
+
+	@media (min-width: lib.$layout-max-content-width / 1.3) {
+		.articleInfo {
+			justify-content: center;
+
+			h2 {
+				/* see notice below */
+				position: relative;
+				bottom: lib.$layout-spacing-medium;
+				margin-bottom: 0;
+			}
+
+			h3 {
+				@include lib.typo-font-xlarge;
+			}
+
+			.category {
+				@include lib.typo-font-large;
+			}
+		}
+
+		.imageContainer {
+			height: min(calc(66.66vw * 0.75), calc((2/3) * #{lib.$layout-max-content-width} * 0.75 ));
+		}
+	}
 }
 
 .imageContainer {
 	position: relative;
+
+	img {
+		transform: scale(1);
+		transition: transform 1s cubic-bezier(.09,.75,0,.99);
+	}
 }
 
 .articleInfo {
@@ -17,15 +76,30 @@
 	padding: lib.$layout-spacing-large;
 	gap: lib.$layout-spacing-small;
 
+	background: lib.$color-background;
+	transition: background 1s cubic-bezier(.09,.75,0,.99);
+
+	h2 {
+		/* This is only used for the "à la une" text in large-card */
+		width: auto;
+		margin-right: auto;
+		border-bottom: 2px solid lib.$color-foreground;
+		margin-bottom: lib.$layout-spacing-medium;
+		@include lib.typo-font-large;
+	}
+
 	a {
 		text-decoration: none;
 	}
 }
 
+.category {
+	@include lib.typo-font-reading;
+}
+
 .intro {
 	max-height: 9rem;
 	overflow: hidden;
-	// @include lib.typo-font-normal;
 }
 
 .details {
