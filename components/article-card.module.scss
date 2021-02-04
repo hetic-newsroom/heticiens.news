@@ -20,8 +20,8 @@
 		}
 	}
 
-	a[href~="/category"] {
-		color: red;
+	a[href*="/category"]:hover, a[href*="/category"]:focus {
+		text-decoration: underline;
 	}
 }
 
