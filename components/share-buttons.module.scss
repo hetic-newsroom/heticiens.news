@@ -1,0 +1,6 @@
+@use 'stylelib/index' as lib;
+
+.share {
+	display: flex;
+	gap: lib.$layout-spacing-small;
+}
