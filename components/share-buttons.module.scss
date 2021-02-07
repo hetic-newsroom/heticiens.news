@@ -2,5 +2,8 @@
 
 .share {
 	display: flex;
-	gap: lib.$layout-spacing-small;
+
+	> * {
+		margin-right: lib.$layout-spacing-small;
+	}
 }

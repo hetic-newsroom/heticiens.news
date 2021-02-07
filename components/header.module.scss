@@ -38,8 +38,11 @@
 .barContainer {
 	display: flex;
 	flex-direction: row;
-	gap: lib.$layout-spacing-x-small;
 	align-items: center;
+
+	> * {
+		margin-right: lib.$layout-spacing-small;
+	}
 
 	a {
 		text-decoration: none;
@@ -96,7 +99,10 @@
 			padding: 0;
 			display: flex;
 			flex-direction: column;
-			gap: lib.$layout-spacing-medium;
+
+			> * {
+				margin-bottom: lib.$layout-spacing-small;
+			}
 
 			li {
 				display: block;
@@ -149,12 +155,15 @@
 			align-items: center;
 			justify-content: center;
 			padding: lib.$layout-spacing-large;
-			gap: lib.$layout-spacing-small;
 			background: var(--brand-color);
 			color: lib.$color-light-background;
 
 			transform: scale(1);
 			transition: transform 1s cubic-bezier(.09,.75,0,.99);
+
+			> *:last-child {
+				margin-top: lib.$layout-spacing-small;
+			}
 
 			span {
 				@include lib.typo-font-family-brand;

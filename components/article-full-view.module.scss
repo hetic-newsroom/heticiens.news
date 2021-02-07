@@ -46,9 +46,11 @@ $max-p-width: 690px;
 
 			.authorPreview {
 				display: flex;
-				gap: lib.$layout-spacing-small;
 				align-items: center;
 
+				> * {
+					margin-right: lib.$layout-spacing-small;
+				}
 				.authorImgContainer {
 					position: relative;
 					width: 35px;
@@ -86,10 +88,10 @@ $max-p-width: 690px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: lib.$layout-spacing-small;
 
 	> * {
 		width: min(100%, #{$max-p-width});
+		margin-bottom: lib.$layout-spacing-small;
 	}
 
 	h2 {
