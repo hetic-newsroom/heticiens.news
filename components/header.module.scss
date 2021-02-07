@@ -15,7 +15,7 @@
 	position: sticky;
 	top: 0;
 	z-index: 800;
-	padding: lib.$layout-spacing-medium;
+	padding: lib.$layout-spacing-small lib.$layout-spacing-medium;
 
 	@include lib.layout-full-width-container;
 
@@ -74,29 +74,97 @@
 	left: 0;
 	right: 0;
 	height: 0;
-	overflow: hidden;
+	overflow: auto;
 	background: lib.$color-background;
 
 	@include lib.layout-full-width-container;
 
-	nav {
-		display: grid;
-		@include lib.layout-grid-2-columns-thirds;
+	.menuColumnsWrapper {
+		@include lib.layout-grid-3-columns;
+		grid-row-gap: lib.$layout-spacing-large;
+		padding-bottom: lib.$layout-spacing-medium;
+
+		h2 {
+			@include lib.typo-font-family-normal;
+			@include lib.typo-font-large;
+			font-weight: 400;
+			margin-bottom: lib.$layout-spacing-medium;
+		}
 
 		ul {
 			margin: 0;
 			padding: 0;
+			display: flex;
+			flex-direction: column;
+			gap: lib.$layout-spacing-medium;
 
 			li {
 				display: block;
-				margin-bottom: lib.$layout-spacing-small;
 
 				a {
 					@include lib.typo-font-family-brand;
-					@include lib.typo-font-large;
+					@include lib.typo-font-xlarge;
 					font-weight: 700;
 					text-decoration: none;
 				}
+			}
+		}
+	}
+
+	ul.socialCardsContainer {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		li:first-child {
+			grid-column: 1 / span 2;
+
+			.socialCard {
+				height: lib.$layout-spacing-large * 4;
+			}
+		}
+
+		li {
+			overflow: hidden;
+		}
+
+		.socialCard {
+			&[data-site="podcast"] {
+				--brand-color: #ff4547;
+			}
+			&[data-site="twitter"] {
+				--brand-color: #1da1f2;
+			}
+			&[data-site="youtube"] {
+				--brand-color: #ff0001;
+			}
+			&[data-site="linkedin"] {
+				--brand-color: #0a66c2;
+			}
+			&[data-site="instagram"] {
+				--brand-color: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+			}
+
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: lib.$layout-spacing-large;
+			gap: lib.$layout-spacing-small;
+			background: var(--brand-color);
+			color: lib.$color-light-background;
+
+			transform: scale(1);
+			transition: transform 1s cubic-bezier(.09,.75,0,.99);
+
+			span {
+				@include lib.typo-font-family-brand;
+				@include lib.typo-font-large;
+				font-weight: 700;
+			}
+
+			&:hover, &:focus {
+				filter: sepia(20%) saturate(90%);
+				transform: scale(1.15);
 			}
 		}
 	}
