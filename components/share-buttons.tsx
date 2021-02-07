@@ -1,8 +1,15 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Share, Twitter, Facebook, Linkedin, Mail } from 'react-feather'
 import styles from './share-buttons.module.scss'
 
 export default function ShareButtons({ link, revealAnimation }: { link: string; revealAnimation?: boolean }) {
+	const [showNativeShare, setShowNativeShare] = useState(false)
+
+	useEffect(() => {
+		if (typeof navigator !== 'undefined' && navigator.share) setShowNativeShare(true)
+	})
+
 	let animationProps = {}
 	if (revealAnimation) {
 		animationProps = {
@@ -33,7 +40,7 @@ export default function ShareButtons({ link, revealAnimation }: { link: string; 
 		animate="show"
 		{...animationProps}
 	>
-		{(typeof navigator !== 'undefined' && navigator.share) &&
+		{showNativeShare &&
 			<motion.a
 				href="#"
 				onClick={e => {
