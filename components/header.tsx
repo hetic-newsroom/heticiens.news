@@ -135,7 +135,7 @@ export default function Header(props: HeaderProps) {
 									className={styles.socialCard}
 									data-site="podcast"
 								>
-									<Headphones size="2rem"/>
+									<Headphones size="32px"/>
 									<span>HN'You</span>
 								</div>
 							</a>
@@ -146,7 +146,7 @@ export default function Header(props: HeaderProps) {
 									className={styles.socialCard}
 									data-site="twitter"
 								>
-									<Twitter size="2rem"/>
+									<Twitter size="32px"/>
 								</div>
 							</a>
 						</motion.li>
@@ -156,7 +156,7 @@ export default function Header(props: HeaderProps) {
 									className={styles.socialCard}
 									data-site="youtube"
 								>
-									<Youtube size="2rem"/>
+									<Youtube size="32px"/>
 								</div>
 							</a>
 						</motion.li>
@@ -166,7 +166,7 @@ export default function Header(props: HeaderProps) {
 									className={styles.socialCard}
 									data-site="linkedin"
 								>
-									<Linkedin size="2rem"/>
+									<Linkedin size="32px"/>
 								</div>
 							</a>
 						</motion.li>
@@ -176,7 +176,7 @@ export default function Header(props: HeaderProps) {
 									className={styles.socialCard}
 									data-site="instagram"
 								>
-									<Instagram size="2rem"/>
+									<Instagram size="32px"/>
 								</div>
 							</a>
 						</motion.li>
