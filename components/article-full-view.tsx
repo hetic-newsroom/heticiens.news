@@ -4,11 +4,15 @@ import { RichText } from 'prismic-reactjs'
 import readingTime from 'reading-time'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import ShareButtons from 'components/share-buttons'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import htmlSerializer from 'lib/prismic-richtext-serializer'
 import styles from './article-full-view.module.scss'
 
 export default function ArticleFullView({ article: props }: { article: Article }) {
+	const router = useRouter()
+
 	const dateString = useMemo(() => {
 		const date = new Date(props.date)
 		const day = date.getDate()
@@ -67,6 +71,7 @@ export default function ArticleFullView({ article: props }: { article: Article }
 				>
 					{ props.intro }
 				</motion.p>
+				<ShareButtons link={`https://heticiens.news${router.asPath}`} revealAnimation/>
 				<motion.span
 					className={styles.timeDisplays}
 					initial={{ opacity: 0 }}
