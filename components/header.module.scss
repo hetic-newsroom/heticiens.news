@@ -120,6 +120,7 @@
 	ul.socialCardsContainer {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+		grid-column-gap: lib.$layout-spacing-small;
 
 		li:first-child {
 			grid-column: 1 / span 2;
