@@ -5,6 +5,7 @@
 	grid-template-columns: 1fr;
 	$width: min(#{lib.$layout-max-content-width / 3}, 100vw);
 	grid-template-rows: calc(#{$width} * 0.75 ) auto;
+	height: 100%;
 
 	a:hover, a:focus {
 		color: inherit;
@@ -17,6 +18,11 @@
 
 		.articleInfo {
 			background: lib.$color-accent;
+			color: lib.$color-light-background;
+
+			h2 {
+				border-color: lib.$color-light-background;
+			}
 		}
 	}
 
