@@ -13,12 +13,11 @@ export default function ShareButtons({ link, revealAnimation }: { link: string; 
 				show: {
 					opacity: 1,
 					transition: {
+						delay: 0.7,
 						staggerChildren: 0.2
 					}
 				}
-			},
-			initial: 'hidden',
-			animate: 'show'
+			}
 		}
 	}
 
@@ -30,6 +29,8 @@ export default function ShareButtons({ link, revealAnimation }: { link: string; 
 
 	return <motion.div
 		className={styles.share}
+		initial="hidden"
+		animate="show"
 		{...animationProps}
 	>
 		{(typeof navigator !== 'undefined' && navigator.share) &&
