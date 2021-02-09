@@ -1,0 +1,33 @@
+@use 'stylelib/index' as lib;
+
+.width-x-small {
+	width: lib.$layout-spacing-x-small;
+}
+
+.height-x-small {
+	height: lib.$layout-spacing-x-small;
+}
+
+.width-small {
+	width: lib.$layout-spacing-small;
+}
+
+.height-small {
+	height: lib.$layout-spacing-small;
+}
+
+.width-medium {
+	width: lib.$layout-spacing-medium;
+}
+
+.height-medium {
+	height: lib.$layout-spacing-medium;
+}
+
+.width-large {
+	width: lib.$layout-spacing-large;
+}
+
+.height-large {
+	height: lib.$layout-spacing-large;
+}
