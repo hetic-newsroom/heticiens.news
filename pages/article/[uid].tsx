@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps } from 'next'
+import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import query, { client } from 'lib/prismic'
 import Article, { toArticle, prArticle, prArticleAllFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
@@ -40,13 +40,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 	const { uid } = params
 
-	const article: Article = toArticle(await client().getByUID(prArticle, uid, {
-		fetch: prArticleAllFields,
-		fetchLinks: [
-			...prCategoryMinFields,
-			...prAuthorMinFields
-		]
-	}))
+	let article: Article
+	try {
+		article = toArticle(await client().getByUID(prArticle, uid, {
+			fetch: prArticleAllFields,
+			fetchLinks: [
+				...prCategoryMinFields,
+				...prAuthorMinFields
+			]
+		}))
+	} catch {
+		return { notFound: true }
+	}
 
 	return {
 		props: {
@@ -56,7 +61,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	}
 }
 
-export default function ArticlePage({ article }: { article: Article }) {
+export default function ArticlePage({ article }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return <div>
 		<ArticleFullView article={article}/>
 	</div>
