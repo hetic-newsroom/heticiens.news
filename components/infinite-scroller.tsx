@@ -22,6 +22,10 @@ export default function InfiniteScroller(props: InfiniteScrollerProps) {
 	})
 
 	useEffect(() => {
+		setItems(props.initial)
+	}, [props.initial])
+
+	useEffect(() => {
 		if (intersection?.isIntersecting && !loading && !done) {
 			setLoading(true)
 
