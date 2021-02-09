@@ -3,6 +3,7 @@ import query from 'lib/prismic'
 import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
 import { prAuthorMinFields } from 'types/author'
+import Spacer from 'components/spacer'
 import Columns from 'components/columns'
 import InfiniteScroller from 'components/infinite-scroller'
 import ArticleCard from 'components/article-card'
@@ -36,15 +37,24 @@ export default function HomeFeed({ items }: InferGetStaticPropsType<typeof getSt
 			size="large"
 			article={items[0]}
 		/>
-		<Columns no="3" revealAnimation>
+		<Spacer height="medium"/>
+		<Columns no="3" columnGap="small" revealAnimation>
+			{items.slice(1, 4).map((article: Article) => (
+				<ArticleCard article={article} key={article.uid} size="medium"/>
+			))}
+		</Columns>
+		{
+			// TODO: Newsletter registration invite
+		}
+		<Columns no="2" rowGap="medium" revealAnimation>
 			<InfiniteScroller
 				forwardRevealAnimation
-				initial={items.slice(1).map((article: Article) => (
-					<ArticleCard article={article} key={article.uid}/>
+				initial={items.slice(4).map((article: Article) => (
+					<ArticleCard article={article} key={article.uid} size="small"/>
 				))}
 				getMore={async page => {
 					const articles = await fetchHomeFeed(13, page)
-					return articles.map(article => <ArticleCard article={article} key={article.uid}/>)
+					return articles.map(article => <ArticleCard article={article} key={article.uid} size="small"/>)
 				}}
 			/>
 		</Columns>
