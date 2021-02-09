@@ -91,6 +91,14 @@
 			@include lib.typo-font-small;
 		}
 	}
+
+	@media (max-width: 500px) {
+		grid-template-columns: 1fr;
+
+		.imageContainer {
+			height: 300px * 0.75;
+		}
+	}
 }
 
 .imageContainer {
