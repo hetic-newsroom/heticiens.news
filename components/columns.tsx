@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import classNames from 'classnames/bind'
 import styles from './columns.module.scss'
 
@@ -33,33 +33,29 @@ export default function Columns({ no, children, gap, rowGap, columnGap, revealAn
 	})
 
 	if (revealAnimation) {
-		const variants = {
-			hidden: { opacity: 0 },
-			show: {
-				opacity: 1,
-				transition: {
-					staggerChildren: 0.2
-				}
-			}
-		}
-
 		return <motion.div
 			className={cns}
-			variants={variants}
-			initial="hidden"
-			animate="show"
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{
+				staggerChildren: 0.2
+			}}
 		>
-			{children && Array.isArray(children) && children.map((child, i) =>
-				<motion.div
-					variants={variants}
-					key={i}
-				>
-					{ child }
-				</motion.div>
-			)}
-			{children && !Array.isArray(children) &&
-				<>{ children }</>
-			}
+			<AnimatePresence>
+				{children && Array.isArray(children) && children.map((child, i) =>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						key={i}
+					>
+						{ child }
+					</motion.div>
+				)}
+				{children && !Array.isArray(children) &&
+					<>{ children }</>
+				}
+			</AnimatePresence>
 		</motion.div>
 	}
 

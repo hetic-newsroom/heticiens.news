@@ -50,10 +50,14 @@ export default function InfiniteScroller(props: InfiniteScrollerProps) {
 		}
 
 		return <>
-			{items && items.map((child, i) =>
+			{items && items.map((child) =>
 				<motion.div
 					variants={variants}
-					key={i}
+					initial="hidden"
+					animate="show"
+					exit="hidden"
+					key={child.key}
+					layoutId={child.key?.toString()}
 				>
 					{ child }
 				</motion.div>
