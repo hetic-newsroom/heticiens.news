@@ -95,6 +95,7 @@ export default function CategoryPage({ category, articles }: InferGetStaticProps
 					const articles = await fetchCategoryFeed(category.id, 10, page)
 					return articles.map(article => <ArticleCard article={article} key={article.uid} size="small"/>)
 				}}
+				key={category.id}
 			/>
 		</Columns>
 	</Columns>
