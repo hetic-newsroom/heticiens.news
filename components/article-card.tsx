@@ -32,7 +32,8 @@ export default function ArticleCard({ article: props, size }: ArticleCardProps) 
 	return <div
 		className={cx({
 			card: true,
-			largeCard: (size === 'large')
+			largeCard: (size === 'large'),
+			smallCard: (size === 'small')
 		})}
 	>
 		<motion.div layoutId={`articlePoster-${props.uid}`} className={styles.imageContainer}>

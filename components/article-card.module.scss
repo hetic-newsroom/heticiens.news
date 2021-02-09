@@ -67,6 +67,32 @@
 	}
 }
 
+.smallCard {
+	grid-template-columns: 300px 1fr;
+	grid-template-rows: 1fr;
+
+	.articleInfo {
+		padding: lib.$layout-spacing-small;
+
+		.category {
+			@include lib.typo-font-normal;
+		}
+
+		h3 {
+			@include lib.typo-font-reading;
+			line-height: 1.2;
+		}
+
+		.intro {
+			@include lib.typo-font-normal;
+		}
+
+		.details {
+			@include lib.typo-font-small;
+		}
+	}
+}
+
 .imageContainer {
 	position: relative;
 
@@ -80,10 +106,13 @@
 	display: flex;
 	flex-direction: column;
 	padding: lib.$layout-spacing-large;
-	gap: lib.$layout-spacing-small;
 
 	background: lib.$color-background;
 	transition: background 1s cubic-bezier(.09,.75,0,.99);
+
+	> *:not(:last-child) {
+		margin-bottom: lib.$layout-spacing-small;
+	}
 
 	h2 {
 		/* This is only used for the "à la une" text in large-card */
