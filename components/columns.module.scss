@@ -19,3 +19,49 @@
 .column1 {
 	@include lib.layout-full-width-container;
 }
+
+/* grid-gap cannot be made to override defined column & row tracks length atm, so we define margin on direct childs */
+
+.rowGap {
+	> *:not(:last-child) {
+		margin-bottom: var(--row-gap);
+	}
+}
+
+.columnGap {
+	> *:not(:last-child) {
+		margin-right: var(--column-gap);
+	}
+}
+
+.row-x-small {
+	--row-gap: #{lib.$layout-spacing-x-small};
+}
+
+.column-x-small {
+	--column-gap: #{lib.$layout-spacing-x-small};
+}
+
+.row-small {
+	--row-gap: #{lib.$layout-spacing-small};
+}
+
+.column-small {
+	--column-gap: #{lib.$layout-spacing-small};
+}
+
+.row-medium {
+	--row-gap: #{lib.$layout-spacing-medium};
+}
+
+.column-medium {
+	--column-gap: #{lib.$layout-spacing-medium};
+}
+
+.row-large {
+	--row-gap: #{lib.$layout-spacing-large};
+}
+
+.column-large {
+	--column-gap: #{lib.$layout-spacing-large};
+}
