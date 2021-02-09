@@ -18,7 +18,7 @@ export default function InfiniteScroller(props: InfiniteScrollerProps) {
 	const triggerRef = useRef<HTMLDivElement>(null)
 	const intersection = useIntersection(triggerRef, {
 		root: null,
-		threshold: 1
+		threshold: 0.5
 	})
 
 	useEffect(() => {
@@ -54,12 +54,24 @@ export default function InfiniteScroller(props: InfiniteScrollerProps) {
 					{ child }
 				</motion.div>
 			)}
-			<div ref={triggerRef}></div>
+			<div
+				ref={triggerRef}
+				style={{
+					height: '1px',
+					visibility: 'hidden'
+				}}
+			/>
 		</>
 	}
 
 	return <>
 		{ items }
-		<div ref={triggerRef}></div>
+		<div
+			ref={triggerRef}
+			style={{
+				height: '1px',
+				visibility: 'hidden'
+			}}
+		/>
 	</>
 }
