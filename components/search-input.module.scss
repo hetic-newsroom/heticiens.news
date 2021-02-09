@@ -1,0 +1,41 @@
+@use 'stylelib/index' as lib;
+
+.container, .input {
+	color: lib.$color-foreground;
+	background: lib.$color-background;
+	outline: none;
+	border: 3px solid lib.$color-foreground;
+	padding: lib.$layout-spacing-x-small lib.$layout-spacing-small;
+
+	@include lib.typo-font-family-brand;
+	@include lib.typo-font-reading;
+}
+
+.container {
+	width: min(100%, 65ch);
+	margin: 0 auto;
+	color: lib.$color-background;
+	background: lib.$color-foreground;
+	padding: 0;
+	padding-left: lib.$layout-spacing-small;
+	border: none;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.input {
+	margin-left: lib.$layout-spacing-x-small;
+	padding-left: lib.$layout-spacing-x-small;
+	width: 100%;
+
+	transition: all .2s ease-out;
+
+	&:hover, &:focus {
+		background: lib.$color-foreground;
+		color: lib.$color-background;
+		margin-left: 0;
+		padding-left: lib.$layout-spacing-x-small / 2;
+	}
+}
