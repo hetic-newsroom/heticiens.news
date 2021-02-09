@@ -39,6 +39,11 @@ export default function Header(props: HeaderProps) {
 		opened: { opacity: 1 }
 	}
 
+	const staggerChildren = {
+		staggerChildren: 0.1,
+		staggerDirection: 1
+	}
+
 	return <motion.header
 		ref={headerRef}
 		className={cx({
@@ -87,9 +92,7 @@ export default function Header(props: HeaderProps) {
 				opened: {
 					height: `calc(100vh - ${headerRef.current?.getBoundingClientRect().bottom}px)`,
 					transition: {
-						ease: 'anticipate',
-						staggerChildren: 0.1,
-						staggerDirection: 1
+						ease: 'anticipate'
 					}
 				}
 			}}
@@ -97,7 +100,7 @@ export default function Header(props: HeaderProps) {
 			animate={(menuOpen) ? 'opened' : 'hidden'}
 		>
 			<div className={styles.menuColumnsWrapper}>
-				<nav>
+				<motion.nav variants={opacityVariants} transition={staggerChildren}>
 					<motion.h2 variants={opacityVariants}>Catégories</motion.h2>
 					<ul>
 						{props.categories.map(c => (
@@ -113,8 +116,8 @@ export default function Header(props: HeaderProps) {
 							</motion.li>
 						))}
 					</ul>
-				</nav>
-				<nav>
+				</motion.nav>
+				<motion.nav variants={opacityVariants} transition={staggerChildren}>
 					<motion.h2 variants={opacityVariants}>En savoir plus</motion.h2>
 					<ul>
 						<motion.li variants={opacityVariants}>
@@ -125,8 +128,8 @@ export default function Header(props: HeaderProps) {
 							</span>
 						</motion.li>
 					</ul>
-				</nav>
-				<nav>
+				</motion.nav>
+				<motion.nav variants={opacityVariants} transition={staggerChildren}>
 					<motion.h2 variants={opacityVariants}>Et aussi...</motion.h2>
 					<ul className={styles.socialCardsContainer}>
 						<motion.li variants={opacityVariants}>
@@ -181,7 +184,7 @@ export default function Header(props: HeaderProps) {
 							</a>
 						</motion.li>
 					</ul>
-				</nav>
+				</motion.nav>
 			</div>
 		</motion.section>
 	</motion.header>
