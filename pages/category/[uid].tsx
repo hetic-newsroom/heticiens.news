@@ -69,7 +69,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		return { notFound: true }
 	}
 
-	console.log('CATEGORY ID:', category.id)
 	const articles: Article[] = await fetchCategoryFeed(category.id, 10)
 
 	return {
