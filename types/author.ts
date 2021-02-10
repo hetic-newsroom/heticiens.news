@@ -3,7 +3,7 @@ import Image, { toImage } from './image'
 
 export const prAuthor = 'authors'
 
-type SocialWebsite = 'facebook' | 'instagram' | 'twitter' | 'linkedin' | 'website'
+export type SocialWebsite = 'facebook' | 'instagram' | 'twitter' | 'linkedin' | 'website'
 
 export default interface Author {
 	id: string

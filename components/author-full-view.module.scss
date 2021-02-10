@@ -1,0 +1,42 @@
+@use 'stylelib/index' as lib;
+
+.container {
+	max-width: 65ch;
+	margin: 0 auto;
+	display: grid;
+	grid-template: "photo name" 80px
+						"bio bio" auto
+						"social social" auto / 80px auto;
+	gap: lib.$layout-spacing-small;
+	align-items: center;
+
+	.photoContainer {
+		grid-area: photo;
+		position: relative;
+		width: 80px;
+		height: 80px;
+		clip-path: circle(40px at center center);
+	}
+
+	h1 {
+		grid-area: name;
+	}
+
+	p {
+		grid-area: bio;
+	}
+
+	.socialContainer {
+		padding: 0;
+		margin: 0;
+
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		li {
+			display: block;
+			margin-right: lib.$layout-spacing-small;
+		}
+	}
+}
