@@ -2,6 +2,4 @@ User-agent: *
 Disallow: /api
 Disallow: /404
 Disallow: /_error
-Disallow: /category
-Disallow: /category/*
 Disallow: /search

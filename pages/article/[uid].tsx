@@ -2,7 +2,8 @@ import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'ne
 import query, { client } from 'lib/prismic'
 import Article, { toArticle, prArticle, prArticleAllFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
-import { prAuthorMinFields } from 'types/author'
+import { prAuthorAllFields } from 'types/author'
+import SeoTags from 'components/seo-tags'
 import ArticleFullView from 'components/article-full-view'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -46,7 +47,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 			fetch: prArticleAllFields,
 			fetchLinks: [
 				...prCategoryMinFields,
-				...prAuthorMinFields
+				...prAuthorAllFields // We need all fields here to properly tag social handles in seo metadata
 			]
 		}))
 	} catch {
@@ -63,6 +64,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export default function ArticlePage({ article }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return <div>
+		<SeoTags article={article}/>
 		<ArticleFullView article={article}/>
 	</div>
 }

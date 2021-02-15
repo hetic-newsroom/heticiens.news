@@ -3,6 +3,7 @@ import query, { client, complexQuery } from 'lib/prismic'
 import Author, { toAuthor, prAuthor, prAuthorAllFields, prAuthorMinFields } from 'types/author'
 import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
+import SeoTags from 'components/seo-tags'
 import Columns from 'components/columns'
 import Spacer from 'components/spacer'
 import AuthorFullView from 'components/author-full-view'
@@ -83,6 +84,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export default function AuthorPage({ author, articles }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return <Columns no="1">
+		<SeoTags author={author}/>
 		<Spacer height="large"/>
 		<AuthorFullView author={author}/>
 		<Spacer height="large"/>

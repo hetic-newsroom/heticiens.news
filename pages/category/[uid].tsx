@@ -3,6 +3,7 @@ import query, { client, complexQuery } from 'lib/prismic'
 import Category, { toCategory, prCategory, prCategoryAllFields } from 'types/category'
 import Article, { toArticle, prArticle, prArticleMinFields } from 'types/article'
 import { prAuthorMinFields } from 'types/author'
+import SeoTags from 'components/seo-tags'
 import Spacer from 'components/spacer'
 import Columns from 'components/columns'
 import InfiniteScroller from 'components/infinite-scroller'
@@ -82,6 +83,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export default function CategoryPage({ category, articles }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return <Columns no="1" revealAnimation>
+		<SeoTags category={category}/>
 		<h1 style={{ textAlign: 'center' }}>{ category.name }</h1>
 		<Spacer height="large"/>
 		<Columns no="2" rowGap="medium" revealAnimation>
