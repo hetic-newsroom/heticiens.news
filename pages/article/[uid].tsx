@@ -8,6 +8,7 @@ import ArticleFullView from 'components/article-full-view'
 import Spacer from 'components/spacer'
 import Columns from 'components/columns'
 import ArticleCard from 'components/article-card'
+import NewsletterSignupCard from 'components/newsletter-signup'
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	let page = 1
@@ -84,6 +85,8 @@ export default function ArticlePage({ article, similar }: InferGetStaticPropsTyp
 		<ArticleFullView article={article}/>
 		<Spacer height="large"/>
 		<Columns no="1">
+			<NewsletterSignupCard/>
+			<Spacer height="large"/>
 			<h2>À lire aussi</h2>
 			<Spacer height="medium"/>
 			<Columns no="3" rowGap="medium">
