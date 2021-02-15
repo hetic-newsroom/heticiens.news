@@ -1,10 +1,13 @@
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import query, { client } from 'lib/prismic'
-import Article, { toArticle, prArticle, prArticleAllFields } from 'types/article'
+import query, { client, predicates } from 'lib/prismic'
+import Article, { toArticle, prArticle, prArticleAllFields, prArticleMinFields } from 'types/article'
 import { prCategoryMinFields } from 'types/category'
-import { prAuthorAllFields } from 'types/author'
+import { prAuthorAllFields, prAuthorMinFields } from 'types/author'
 import SeoTags from 'components/seo-tags'
 import ArticleFullView from 'components/article-full-view'
+import Spacer from 'components/spacer'
+import Columns from 'components/columns'
+import ArticleCard from 'components/article-card'
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	let page = 1
@@ -54,17 +57,40 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		return { notFound: true }
 	}
 
+	const similar: Article[] = (await client().query([
+		predicates.at('document.type', prArticle),
+		predicates.similar(article.id, 10)
+	], {
+		fetch: prArticleMinFields,
+		fetchLinks: [
+			...prCategoryMinFields,
+			...prAuthorMinFields
+		],
+		pageSize: 3
+	})).results.map(x => toArticle(x))
+
 	return {
 		props: {
-			article
+			article,
+			similar
 		},
 		revalidate: 1800
 	}
 }
 
-export default function ArticlePage({ article }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function ArticlePage({ article, similar }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return <div>
 		<SeoTags article={article}/>
 		<ArticleFullView article={article}/>
+		<Spacer height="large"/>
+		<Columns no="1">
+			<h2>À lire aussi</h2>
+			<Spacer height="medium"/>
+			<Columns no="3" rowGap="medium">
+				{similar.map((x: Article) =>
+					<ArticleCard article={x} key={x.uid}/>
+				)}
+			</Columns>
+		</Columns>
 	</div>
 }
