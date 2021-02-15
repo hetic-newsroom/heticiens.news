@@ -1,0 +1,49 @@
+@use 'stylelib/index' as lib;
+
+.container {
+	margin: lib.$layout-spacing-large auto;
+	padding: lib.$layout-spacing-medium;
+	background: lib.$color-foreground;
+	color: lib.$color-background;
+	max-width: 730px;
+}
+
+.subtitle {
+	@include lib.typo-font-reading;
+}
+
+.form {
+	padding-top: lib.$layout-spacing-small;
+	display: flex;
+	gap: lib.$layout-spacing-small;
+}
+
+.input {
+	background: lib.$color-foreground;
+	color: lib.$color-background;
+	outline: none;
+	border: 3px solid lib.$color-background;
+	padding: lib.$layout-spacing-x-small lib.$layout-spacing-small;
+
+	@include lib.typo-font-family-brand;
+	@include lib.typo-font-reading;
+
+	width: 100%;
+	max-width: 380px;
+
+	transform: translateY(0px);
+	transition: all .2s ease-out;
+
+	&[type="submit"] {
+		cursor: pointer;
+		color: lib.$color-foreground;
+		background: lib.$color-background;
+		width: 200px;
+	}
+
+	&:hover, &:focus {
+		color: lib.$color-foreground;
+		background: lib.$color-background;
+		transform: translateY(-3px);
+	}
+}

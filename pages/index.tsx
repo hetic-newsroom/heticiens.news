@@ -7,6 +7,7 @@ import Spacer from 'components/spacer'
 import Columns from 'components/columns'
 import InfiniteScroller from 'components/infinite-scroller'
 import ArticleCard from 'components/article-card'
+import NewsletterSignupCard from 'components/newsletter-signup'
 
 export async function fetchHomeFeed(pageSize: number, page = 1): Promise<Article[]> {
 	const articles: Article[] = (await query('document.type', prArticle, {
@@ -43,9 +44,8 @@ export default function HomeFeed({ items }: InferGetStaticPropsType<typeof getSt
 				<ArticleCard article={article} key={article.uid} size="medium"/>
 			))}
 		</Columns>
-		{
-			// TODO: Newsletter registration invite
-		}
+		<NewsletterSignupCard/>
+		<Spacer height="medium"/>
 		<Columns no="2" rowGap="medium" revealAnimation>
 			<InfiniteScroller
 				forwardRevealAnimation
