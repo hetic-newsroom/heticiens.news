@@ -1,7 +1,7 @@
 @use 'stylelib/index' as lib;
 
 .container {
-	margin: lib.$layout-spacing-large auto;
+	margin: 0 auto;
 	padding: lib.$layout-spacing-medium;
 	background: lib.$color-foreground;
 	color: lib.$color-background;

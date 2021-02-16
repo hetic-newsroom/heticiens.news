@@ -44,6 +44,7 @@ export default function HomeFeed({ items }: InferGetStaticPropsType<typeof getSt
 				<ArticleCard article={article} key={article.uid} size="medium"/>
 			))}
 		</Columns>
+		<Spacer height="medium"/>
 		<NewsletterSignupCard/>
 		<Spacer height="medium"/>
 		<Columns no="2" rowGap="medium" revealAnimation>
