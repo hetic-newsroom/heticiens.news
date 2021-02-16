@@ -30,9 +30,9 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 }
 
 HeticNewsroom.getInitialProps = async (appContext: AppContext): Promise<Pick<AppProps, 'pageProps'> | void> => {
-	if (typeof window === 'undefined') {
-		const { pageProps } = await App.getInitialProps(appContext)
+	const { pageProps } = await App.getInitialProps(appContext)
 
+	if (typeof window === 'undefined') {
 		const { default: query } = await import('lib/prismic')
 		const { toCategory, prCategory } = await import('types/category')
 
@@ -41,6 +41,13 @@ HeticNewsroom.getInitialProps = async (appContext: AppContext): Promise<Pick<App
 		return {
 			pageProps: {
 				categories,
+				...pageProps
+			}
+		}
+	} else {
+		return {
+			pageProps: {
+				categories: [],
 				...pageProps
 			}
 		}
