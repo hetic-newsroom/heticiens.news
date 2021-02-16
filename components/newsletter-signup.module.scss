@@ -24,6 +24,7 @@
 	color: lib.$color-background;
 	outline: none;
 	border: 3px solid lib.$color-background;
+	border-radius: none;
 	padding: lib.$layout-spacing-x-small lib.$layout-spacing-small;
 
 	@include lib.typo-font-family-brand;
