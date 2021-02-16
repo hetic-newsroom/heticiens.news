@@ -77,10 +77,15 @@
 	left: 0;
 	right: 0;
 	height: 0;
-	overflow: auto;
 	background: lib.$color-background;
 
 	@include lib.layout-full-width-container;
+	
+	@media (max-height: 1000px) {
+		& {
+			overflow-y: scroll;
+		}
+	}
 
 	.menuColumnsWrapper {
 		@include lib.layout-grid-3-columns;
