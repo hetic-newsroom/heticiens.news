@@ -80,17 +80,52 @@
 	background: lib.$color-background;
 
 	@include lib.layout-full-width-container;
-	
-	@media (max-height: 1000px) {
-		& {
-			overflow-y: scroll;
-		}
-	}
 
 	.menuColumnsWrapper {
-		@include lib.layout-grid-3-columns;
-		grid-row-gap: lib.$layout-spacing-large;
-		padding-bottom: lib.$layout-spacing-medium;
+		display: grid;
+		grid-template: "a b" auto
+							"a c" auto / auto 400px;
+		height: min-content;
+
+		> .searchColumn {
+			grid-area: a;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			padding-right: lib.$layout-spacing-large;
+
+			.searchContainer {
+				grid-column: 1 / span 2;
+				margin-bottom: lib.$layout-spacing-large;
+			}
+
+			@media (max-width: 450px) {
+				& {
+					display: flex;
+					flex-direction: column;
+				}
+
+				& > :last-child {
+					margin-top: lib.$layout-spacing-large;
+				}
+			}
+		}
+
+		> .newsColumn {
+			grid-area: b;
+			margin-bottom: lib.$layout-spacing-large;
+		}
+
+		@media (max-width: 1000px) {
+			& {
+				display: flex;
+				flex-direction: column;
+
+				> .searchColumn {
+					padding-right: 0;
+					margin-bottom: lib.$layout-spacing-large;
+				}
+			}
+		}
 
 		h2 {
 			@include lib.typo-font-family-normal;
@@ -122,65 +157,20 @@
 		}
 	}
 
-	ul.socialCardsContainer {
+	.searchBoxContainer {
+		width: min(100%, 65ch);
+	}
+
+	ul.socialLinksContainer {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: 1fr;
 		grid-column-gap: lib.$layout-spacing-small;
 
-		li:first-child {
-			grid-column: 1 / span 2;
-
-			.socialCard {
-				height: lib.$layout-spacing-large * 4;
-			}
-		}
-
 		li {
-			overflow: hidden;
-		}
-
-		.socialCard {
-			&[data-site="podcast"] {
-				--brand-color: #ff4547;
-			}
-			&[data-site="twitter"] {
-				--brand-color: #1da1f2;
-			}
-			&[data-site="youtube"] {
-				--brand-color: #ff0001;
-			}
-			&[data-site="linkedin"] {
-				--brand-color: #0a66c2;
-			}
-			&[data-site="instagram"] {
-				--brand-color: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-			}
-
 			display: flex;
-			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			padding: lib.$layout-spacing-large;
-			background: var(--brand-color);
-			color: lib.$color-light-background;
-
-			transform: scale(1);
-			transition: transform 1s cubic-bezier(.09,.75,0,.99);
-
-			> *:last-child {
-				margin-top: lib.$layout-spacing-small;
-			}
-
-			span {
-				@include lib.typo-font-family-brand;
-				@include lib.typo-font-large;
-				font-weight: 700;
-			}
-
-			&:hover, &:focus {
-				filter: sepia(20%) saturate(90%);
-				transform: scale(1.15);
-			}
 		}
 	}
 }

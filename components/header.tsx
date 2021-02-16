@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Menu, X, Headphones, Twitter, Instagram, Linkedin, Youtube } from 'react-feather'
 import { motion } from 'framer-motion'
 import type Category from 'types/category'
+import SearchInput from './search-input'
+import NewsletterSignupCard from './newsletter-signup'
 import classNames from 'classnames/bind'
 import styles from './header.module.scss'
 
@@ -33,6 +35,11 @@ export default function Header(props: HeaderProps) {
 			router.events.off('routeChangeStart', handleRouteChange)
 		}
 	})
+
+	function performSearch(search: string) {
+		if (!menuOpen || search.length < 2) return
+		router.push(`/search?q=${encodeURIComponent(search).replace(/%20/g, '+')}`)
+	}
 
 	const opacityVariants = {
 		hidden: { opacity: 0 },
@@ -84,6 +91,7 @@ export default function Header(props: HeaderProps) {
 			variants={{
 				hidden: {
 					height: '0vh',
+					overflow: 'hidden',
 					transition: {
 						ease: 'anticipate',
 						duration: 0.3
@@ -91,6 +99,7 @@ export default function Header(props: HeaderProps) {
 				},
 				opened: {
 					height: `calc(100vh - ${headerRef.current?.getBoundingClientRect().bottom}px)`,
+					overflow: 'auto',
 					transition: {
 						ease: 'anticipate'
 					}
@@ -100,87 +109,87 @@ export default function Header(props: HeaderProps) {
 			animate={(menuOpen) ? 'opened' : 'hidden'}
 		>
 			<div className={styles.menuColumnsWrapper}>
-				<motion.nav variants={opacityVariants} transition={staggerChildren}>
-					<motion.h2 variants={opacityVariants}>Catégories</motion.h2>
-					<ul>
-						{props.categories.map(c => (
-							<motion.li
-								variants={opacityVariants}
-								key={c.uid}
-							>
+				<motion.div className={styles.searchColumn} variants={opacityVariants} transition={staggerChildren}>
+					<div className={styles.searchContainer}>
+						<motion.h2 variants={opacityVariants}>
+							Rechercher
+						</motion.h2>
+						<motion.div variants={opacityVariants} className={styles.searchBoxContainer}>
+							<SearchInput onThrottledChange={performSearch}/>
+						</motion.div>
+					</div>
+
+					<motion.nav variants={opacityVariants} transition={staggerChildren}>
+						<motion.h2 variants={opacityVariants}>
+							Catégories
+						</motion.h2>
+						<ul>
+							{props.categories.map(c => (
+								<motion.li
+									variants={opacityVariants}
+									key={c.uid}
+								>
+									<span>
+										<Link href={`/category/${c.uid}`}>
+											<a>{c.name}</a>
+										</Link>
+									</span>
+								</motion.li>
+							))}
+						</ul>
+					</motion.nav>
+
+					<motion.nav variants={opacityVariants} transition={staggerChildren}>
+						<motion.h2 variants={opacityVariants}>
+							En savoir plus
+						</motion.h2>
+						<ul>
+							<motion.li variants={opacityVariants}>
 								<span>
-									<Link href={`/category/${c.uid}`}>
-										<a>{c.name}</a>
+									<Link href="/">
+										<a>hello</a>
 									</Link>
 								</span>
 							</motion.li>
-						))}
-					</ul>
-				</motion.nav>
+							<motion.li variants={opacityVariants}>
+								<span>
+									<a href="https://anchor.fm/hetic-newsroom" target="_blank" rel="noopener" style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
+										<Headphones size="28px"/>
+											HN'You
+									</a>
+								</span>
+							</motion.li>
+						</ul>
+					</motion.nav>
+				</motion.div>
+
+				<motion.div className={styles.newsColumn} variants={opacityVariants} transition={staggerChildren}>
+					<NewsletterSignupCard/>
+				</motion.div>
+
 				<motion.nav variants={opacityVariants} transition={staggerChildren}>
-					<motion.h2 variants={opacityVariants}>En savoir plus</motion.h2>
-					<ul>
-						<motion.li variants={opacityVariants}>
-							<span>
-								<Link href="/">
-									<a>hello</a>
-								</Link>
-							</span>
-						</motion.li>
-					</ul>
-				</motion.nav>
-				<motion.nav variants={opacityVariants} transition={staggerChildren}>
-					<motion.h2 variants={opacityVariants}>Et aussi...</motion.h2>
-					<ul className={styles.socialCardsContainer}>
-						<motion.li variants={opacityVariants}>
-							<a href="https://anchor.fm/hetic-newsroom" target="_blank" rel="noopener">
-								<div
-									className={styles.socialCard}
-									data-site="podcast"
-								>
-									<Headphones size="32px"/>
-									<span>HN'You</span>
-								</div>
-							</a>
-						</motion.li>
+					<motion.h2 variants={opacityVariants}>
+						Nous suivre
+					</motion.h2>
+					<ul className={styles.socialLinksContainer}>
 						<motion.li variants={opacityVariants}>
 							<a href="https://twitter.com/hetic_newsroom" target="_blank" rel="noopener">
-								<div
-									className={styles.socialCard}
-									data-site="twitter"
-								>
-									<Twitter size="32px"/>
-								</div>
+								<Twitter size="32px"/>
 							</a>
 						</motion.li>
 						<motion.li variants={opacityVariants}>
 							<a href="https://www.youtube.com/channel/UCUdr_JzbdkV6bVvOTSpseEA" target="_blank" rel="noopener">
-								<div
-									className={styles.socialCard}
-									data-site="youtube"
-								>
-									<Youtube size="32px"/>
-								</div>
+								<Youtube size="32px"/>
 							</a>
 						</motion.li>
 						<motion.li variants={opacityVariants}>
 							<a href="https://www.linkedin.com/company/hetic-newsroom" target="_blank" rel="noopener">
-								<div
-									className={styles.socialCard}
-									data-site="linkedin"
-								>
-									<Linkedin size="32px"/>
-								</div>
+								<Linkedin size="32px"/>
 							</a>
 						</motion.li>
 						<motion.li variants={opacityVariants}>
 							<a href="https://www.linkedin.com/company/hetic-newsroom" target="_blank" rel="noopener">
-								<div
-									className={styles.socialCard}
-									data-site="instagram"
-								>
-									<Instagram size="32px"/>
-								</div>
+								<Instagram size="32px"/>
 							</a>
 						</motion.li>
 					</ul>
