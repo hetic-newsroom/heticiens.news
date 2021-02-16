@@ -34,6 +34,12 @@ $max-content-width: 1400px;
 @mixin grid-3-columns {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(#{$max-content-width / 3}, 100%), 1fr));
+
+	@media (min-width: 970px) and (max-width: #{$max-content-width}) {
+		> :last-child {
+			grid-column: 1 / span 2;
+		}
+	}
 }
 
 @mixin grid-2-columns-thirds {
