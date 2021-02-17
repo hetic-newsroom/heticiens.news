@@ -17,7 +17,7 @@ export default function Footer() {
 				<div>
 					<p className={styles.smallPrint}>
 						© {new Date().getFullYear()} Tout droits réservés<br/>
-						HETIC Newsroom · 27 Bis Rue Du Progres · MONTREUIL 93100 · France<br/>
+						HETIC Newsroom · 27 Bis Rue Du Progrès · MONTREUIL 93100 · France<br/>
 						Nous contacter: <a href="mailto:info@heticiens.news">info@heticiens.news</a>
 					</p>
 				</div>

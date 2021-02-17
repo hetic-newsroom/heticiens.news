@@ -9,14 +9,14 @@
 
 	.columns {
 		display: grid;
-		grid-template-columns: minmax(340px, 1fr) minmax(290px, 1fr) 1fr;
+		grid-template-columns: minmax(340px, 1fr) minmax(290px, 1fr) 150px;
 
 		> div:not(:last-child) {
 			margin-right: lib.$layout-spacing-large;
 		}
 
 		@media (max-width: 750px) {
-			grid-template-columns: minmax(340px, 1fr) 1fr;
+			grid-template-columns: minmax(340px, 1fr) 150px;
 			grid-row-gap: lib.$layout-spacing-medium;
 
 			> div:first-child {
