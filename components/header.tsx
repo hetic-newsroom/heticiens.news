@@ -146,8 +146,8 @@ export default function Header(props: HeaderProps) {
 						<ul>
 							<motion.li variants={opacityVariants}>
 								<span>
-									<Link href="/">
-										<a>hello</a>
+									<Link href="/about">
+										<a>Qui sommes-nous ?</a>
 									</Link>
 								</span>
 							</motion.li>
