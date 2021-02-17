@@ -163,10 +163,6 @@ export default function Header(props: HeaderProps) {
 					</motion.nav>
 				</motion.div>
 
-				<motion.div className={styles.newsColumn} variants={opacityVariants} transition={staggerChildren}>
-					<NewsletterSignupCard/>
-				</motion.div>
-
 				<motion.nav variants={opacityVariants} transition={staggerChildren}>
 					<motion.h2 variants={opacityVariants}>
 						Nous suivre
@@ -194,6 +190,10 @@ export default function Header(props: HeaderProps) {
 						</motion.li>
 					</ul>
 				</motion.nav>
+
+				<motion.div className={styles.newsColumn} variants={opacityVariants} transition={staggerChildren}>
+					<NewsletterSignupCard/>
+				</motion.div>
 			</div>
 		</motion.section>
 	</motion.header>
