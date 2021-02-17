@@ -25,7 +25,7 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 		<LoadingBar/>
 		<Header categories={pageProps.categories}/>
 		<AnimateSharedLayout>
-			<div style={{ minHeight: '80vh', height: 'min-content' }}>
+			<div style={{ minHeight: '75vh', height: 'min-content' }}>
 				<Component {...pageProps}/>
 			</div>
 		</AnimateSharedLayout>
