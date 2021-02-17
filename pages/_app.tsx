@@ -6,6 +6,7 @@ import { defaultSeoProps } from 'components/seo-tags'
 import { AnimateSharedLayout } from 'framer-motion'
 import LoadingBar from 'components/loading-bar'
 import Header from 'components/header'
+import Footer from 'components/footer'
 import 'stylelib/defaults.scss'
 
 function HeticNewsroom({ Component, pageProps }: AppProps) {
@@ -24,8 +25,11 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 		<LoadingBar/>
 		<Header categories={pageProps.categories}/>
 		<AnimateSharedLayout>
-			<Component {...pageProps}/>
+			<div style={{ minHeight: '80vh', height: 'min-content' }}>
+				<Component {...pageProps}/>
+			</div>
 		</AnimateSharedLayout>
+		<Footer/>
 	</>
 }
 
