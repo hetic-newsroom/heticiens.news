@@ -61,7 +61,7 @@ export default function SearchPage() {
 	return <Columns no="1" revealAnimation>
 		<h1 style={{ textAlign: 'center' }}>Recherche</h1>
 		<Spacer height="medium"/>
-		<div style={{ width: 'min(100%, 65ch)' }}>
+		<div style={{ width: 'min(100%, 65ch)', margin: '0 auto' }}>
 			<SearchInput
 				initialValue={query}
 				onThrottledChange={search}
