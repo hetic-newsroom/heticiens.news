@@ -40,7 +40,9 @@ HeticNewsroom.getInitialProps = async (appContext: AppContext): Promise<Pick<App
 		const { default: query } = await import('lib/prismic')
 		const { toCategory, prCategory } = await import('types/category')
 
-		const categories = (await query('document.type', prCategory)).results.map(x => toCategory(x))
+		const categories = (await query('document.type', prCategory)).results
+			.map(x => (x.uid !== 'hnyou' && x.uid !== 'videos') ? toCategory(x) : null)
+			.filter(x => (x !== null))
 
 		return {
 			pageProps: {

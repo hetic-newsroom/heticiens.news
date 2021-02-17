@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useToggle, useLockBodyScroll } from 'react-use'
 import Link from 'next/link'
-import { Menu, X, Headphones, Twitter, Instagram, Linkedin, Youtube } from 'react-feather'
+import { Menu, X, Headphones, Video, User, Twitter, Instagram, Linkedin, Youtube } from 'react-feather'
 import { motion } from 'framer-motion'
 import type Category from 'types/category'
 import SearchInput from './search-input'
@@ -141,22 +141,37 @@ export default function Header(props: HeaderProps) {
 
 					<motion.nav variants={opacityVariants} transition={staggerChildren}>
 						<motion.h2 variants={opacityVariants}>
-							En savoir plus
+							Découvrir
 						</motion.h2>
 						<ul>
 							<motion.li variants={opacityVariants}>
 								<span>
-									<Link href="/about">
-										<a>Qui sommes-nous ?</a>
+									<Link href="/category/hnyou">
+										<a style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+											<Headphones size="28px"/>
+											HN'You
+										</a>
 									</Link>
 								</span>
 							</motion.li>
 							<motion.li variants={opacityVariants}>
 								<span>
-									<a href="https://anchor.fm/hetic-newsroom" target="_blank" rel="noopener" style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-										<Headphones size="28px"/>
-											HN'You
-									</a>
+									<Link href="/category/videos">
+										<a style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+											<Video size="28px"/>
+											Vidéos
+										</a>
+									</Link>
+								</span>
+							</motion.li>
+							<motion.li variants={opacityVariants}>
+								<span>
+									<Link href="/about">
+										<a style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+											<User size="28px"/>
+											Qui sommes-nous ?
+										</a>
+									</Link>
 								</span>
 							</motion.li>
 						</ul>
