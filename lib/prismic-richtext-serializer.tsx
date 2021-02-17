@@ -31,8 +31,16 @@ const htmlSerializer: HTMLSerializer<ReactNode> = (type, element, _, children, k
 		case Elements.embed: {
 			console.log(element)
 			if (element.oembed.embed_url.startsWith('https://anchor.fm')) {
-				return <div className="embed embed-anchor" key={element.oembed.embed_url}>
-					<iframe src={element.oembed.embed_url} scrolling="no" style={{ height: 102 }}/>
+				return <div
+					className="embed embed-anchor"
+					key={element.oembed.embed_url}
+					style={{
+						width: '100%',
+						height: 'auto',
+						marginTop: 0
+					}}
+				>
+					<iframe src={element.oembed.embed_url} scrolling="no" style={{ height: 'auto', width: '100%' }}/>
 				</div>
 			}
 			return null
