@@ -42,12 +42,6 @@ export const defaultSeoProps: NextSeoProps = {
 		description: 'Collectif d’étudiants, qui regroupe l’ensemble des filières de l’école HETIC. Indépendant, HETIC Newsroom se propose de raconter ce qui fait l’expérience des héticiens.',
 		images: [
 			{
-				url: 'https://heticiens.news/favicon.png',
-				width: 512,
-				height: 512,
-				alt: 'HETIC Newsroom icon'
-			},
-			{
 				url: 'https://heticiens.news/opengraph.png',
 				width: 800,
 				height: 600,
