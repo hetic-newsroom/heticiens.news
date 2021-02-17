@@ -28,7 +28,7 @@ export default function ArticleFullView({ article: props }: { article: Article }
 	}, [props.date])
 
 	const readTime = useMemo(() => {
-		if (!props.content) return 0
+		if (!props.content || props.category.name === "HN'You" || props.category.name === 'Vidéos') return 0
 		return Math.round(
 			readingTime(RichText.asText(props.content)).minutes
 		)
@@ -78,7 +78,7 @@ export default function ArticleFullView({ article: props }: { article: Article }
 					animate={{ opacity: 0.7 }}
 					transition={{ delay: 0.9 }}
 				>
-					Publié le { dateString } — Temps de lecture { readTime } min
+					Publié le { dateString }{props.category.name !== "HN'You" && props.category.name !== 'Vidéos' && <> — Temps de lecture { readTime } min</>}
 				</motion.span>
 			</header>
 			<motion.aside layoutId={`articlePoster-${props.uid}`} className={styles.posterContainer}>
