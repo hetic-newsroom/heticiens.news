@@ -16,7 +16,8 @@ export default function Footer() {
 				</div>
 				<div>
 					<p className={styles.smallPrint}>
-						© {new Date().getFullYear()} Tout droits réservés<br/>
+						Notre code est <a href="https://github.com/hetic-newsroom/heticiens.news" target="_blank" rel="noopener">open-source</a> !<br/>
+						© {new Date().getFullYear()} Tout droits réservés
 						HETIC Newsroom · 27 Bis Rue Du Progrès · MONTREUIL 93100 · France<br/>
 						Nous contacter: <a href="mailto:info@heticiens.news">info@heticiens.news</a>
 					</p>
