@@ -9,9 +9,9 @@
 
 	.columns {
 		display: grid;
-		grid-template-columns: minmax(340px, 1fr) minmax(290px, 1fr) 150px;
+		grid-template-columns: minmax(340px, 1fr) minmax(290px, 1fr) 1fr;
 
-		> div:not(:last-child) {
+		> div:first-child {
 			margin-right: lib.$layout-spacing-large;
 		}
 
