@@ -82,7 +82,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function ArticlePage({ article, similar }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return <div>
 		<SeoTags article={article}/>
-		<ArticleFullView article={article}/>
+		<ArticleFullView article={article} key={article.id}/>
 		<Spacer height="large"/>
 		<Columns no="1">
 			<NewsletterSignupCard/>
