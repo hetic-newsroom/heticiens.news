@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useToggle, useLockBodyScroll } from 'react-use'
+import { useToggle } from 'react-use'
 import Link from 'next/link'
 import { Menu, X, Headphones, Video, User, Twitter, Instagram, Linkedin, Youtube } from 'react-feather'
 import { motion } from 'framer-motion'
@@ -19,8 +19,6 @@ export default function Header(props: HeaderProps) {
 	const [menuOpen, toggleMenu] = useToggle(false)
 	const headerRef = useRef<HTMLElement>(null)
 	const router = useRouter()
-
-	useLockBodyScroll(menuOpen)
 
 	useEffect(() => {
 		const handleRouteChange = () => {
@@ -91,6 +89,7 @@ export default function Header(props: HeaderProps) {
 			variants={{
 				hidden: {
 					height: '0vh',
+					minHeight: '0vh',
 					overflow: 'hidden',
 					transition: {
 						ease: 'anticipate',
@@ -98,7 +97,8 @@ export default function Header(props: HeaderProps) {
 					}
 				},
 				opened: {
-					height: `calc(100vh - ${headerRef.current?.getBoundingClientRect().bottom}px)`,
+					height: 'min-content',
+					minHeight: '100vh',
 					overflow: 'auto',
 					transition: {
 						ease: 'anticipate'
