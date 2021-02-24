@@ -19,6 +19,7 @@
 }
 
 .input {
+	-webkit-appearance: none;
 	appearance: none;
 	background: lib.$color-foreground;
 	color: lib.$color-background;
