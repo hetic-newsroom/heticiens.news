@@ -20,6 +20,10 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 			<link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://images.prismic.io"/>
 			<link rel="dns-prefetch" href="https://images.prismic.io"/>
+
+			{/* Google Analytics */}
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159035556-2"/>
+			<script dangerouslySetInnerHTML={{ __html: "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-159035556-2');" }}/>
 		</Head>
 		<DefaultSeo {...defaultSeoProps}/>
 		<LoadingBar/>
