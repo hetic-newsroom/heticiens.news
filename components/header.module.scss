@@ -86,6 +86,7 @@
 		grid-template: "a b" auto
 							"a c" auto / auto 400px;
 		height: min-content;
+		padding-bottom: lib.$layout-spacing-large;
 
 		> .searchColumn {
 			grid-area: a;
