@@ -77,7 +77,6 @@
 	left: 0;
 	right: 0;
 	height: 0;
-	min-height: 100vh;
 	background: lib.$color-background;
 
 	@include lib.layout-full-width-container;
