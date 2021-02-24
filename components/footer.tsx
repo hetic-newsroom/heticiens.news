@@ -17,8 +17,8 @@ export default function Footer() {
 				<div>
 					<p className={styles.smallPrint}>
 						Notre code est <a href="https://github.com/hetic-newsroom/heticiens.news" target="_blank" rel="noopener">open-source</a> !<br/>
-						© {new Date().getFullYear()} Tout droits réservés
-						HETIC Newsroom · 27 Bis Rue Du Progrès · MONTREUIL 93100 · France<br/>
+						© {new Date().getFullYear()} Tous droits réservés
+						HETIC Newsroom · 27 Bis rue du Progrès · 93100 Montreuil · France<br/>
 						Nous contacter: <a href="mailto:info@heticiens.news">info@heticiens.news</a>
 					</p>
 				</div>
