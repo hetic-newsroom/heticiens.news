@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useToggle, useLockBodyScroll } from 'react-use'
+import { useToggle } from 'react-use'
 import Link from 'next/link'
 import { Menu, X, Headphones, Video, User, Twitter, Instagram, Linkedin, Youtube } from 'react-feather'
 import { motion } from 'framer-motion'
@@ -20,7 +20,9 @@ export default function Header(props: HeaderProps) {
 	const headerRef = useRef<HTMLElement>(null)
 	const router = useRouter()
 
-	useLockBodyScroll(menuOpen)
+	useEffect(() => {
+		document.body.style.overflow = (menuOpen) ? 'hidden' : 'auto'
+	}, [menuOpen])
 
 	useEffect(() => {
 		const handleRouteChange = () => {
