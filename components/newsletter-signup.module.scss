@@ -15,7 +15,10 @@
 .form {
 	padding-top: lib.$layout-spacing-small;
 	display: flex;
-	gap: lib.$layout-spacing-small;
+
+	> :first-child {
+		margin-right: lib.$layout-spacing-small;
+	}
 }
 
 .input {
@@ -25,7 +28,7 @@
 	color: lib.$color-background;
 	outline: none;
 	border: 3px solid lib.$color-background;
-	border-radius: none;
+	border-radius: 0px;
 	padding: lib.$layout-spacing-x-small lib.$layout-spacing-small;
 
 	@include lib.typo-font-family-brand;

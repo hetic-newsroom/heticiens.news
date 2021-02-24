@@ -146,30 +146,30 @@ export default function Header(props: HeaderProps) {
 							Découvrir
 						</motion.h2>
 						<ul>
-							<motion.li variants={opacityVariants}>
+							<motion.li variants={opacityVariants} className={styles.iconedLinks}>
 								<span>
 									<Link href="/category/hnyou">
-										<a style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+										<a>
 											<Headphones size="28px"/>
 											HN'You
 										</a>
 									</Link>
 								</span>
 							</motion.li>
-							<motion.li variants={opacityVariants}>
+							<motion.li variants={opacityVariants} className={styles.iconedLinks}>
 								<span>
 									<Link href="/category/videos">
-										<a style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+										<a>
 											<Video size="28px"/>
 											Vidéos
 										</a>
 									</Link>
 								</span>
 							</motion.li>
-							<motion.li variants={opacityVariants}>
+							<motion.li variants={opacityVariants} className={styles.iconedLinks}>
 								<span>
 									<Link href="/about">
-										<a style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+										<a>
 											<User size="28px"/>
 											Qui sommes-nous ?
 										</a>

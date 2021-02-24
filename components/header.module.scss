@@ -181,3 +181,15 @@
 		}
 	}
 }
+
+.iconedLinks {
+	a {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		> :first-child {
+			margin-right: 10px;
+		}
+	}
+}
