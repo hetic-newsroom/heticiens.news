@@ -40,7 +40,7 @@ export default function Footer() {
 							</a>
 						</li>
 						<li>
-							<a href="https://www.linkedin.com/company/hetic-newsroom" target="_blank" rel="noopener">
+							<a href="https://www.instagram.com/hetic_newsroom" target="_blank" rel="noopener">
 								<Instagram size="24px"/>
 							</a>
 						</li>

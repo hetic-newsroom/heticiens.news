@@ -201,7 +201,7 @@ export default function Header(props: HeaderProps) {
 							</a>
 						</motion.li>
 						<motion.li variants={opacityVariants}>
-							<a href="https://www.linkedin.com/company/hetic-newsroom" target="_blank" rel="noopener">
+							<a href="https://www.instagram.com/hetic_newsroom" target="_blank" rel="noopener">
 								<Instagram size="32px"/>
 							</a>
 						</motion.li>
