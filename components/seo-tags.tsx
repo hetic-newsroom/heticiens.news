@@ -133,7 +133,7 @@ export default function SeoTags({ category, author, article }: SeoTagsProps) {
 		}
 		jsonLdTags.push(
 			<ArticleJsonLd
-				title={article.title}
+				title={article.title.replace(/"/g, '”')}
 				url={`https://heticiens.news/article/${article.uid}`}
 				datePublished={new Date(article.date).toString()}
 				description={`${shortenText(article.intro)} Un article de ${article.authors.map(x => x.name).join(' et ')} à découvrir sur HETIC Newsroom.`}
