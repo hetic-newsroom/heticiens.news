@@ -146,6 +146,10 @@ export default function SeoTags({ category, author, article }: SeoTagsProps) {
 		)
 	}
 
+	if (seo.openGraph?.images) {
+		delete defaultSeoProps.openGraph?.images
+	}
+
 	return <>
 		<NextSeo {...merge(defaultSeoProps, seo)} />
 		<LogoJsonLd logo="https://heticiens.news/favicon.png" url="https://heticiens.news"/>
