@@ -40,26 +40,17 @@ function HeticNewsroom({ Component, pageProps }: AppProps) {
 HeticNewsroom.getInitialProps = async (appContext: AppContext): Promise<Pick<AppProps, 'pageProps'> | void> => {
 	const { pageProps } = await App.getInitialProps(appContext)
 
-	if (typeof window === 'undefined') {
-		const { default: query } = await import('lib/prismic')
-		const { toCategory, prCategory } = await import('types/category')
+	const { default: query } = await import('lib/prismic')
+	const { toCategory, prCategory } = await import('types/category')
 
-		const categories = (await query('document.type', prCategory)).results
-			.map(x => (x.uid !== 'hnyou' && x.uid !== 'videos') ? toCategory(x) : null)
-			.filter(x => (x !== null))
+	const categories = (await query('document.type', prCategory)).results
+		.map(x => (x.uid !== 'hnyou' && x.uid !== 'videos') ? toCategory(x) : null)
+		.filter(x => (x !== null))
 
-		return {
-			pageProps: {
-				categories,
-				...pageProps
-			}
-		}
-	} else {
-		return {
-			pageProps: {
-				categories: [],
-				...pageProps
-			}
+	return {
+		pageProps: {
+			categories,
+			...pageProps
 		}
 	}
 }
