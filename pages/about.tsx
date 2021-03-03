@@ -1,8 +1,12 @@
+import Head from 'next/head'
 import Columns from 'components/columns'
 import Spacer from 'components/spacer'
 
 export default function AboutPage() {
 	return <Columns no="1">
+		<Head>
+			<title>HETIC Newsroom - Qui sommes-nous</title>
+		</Head>
 		<Spacer height="medium"/>
 		<h1>Qui sommes-nous ?</h1>
 		<Spacer height="medium"/>
