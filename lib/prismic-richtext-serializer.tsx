@@ -29,7 +29,6 @@ const htmlSerializer: HTMLSerializer<ReactNode> = (type, element, _, children, k
 			}
 		}
 		case Elements.embed: {
-			console.log(element)
 			if (element.oembed.embed_url.startsWith('https://anchor.fm')) {
 				return <div
 					className="embed embed-anchor"
