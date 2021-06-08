@@ -1,9 +1,11 @@
+@use "sass:math";
+
 @use 'stylelib/index' as lib;
 
 @keyframes noise-anim-1 {
 	$steps: 20;
 	@for $i from 0 through $steps {
-		#{percentage($i*(1/$steps))} {
+		#{percentage($i*math.div(1, $steps))} {
 			clip: rect(random(150)+px, 350px, random(150)+px, 30px);
 		}
 	}
@@ -12,7 +14,7 @@
 @keyframes noise-anim-2 {
 	$steps: 20;
 	@for $i from 0 through $steps {
-		#{percentage($i*(1/$steps))} {
+		#{percentage($i*math.div(1, $steps))} {
 			clip: rect(random(150)+px, 350px, random(150)+px, 30px);
 		}
 	}

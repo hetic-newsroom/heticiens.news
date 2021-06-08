@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @use 'stylelib/index' as lib;
 
 $max-p-width: 690px;
@@ -69,7 +71,7 @@ $max-p-width: 690px;
 		}
 	}
 
-	@media (min-width: lib.$layout-max-content-width / 1.3) {
+	@media (min-width: math.div(lib.$layout-max-content-width, 1.3)) {
 		.posterContainer {
 			height: min(calc(66.66vw * 0.75), calc((2/3) * #{lib.$layout-max-content-width} * 0.75 ));
 			grid-column: 2;
@@ -126,7 +128,7 @@ $max-p-width: 690px;
 		}
 	}
 
-	@media (min-width: lib.$layout-max-content-width / 1.3) {
+	@media (min-width: math.div(lib.$layout-max-content-width, 1.3)) {
 		& {
 			display: grid;
 			@include lib.layout-grid-2-columns-thirds;

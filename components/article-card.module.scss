@@ -1,9 +1,11 @@
+@use "sass:math";
+
 @use 'stylelib/index' as lib;
 
 .card {
 	display: grid;
 	grid-template-columns: 1fr;
-	$width: min(#{lib.$layout-max-content-width / 3}, 100vw);
+	$width: min(#{math.div(lib.$layout-max-content-width, 3)}, 100vw);
 	grid-template-rows: calc(#{$width} * 0.75 ) auto;
 	height: 100%;
 
@@ -41,7 +43,7 @@
 		height: min(calc(100vw * 0.75), calc(#{lib.$layout-max-content-width} * 0.75 ));
 	}
 
-	@media (min-width: lib.$layout-max-content-width / 1.3) {
+	@media (min-width: math.div(lib.$layout-max-content-width, 1.3)) {
 		.articleInfo {
 			justify-content: center;
 

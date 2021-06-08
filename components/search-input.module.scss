@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @use 'stylelib/index' as lib;
 
 .container, .input {
@@ -39,6 +41,6 @@
 		background: lib.$color-foreground;
 		color: lib.$color-background;
 		margin-left: 0;
-		padding-left: lib.$layout-spacing-x-small / 2;
+		padding-left: math.div(lib.$layout-spacing-x-small, 2);
 	}
 }
