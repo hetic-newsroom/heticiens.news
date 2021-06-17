@@ -11,5 +11,8 @@ module.exports = withBundleAnalyzer({
 		return [
 			{ source: '/rss', destination: '/api/rss' }
 		]
+	},
+	eslint: {
+		ignoreDuringBuilds: true
 	}
 })
